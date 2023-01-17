@@ -1,0 +1,7 @@
+.form-group .btn {
+    transition: 0.15s;
+}
+
+.form-group .btn:active {
+    transform: scale(0.96);
+}
