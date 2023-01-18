@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 import { NavLink } from "react-router-dom";
 
 import "./page_styles/SignInPage.css";
@@ -7,7 +8,7 @@ import Navbar from "../components/NavbarComponent";
 import Footer from "../components/FooterComponent";
 
 const SignUpPage = () => {
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordShown, setPasswordShown] = useState(false);
@@ -24,7 +25,21 @@ const SignUpPage = () => {
     }
   }
 
-  const onSubmitHandler = (e) => { };
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+
+    const user = {
+      username,
+      email,
+      password,
+    };
+    console.log(user);
+
+    axios.post("http://localhost:5000/customers/add", user)
+      .then(res => {
+        console.log(res.cookie);
+      })
+  };
 
   return (
     <>
@@ -41,8 +56,8 @@ const SignUpPage = () => {
               type="text"
               required
               className="form-control"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
 
