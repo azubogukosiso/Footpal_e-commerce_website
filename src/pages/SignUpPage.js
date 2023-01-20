@@ -35,10 +35,17 @@ const SignUpPage = () => {
     };
     console.log(user);
 
-    axios.post("http://localhost:5000/customers/add", user)
-      .then(res => {
-        console.log(res.cookie);
+    const instance = axios.create({
+      withCredentials: true
+    });
+
+    instance.post("http://localhost:5000/customers/add", user)
+      .then(response => {
+        console.log(document.cookie);
       })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   return (

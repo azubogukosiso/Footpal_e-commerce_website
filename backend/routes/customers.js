@@ -20,6 +20,7 @@ const handleErrors = (err) => {
 const maxAge = 3 * 24 * 60 * 60; // 3 days
 // create jwt using fxn
 const createToken = (id) => {
+    console.log("This is the customer's id: "+ id);
     return jwt.sign({ id }, "kosi secret", {
         expiresIn: maxAge,
     });
@@ -44,9 +45,9 @@ router.route("/add").post( async (req, res) => {
     try{
         const customer = await Customer.create(customer_details);
         const token = createToken(customer._id);
-        console.log(token);
-        res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-        res.status(201).json({ customer: customer._id });
+        console.log("This is the token: "+ token);
+        res.cookie("jwt", token, { httpOnly: false, maxAge: maxAge * 1000});
+        res.send('Cookies sent');
     } catch (err) {
         const errors = handleErrors(err);
         res.status(400).json({ errors });

@@ -1,4 +1,6 @@
 .navbar-brand {
+    font-family: 'Comfortaa', cursive;
+    font-weight: 700;
     font-size: xx-large;
     letter-spacing: 0.2rem;
 }

@@ -22,9 +22,8 @@ db.once("open", () => {
     });
 });
 
-app.use(cors());
+app.use(cors({credentials: true, origin: true}));
 app.use(express.json());
 app.use(cookieParser());
-
 
 app.use("/customers", customersRouter);
