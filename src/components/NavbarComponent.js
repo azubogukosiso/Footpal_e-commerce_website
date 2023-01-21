@@ -5,7 +5,7 @@ const NavbarComponent = () => {
   return (
     <section>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div className="container my-2">
+        <div className="container my-2 px-5">
           <NavLink className="navbar-brand" to="/">
             footpal
           </NavLink>

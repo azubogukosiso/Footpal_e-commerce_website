@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import "./page_styles/SignInPage.css";
 
@@ -11,7 +12,10 @@ const SignInPage = () => {
   const [password, setPassword] = useState("");
   const [passwordShown, setPasswordShown] = useState(false);
   const [passwordBtnValue, setPasswordBtnValue] = useState("Show");
+  const [emailErrMsg, setEmailErrMsg] = useState("");
+  const [pwdErrMsg, setPwdErrMsg] = useState("");
 
+  // SHOW AND HIDE PASSWORD FUNCTIONALITY
   const togglePassword = () => {
     if (password !== "") {
       setPasswordShown(!passwordShown);
@@ -23,7 +27,48 @@ const SignInPage = () => {
     }
   }
 
-  const onSubmitHandler = (e) => { };
+  // HIDE ERROR MESSAGES AFTER 5 SECS
+  const hideErrors = () => {
+    setTimeout(() => {
+      setEmailErrMsg("");
+      setPwdErrMsg("");
+    }, 5000)
+  }
+
+  const navigate = useNavigate();
+
+  // FUNCTION TO SUBMIT USER DETAILS
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+
+    const details = {
+      email,
+      password,
+    };
+
+    const instance = axios.create({
+      withCredentials: true
+    });
+
+    instance.post("http://localhost:5000/customers/signin", details)
+      .then(response => {
+        console.log(response.data);
+        navigate("/");
+      })
+      .catch(error => {
+        if (error.response) {
+          const errMsg = error.response.data.errors;
+          console.log(errMsg);
+          if (errMsg.email) {
+            setEmailErrMsg(errMsg.email);
+            hideErrors();
+          } else if (errMsg.password) {
+            setPwdErrMsg(errMsg.password);
+            hideErrors();
+          }
+        }
+      });
+  };
 
   return (
     <>
@@ -43,6 +88,7 @@ const SignInPage = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+            <span>{emailErrMsg}</span>
           </div>
 
           <div className="form-group mb-4">
@@ -57,6 +103,7 @@ const SignInPage = () => {
               />
               <div className="btn btn-dark" onClick={togglePassword}>{passwordBtnValue}</div>
             </div>
+            <span>{pwdErrMsg}</span>
           </div>
 
           <div className="form-group mb-3">

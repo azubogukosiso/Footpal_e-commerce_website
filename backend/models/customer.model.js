@@ -13,7 +13,7 @@ const customerSchema = new Schema(
         email: {
             type: String,
             required: true,
-            unique: [true, "This email exists already, enter another"],
+            unique: true,
             lowercase: true,
             validate: [isEmail, "Please enter a valid email"],
         },
@@ -34,6 +34,19 @@ customerSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
+
+// for logging in a customer
+customerSchema.statics.login = async function (email, password) {
+    const customer = await this.findOne({ email });
+    if (customer) {
+        const auth = await bcrypt.compare(password, customer.password);
+        if (auth) {
+            return customer;
+        }
+        throw Error("Incorrect Password");
+    }
+    throw Error("Incorrect Email");
+}
 
 
 const Customer = mongoose.model("Customer", customerSchema);

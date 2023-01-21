@@ -5,15 +5,35 @@ const jwt = require("jsonwebtoken");
 // handle errors
 const handleErrors = (err) => {
     console.log(err.message, err.code);
-    const errors = { username: "", email: "", password: "" };
+    const errors = { email: "", password: "" };
 
-    if (err.message.includes("User validation failed")) {
+    // duplicate email error code
+    if (err.code === 11000) {
+        errors.email = "That email is already registered, use another";
+        return errors;
+    }
+
+    // user validation errors
+    if (err.message.includes("Customer validation failed")) {
         Object.values(err.errors).forEach(({ properties }) => {
             errors[properties.path] = properties.message;
         });
     }
+
+    // incorrect email error for login
+    if (err.message.includes("Incorrect Email")) {
+        errors.email = "This email is not registered";
+        return errors;
+    }
+
+    // incorrect pasword error for login
+    if (err.message.includes("Incorrect Password")) {
+        errors.password = "The password is not correct";
+        return errors;
+    }
+
     return errors;
-}
+};
 
 
 // create cookie validity time 
@@ -26,7 +46,8 @@ const createToken = (id) => {
     });
 };
 
-// gets a list of all customer accounts in the database
+// ---------- LIST OF ROUTES -------------
+// gets a list of all customers
 router.route("/").get((req, res) => {
     Customer.find()
         .sort({ createdAt: -1 })
@@ -34,8 +55,8 @@ router.route("/").get((req, res) => {
         .catch(err => res.status(400).json("Error: "+ err));
 });
 
-// adds a new customer account to the database
-router.route("/add").post( async (req, res) => {
+// signs up a new customer
+router.route("/signup").post( async (req, res) => {
     const customer_details = {
         username: req.body.username,
         email: req.body.email,
@@ -47,12 +68,28 @@ router.route("/add").post( async (req, res) => {
         const token = createToken(customer._id);
         console.log("This is the token: "+ token);
         res.cookie("jwt", token, { httpOnly: false, maxAge: maxAge * 1000});
-        res.send('Cookies sent');
+        res.status(201).send({ message: 'cookies sent, sign up successful' });
     } catch (err) {
         const errors = handleErrors(err);
-        res.status(400).json({ errors });
+        // console.log(errors);
+        res.status(400).send({ errors });
     }
 });
 
+// signs in a customer
+router.route("/signin").post( async (req, res) => {
+    const { email, password } = req.body;
+
+    try{
+        const customer = await Customer.login(email, password);
+        const token = createToken(customer._id);
+        res.cookie("jwt", token, { httpOnly: false, maxAge: maxAge * 1000});
+        res.status(200).send({ message: 'cookies sent, you are signed in' });
+    } catch (err) {
+        const errors = handleErrors(err);
+        console.log(errors);
+        res.status(400).send({ errors });
+    }
+});
 
 module.exports = router;

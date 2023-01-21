@@ -1,6 +1,6 @@
 import { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { NavLink } from "react-router-dom";
 
 import "./page_styles/SignInPage.css";
 
@@ -13,7 +13,10 @@ const SignUpPage = () => {
   const [password, setPassword] = useState("");
   const [passwordShown, setPasswordShown] = useState(false);
   const [passwordBtnValue, setPasswordBtnValue] = useState("Show");
+  const [emailErrMsg, setEmailErrMsg] = useState("");
+  const [pwdErrMsg, setPwdErrMsg] = useState("");
 
+  // SHOW AND HIDE PASSWORD FUNCTIONALITY
   const togglePassword = () => {
     if (password !== "") {
       setPasswordShown(!passwordShown);
@@ -25,6 +28,17 @@ const SignUpPage = () => {
     }
   }
 
+  // HIDE ERROR MESSAGES AFTER 5 SECS
+  const hideErrors = () => {
+    setTimeout(() => {
+      setEmailErrMsg("");
+      setPwdErrMsg("");
+    }, 5000)
+  }
+
+  const navigate = useNavigate();
+
+  // FUNCTION TO SUBMIT USER DETAILS
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
@@ -39,12 +53,23 @@ const SignUpPage = () => {
       withCredentials: true
     });
 
-    instance.post("http://localhost:5000/customers/add", user)
+    instance.post("http://localhost:5000/customers/signup", user)
       .then(response => {
-        console.log(document.cookie);
+        console.log(response.data);
+        navigate("/");
       })
       .catch(error => {
-        console.log(error);
+        if (error.response) {
+          const errMsg = error.response.data.errors;
+          console.log(errMsg);
+          if (errMsg.email) {
+            setEmailErrMsg(errMsg.email);
+            hideErrors();
+          } else if (errMsg.password) {
+            setPwdErrMsg(errMsg.password);
+            hideErrors();
+          }
+        }
       });
   };
 
@@ -71,12 +96,13 @@ const SignUpPage = () => {
           <div className="form-group mb-3">
             <label htmlFor="email">Email</label>
             <input
-              type="text"
+              type="email"
               required
               className="form-control"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
+            <span className="mt-3">{emailErrMsg}</span>
           </div>
 
           <div className="form-group mb-4">
@@ -91,6 +117,7 @@ const SignUpPage = () => {
               />
               <div className="btn btn-dark" onClick={togglePassword}>{passwordBtnValue}</div>
             </div>
+            <span className="mt-3">{pwdErrMsg}</span>
           </div>
 
           <div className="form-group mb-3">
