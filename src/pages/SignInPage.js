@@ -52,8 +52,9 @@ const SignInPage = () => {
 
     instance.post("http://localhost:5000/customers/signin", details)
       .then(response => {
-        console.log(response.data);
-        navigate("/");
+        if (response.data) {
+          navigate("/");
+        }
       })
       .catch(error => {
         if (error.response) {

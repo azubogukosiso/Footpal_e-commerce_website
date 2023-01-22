@@ -47,7 +47,6 @@ const SignUpPage = () => {
       email,
       password,
     };
-    console.log(user);
 
     const instance = axios.create({
       withCredentials: true
@@ -55,8 +54,9 @@ const SignUpPage = () => {
 
     instance.post("http://localhost:5000/customers/signup", user)
       .then(response => {
-        console.log(response.data);
-        navigate("/");
+        if (response.data) {
+          navigate("/");
+        }
       })
       .catch(error => {
         if (error.response) {
