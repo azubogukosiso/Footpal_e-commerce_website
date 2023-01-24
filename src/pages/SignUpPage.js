@@ -61,7 +61,6 @@ const SignUpPage = () => {
       .catch(error => {
         if (error.response) {
           const errMsg = error.response.data.errors;
-          console.log(errMsg);
           if (errMsg.email) {
             setEmailErrMsg(errMsg.email);
             hideErrors();

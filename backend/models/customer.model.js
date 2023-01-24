@@ -22,6 +22,10 @@ const customerSchema = new Schema(
             required: true,
             minlength: [6, "Minimum password length is 6 characters, this is too short"],
         },
+        profile_image: {
+            data: Buffer,
+            contentType: String,
+        },
     },
     {
         timestamps: true,
@@ -30,9 +34,9 @@ const customerSchema = new Schema(
 
 // fire before doc is saved to db (hash password)
 customerSchema.pre("save", async function (next) {
-  const salt = await bcrypt.genSalt();
-  this.password = await bcrypt.hash(this.password, salt);
-  next();
+    const salt = await bcrypt.genSalt();
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
 });
 
 // for logging in a customer
@@ -47,7 +51,6 @@ customerSchema.statics.login = async function (email, password) {
     }
     throw Error("Incorrect Email");
 }
-
 
 const Customer = mongoose.model("Customer", customerSchema);
 

@@ -6,7 +6,9 @@ import "bootstrap/dist/js/bootstrap.min.js";
 import Main from "./pages/MainPage";
 import SignUp from "./pages/SignUpPage";
 import SignIn from "./pages/SignInPage";
-import AdminLogin from "./pages/AdminLoginPage";
+import AdminSignIn from "./pages/AdminSigninPage";
+import AdminSignUp from "./pages/AdminSignUpPage";
+import AdminMain from "./pages/AdminMainPage";
 import AdminCreateCategory from "./pages/AdminCreateCategoryPage";
 import AdminCreateItem from "./pages/AdminCreateItemPage";
 import AdminEditCategory from "./pages/AdminEditCategoryPage";
@@ -20,7 +22,9 @@ function App() {
           <Route path="/" exact element={<Main />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
-          <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/admin/" element={<AdminMain />} />
+          <Route path="/admin/signin" element={<AdminSignIn />} />
+          <Route path="/admin/signup" element={<AdminSignUp />} />
           <Route path="/admin/create-category" element={<AdminCreateCategory />} />
           <Route path="/admin/create-item" element={<AdminCreateItem />} />
           <Route path="/admin/edit-category" element={<AdminEditCategory />} />

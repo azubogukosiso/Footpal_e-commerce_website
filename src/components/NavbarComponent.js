@@ -64,12 +64,20 @@ const NavbarComponent = () => {
           Sign Up
         </NavLink>
       </li>
-      <li className="nav-item ms-0 mx-lg-3">
+      <li className="nav-item mx-0 mx-lg-3">
         <NavLink
           className="nav-link text-white ps-3 ps-lg-2 rounded"
-          to="/admin"
+          to="/admin/signin"
         >
-          Admin Login
+          Sign In (Admin)
+        </NavLink>
+      </li>
+      <li className="nav-item mx-0 mx-lg-3">
+        <NavLink
+          className="nav-link text-white ps-3 ps-lg-2 rounded"
+          to="/admin/signup"
+        >
+          Sign Up (Admin)
         </NavLink>
       </li>
     </>
@@ -78,7 +86,7 @@ const NavbarComponent = () => {
   return (
     <section>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div className="container my-2 px-5">
+        <div className="container my-2 px-5 px-md-3 px-lg-0">
           <NavLink className="navbar-brand" to="/">
             footpal
           </NavLink>

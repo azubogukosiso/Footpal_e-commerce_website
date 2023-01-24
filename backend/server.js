@@ -7,6 +7,7 @@ const app = express();
 
 // route imports
 const customersRouter = require("./routes/customers");
+const adminRouter = require("./routes/admin");
 
 // connection to the dbase
 mongoose.connect("mongodb://localhost:27017/Footpal-Database", {
@@ -22,8 +23,9 @@ db.once("open", () => {
     });
 });
 
-app.use(cors({credentials: true, origin: true}));
+app.use(cors({ credentials: true, origin: true }));
 app.use(express.json());
 app.use(cookieParser());
 
 app.use("/customers", customersRouter);
+app.use("/admin", adminRouter);
