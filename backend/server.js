@@ -6,6 +6,7 @@ const cors = require('cors');
 const app = express();
 
 // route imports
+const generalRouter = require("./routes/general");
 const customersRouter = require("./routes/customers");
 const adminRouter = require("./routes/admin");
 
@@ -27,5 +28,6 @@ app.use(cors({ credentials: true, origin: true }));
 app.use(express.json());
 app.use(cookieParser());
 
+app.use("/general", generalRouter);
 app.use("/customers", customersRouter);
 app.use("/admin", adminRouter);

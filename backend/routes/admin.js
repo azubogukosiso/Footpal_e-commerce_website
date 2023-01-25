@@ -1,6 +1,8 @@
 const router = require("express").Router();
-let Admin = require("../models/admin.model");
+const mongoose = require('mongoose');
 const jwt = require("jsonwebtoken");
+
+let Admin = require("../models/admin.model");
 
 // handle errors
 const handleErrors = (err) => {
@@ -73,6 +75,27 @@ router.route("/signin").post(async (req, res) => {
         const errors = handleErrors(err);
         console.log(errors);
         res.status(400).send({ errors });
+    }
+});
+
+// checks for the presence of a cookie - to know if a user is logged in
+router.route("/check-cookie").post((req, res) => {
+    const token = req.cookies.jwt;
+    console.log(token);
+
+    try {
+        jwt.verify(token, 'kosi secret', async (err, decodedToken) => {
+            try {
+                console.log(decodedToken.id);
+                const admin = await Admin.findById(decodedToken.id);
+                res.status(200).send({ admin });
+            } catch (err) {
+                console.log(err);
+                res.status(400).send({ message: "you're logged out" });
+            }
+        })
+    } catch {
+        res.status(400).send({ message: "you're logged out" });
     }
 });
 

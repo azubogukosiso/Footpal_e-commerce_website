@@ -1,10 +1,34 @@
 import "./component_styles/NavbarComponent.css";
+import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const NavbarComponent = () => {
-  const navigate = useNavigate();
+  const [cookie, setCookie] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
+  useEffect(() => {
+    const instance = axios.create({
+      withCredentials: true
+    });
+
+    instance.post("http://localhost:5000/general/check-cookie")
+      .then(response => {
+        setCookie(true);
+        console.log(response.data);
+        if (response.data.admin) {
+          console.log("An admin is logged in!");
+          setIsAdmin(true);
+        } else {
+          console.log("A customer is logged in!");
+        }
+      })
+      .catch(error => {
+        console.log(error.response.data);
+      });
+  }, [])
+
+  const navigate = useNavigate();
   const LogOut = (e) => {
     const instance = axios.create({
       withCredentials: true
@@ -12,36 +36,37 @@ const NavbarComponent = () => {
 
     instance.post("http://localhost:5000/customers/logout")
       .then(response => {
+        console.log(response);
         if (response.data) {
           navigate("/");
         }
       })
   }
 
-  const authCookie = document.cookie;
-  let navigationList = authCookie ? (
+  let navigationList = cookie ? isAdmin ? (
     <>
-      <li className="nav-item mx-0 mx-lg-3">
-        <NavLink
-          className="nav-link text-white ps-3 ps-lg-2 rounded"
-          to="/"
-        >
-          Categories
+      <li className="nav-item ms-0 mx-lg-3">
+        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="">
+          Main
         </NavLink>
       </li>
       <li className="nav-item mx-0 mx-lg-3">
-        <NavLink
-          className="nav-link text-white ps-3 ps-lg-2 rounded"
-          to="/"
-        >
-          Check Cart
+        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/">
+          Create Items
+        </NavLink>
+      </li>
+      <li className="nav-item mx-0 mx-lg-3">
+        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/">
+          Edit Items
+        </NavLink>
+      </li>
+      <li className="nav-item mx-0 mx-lg-3">
+        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/">
+          Item List
         </NavLink>
       </li>
       <li className="nav-item ms-0 mx-lg-3">
-        <NavLink
-          className="nav-link text-white ps-3 ps-lg-2 rounded"
-          to="" onClick={LogOut}
-        >
+        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="" onClick={LogOut}>
           Log Out
         </NavLink>
       </li>
@@ -49,34 +74,45 @@ const NavbarComponent = () => {
   ) : (
     <>
       <li className="nav-item mx-0 mx-lg-3">
-        <NavLink
-          className="nav-link text-white ps-3 ps-lg-2 rounded"
-          to="/signin"
-        >
-          Sign In
-        </NavLink >
-      </li >
+        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/">
+          Categories
+        </NavLink>
+      </li>
       <li className="nav-item mx-0 mx-lg-3">
-        <NavLink
-          className="nav-link text-white ps-3 ps-lg-2 rounded"
-          to="/signup"
-        >
+        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/">
+          Check Cart
+        </NavLink>
+      </li>
+      <li className="nav-item mx-0 mx-lg-3">
+        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/">
+          Your Profile
+        </NavLink>
+      </li>
+      <li className="nav-item ms-0 mx-lg-3">
+        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="" onClick={LogOut}>
+          Log Out
+        </NavLink>
+      </li>
+    </>
+  ) : (
+    <>
+      <li className="nav-item mx-0 mx-lg-3">
+        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/signin">
+          Sign In
+        </NavLink>
+      </li>
+      <li className="nav-item mx-0 mx-lg-3">
+        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/signup">
           Sign Up
         </NavLink>
       </li>
       <li className="nav-item mx-0 mx-lg-3">
-        <NavLink
-          className="nav-link text-white ps-3 ps-lg-2 rounded"
-          to="/admin/signin"
-        >
+        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/admin/signin">
           Sign In (Admin)
         </NavLink>
       </li>
       <li className="nav-item mx-0 mx-lg-3">
-        <NavLink
-          className="nav-link text-white ps-3 ps-lg-2 rounded"
-          to="/admin/signup"
-        >
+        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/admin/signup">
           Sign Up (Admin)
         </NavLink>
       </li>

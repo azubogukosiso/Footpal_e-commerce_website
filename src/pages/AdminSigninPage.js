@@ -2,7 +2,6 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
 import "./page_styles/SignInPage.css";
 
 import Navbar from "../components/NavbarComponent";
@@ -53,11 +52,16 @@ const AdminLoginPage = () => {
 
     instance.post("http://localhost:5000/admin/signin", details)
       .then(response => {
+        console.log(response.data);
         if (response.data) {
-          navigate("/admin/");
+          if (document.cookie) {
+            console.log("there is a cookie");
+            navigate("/admin/");
+          }
         }
       })
       .catch(error => {
+        console.log(error.response);
         if (error.response) {
           const errMsg = error.response.data.errors;
           console.log(errMsg);
