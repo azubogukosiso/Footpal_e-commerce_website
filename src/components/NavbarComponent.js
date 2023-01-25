@@ -39,6 +39,7 @@ const NavbarComponent = () => {
         console.log(response);
         if (response.data) {
           navigate("/");
+          document.location.reload();
         }
       })
   }
