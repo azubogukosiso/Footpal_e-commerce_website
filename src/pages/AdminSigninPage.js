@@ -56,7 +56,7 @@ const AdminLoginPage = () => {
         if (response.data) {
           if (document.cookie) {
             console.log("there is a cookie");
-            navigate("/admin/");
+            navigate("/admin");
           }
         }
       })
@@ -88,7 +88,7 @@ const AdminLoginPage = () => {
           <div className="form-group mb-3">
             <label htmlFor="username">Username</label>
             <input
-              type="username"
+              type="text"
               required
               className="form-control"
               value={username}

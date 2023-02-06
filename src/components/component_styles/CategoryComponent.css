@@ -13,7 +13,3 @@
     pointer-events: none;
     transition: 0.15s;
 }
-
-img {
-    object-fit: cover;
-}

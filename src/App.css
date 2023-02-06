@@ -18,7 +18,3 @@
 .main-container {
     min-height: 100vh;
 }
-
-.sub-container {
-    min-height: calc(100vh - 90px - 72px);
-}

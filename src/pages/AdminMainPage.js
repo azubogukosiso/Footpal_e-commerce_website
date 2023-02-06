@@ -1,8 +1,10 @@
+import { useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+
 import Navbar from "../components/NavbarComponent";
 import Footer from "../components/FooterComponent";
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+
 
 const AdminMainPage = () => {
     const navigate = useNavigate();
@@ -14,7 +16,8 @@ const AdminMainPage = () => {
             withCredentials: true
         });
 
-        instance.post("http://localhost:5000/admin/check-cookie")
+        // GETTING THE DETAILS OF THE ADMIN USING AVAILABLE COOKIES
+        instance.get("http://localhost:5000/admin/check-cookie")
             .then(response => {
                 console.log(response.data.admin);
                 const adminDetails = response.data.admin;
@@ -32,8 +35,15 @@ const AdminMainPage = () => {
         return (
             <>
                 <Navbar />
-                <main>
-                    <p>Welcome, {adminUsername}!</p>
+                <main className="d-flex justify-content-center align-items-center">
+                    <div className="rounded shadow p-5 my-5 w-75">
+                        <h4 className="text-center">Welcome, {adminUsername} 😊</h4>
+                        <div className="d-flex justify-content-center mt-3">
+                            <NavLink to="/admin/create-item" className="text-dark">Create Items</NavLink>
+                            <div className="mx-3"></div>
+                            <NavLink to="/admin/edit-item" className="text-dark">Edit Items</NavLink>
+                        </div>
+                    </div>
                 </main>
                 <Footer />
             </>

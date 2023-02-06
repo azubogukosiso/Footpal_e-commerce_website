@@ -47,27 +47,22 @@ const NavbarComponent = () => {
   let navigationList = cookie ? isAdmin ? (
     <>
       <li className="nav-item ms-0 mx-lg-3">
-        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="">
+        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/admin">
           Main
         </NavLink>
       </li>
       <li className="nav-item mx-0 mx-lg-3">
-        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/">
+        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/admin/create-item">
           Create Items
         </NavLink>
       </li>
       <li className="nav-item mx-0 mx-lg-3">
-        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/">
+        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/admin/edit-item">
           Edit Items
         </NavLink>
       </li>
-      <li className="nav-item mx-0 mx-lg-3">
-        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/">
-          Item List
-        </NavLink>
-      </li>
       <li className="nav-item ms-0 mx-lg-3">
-        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="" onClick={LogOut}>
+        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" onClick={LogOut}>
           Log Out
         </NavLink>
       </li>
@@ -90,7 +85,7 @@ const NavbarComponent = () => {
         </NavLink>
       </li>
       <li className="nav-item ms-0 mx-lg-3">
-        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="" onClick={LogOut}>
+        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" onClick={LogOut}>
           Log Out
         </NavLink>
       </li>

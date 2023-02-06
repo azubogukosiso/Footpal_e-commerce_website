@@ -9,9 +9,7 @@ import SignIn from "./pages/SignInPage";
 import AdminSignIn from "./pages/AdminSigninPage";
 import AdminSignUp from "./pages/AdminSignUpPage";
 import AdminMain from "./pages/AdminMainPage";
-import AdminCreateCategory from "./pages/AdminCreateCategoryPage";
 import AdminCreateItem from "./pages/AdminCreateItemPage";
-import AdminEditCategory from "./pages/AdminEditCategoryPage";
 import AdminEditItem from "./pages/AdminEditItemPage";
 
 function App() {
@@ -25,9 +23,7 @@ function App() {
           <Route path="/admin/" element={<AdminMain />} />
           <Route path="/admin/signin" element={<AdminSignIn />} />
           <Route path="/admin/signup" element={<AdminSignUp />} />
-          <Route path="/admin/create-category" element={<AdminCreateCategory />} />
           <Route path="/admin/create-item" element={<AdminCreateItem />} />
-          <Route path="/admin/edit-category" element={<AdminEditCategory />} />
           <Route path="/admin/edit-item" element={<AdminEditItem />} />
         </Routes>
       </div>

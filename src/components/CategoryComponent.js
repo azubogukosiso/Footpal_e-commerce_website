@@ -10,7 +10,7 @@ const CategoryComponent = (props) => {
                     <h4>{props.names} &gt;</h4>
                 </NavLink>
             </div>
-            <img src={props.images} alt="Shoes" className="h-100 w-100" />
+            <img src={props.images} alt="Shoes" className="h-100 w-100 object-fit-cover" />
         </div>
     );
 };

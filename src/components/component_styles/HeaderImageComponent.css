@@ -1,7 +1,3 @@
 .img-container {
     height: 200px;
 }
-
-.img-container img {
-    object-fit: cover;
-}

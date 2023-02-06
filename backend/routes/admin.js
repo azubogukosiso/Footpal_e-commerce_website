@@ -79,7 +79,7 @@ router.route("/signin").post(async (req, res) => {
 });
 
 // checks for the presence of a cookie - to know if a user is logged in
-router.route("/check-cookie").post((req, res) => {
+router.route("/check-cookie").get((req, res) => {
     const token = req.cookies.jwt;
     console.log(token);
 
