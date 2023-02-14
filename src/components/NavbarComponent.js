@@ -8,29 +8,24 @@ const NavbarComponent = () => {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    const instance = axios.create({
+    let instance = axios.create({
       withCredentials: true
     });
 
+    // CHECK WHO'S LOGGED IN - ADMIN OR CUSTOMER
     instance.post("http://localhost:5000/general/check-cookie")
       .then(response => {
         setCookie(true);
-        console.log(response.data);
         if (response.data.admin) {
-          console.log("An admin is logged in!");
           setIsAdmin(true);
-        } else {
-          console.log("A customer is logged in!");
-        }
+        } else { }
       })
-      .catch(error => {
-        console.log(error.response.data);
-      });
+      .catch(error => { });
   }, [])
 
   const navigate = useNavigate();
   const LogOut = (e) => {
-    const instance = axios.create({
+    let instance = axios.create({
       withCredentials: true
     });
 
@@ -57,8 +52,8 @@ const NavbarComponent = () => {
         </NavLink>
       </li>
       <li className="nav-item mx-0 mx-lg-3">
-        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/admin/edit-item">
-          Edit Items
+        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/admin/item-list">
+          Item List
         </NavLink>
       </li>
       <li className="nav-item ms-0 mx-lg-3">

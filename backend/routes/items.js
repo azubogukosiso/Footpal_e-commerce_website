@@ -23,4 +23,22 @@ router.route("/create").post(async (req, res) => {
     }
 });
 
+// gets a particular exercise using its id
+router.route("/:id").get((req, res) => {
+    Item.findById(req.params.id)
+        .then(item => res.json(item))
+        .catch((err) => res.status(400).json("Error: " + err));
+});
+
+// updates an item
+router.route("/update/:id").post((req, res) => {
+    Item.findByIdAndUpdate(req.params.id, req.body, (err, docs) => {
+        if (err) {
+            res.status(400).json("Error: " + err);
+        } else {
+            res.json("Item has been successfully edited!");
+        }
+    });
+});
+
 module.exports = router;

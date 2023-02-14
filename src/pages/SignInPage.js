@@ -77,7 +77,7 @@ const SignInPage = () => {
       <main className="d-flex justify-content-center align-items-center">
         <form
           onSubmit={onSubmitHandler}
-          className="rounded shadow p-5 my-5 w-75"
+          className="rounded shadow-sm border border-light p-5 my-5 w-75"
         >
           <h1>Sign In</h1>
           <div className="form-group mb-3">

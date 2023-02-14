@@ -10,7 +10,8 @@ import AdminSignIn from "./pages/AdminSigninPage";
 import AdminSignUp from "./pages/AdminSignUpPage";
 import AdminMain from "./pages/AdminMainPage";
 import AdminCreateItem from "./pages/AdminCreateItemPage";
-import AdminEditItem from "./pages/AdminEditItemPage";
+import AdminItemList from "./pages/AdminItemListPage";
+import AdminEditItemPage from "./pages/AdminEditItemPage";
 
 function App() {
   return (
@@ -24,7 +25,8 @@ function App() {
           <Route path="/admin/signin" element={<AdminSignIn />} />
           <Route path="/admin/signup" element={<AdminSignUp />} />
           <Route path="/admin/create-item" element={<AdminCreateItem />} />
-          <Route path="/admin/edit-item" element={<AdminEditItem />} />
+          <Route path="/admin/item-list" element={<AdminItemList />} />
+          <Route path="/admin/edit-item/:id" element={<AdminEditItemPage />} />
         </Routes>
       </div>
     </BrowserRouter>

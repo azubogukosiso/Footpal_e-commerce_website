@@ -26,16 +26,14 @@ const AdminCreateItemPage = () => {
     });
 
     // GETTING THE DETAILS OF THE ADMIN USING AVAILABLE COOKIES
-    instance.post("http://localhost:5000/admin/check-cookie")
-      .then(response => {
-        console.log(response.data.admin);
-      })
+    instance.get("http://localhost:5000/admin/check-cookie")
+      .then(response => { })
       .catch(error => {
         console.log(error.response.data.message);
         if (error.response.data.message) {
           navigate("/admin/signin");
         }
-      })
+      });
   }, [navigate])
 
   // IMAGE SELECTION FUNCTIONALITY
@@ -43,12 +41,27 @@ const AdminCreateItemPage = () => {
     inputRef.current.click();
   }
 
-  // DETECT IMAGE SELECTED AND PREVIEW THE IMAGE
+  // DETECT IMAGE SELECTED AND PREVIEW THE IMAGE - DISALLOW INVALID IMAGES
   const changeHandler = (e) => {
-    console.log(e.target.files[0]);
     setOverlayRemoved(true);
     setItemImage(e.target.files[0]);
     setPreviewImage(URL.createObjectURL(e.target.files[0]));
+
+    const fileExtension = e.target.files[0].name.split(".").at(-1);
+    const fileSize = e.target.files[0].size;
+
+    const allowedFileTypes = ["jpg", "png", "jpeg"];
+    if (!allowedFileTypes.includes(fileExtension)) {
+      alert('Selected file type not allowed. Only select .jpeg, .jpg and .png formats');
+      setOverlayRemoved(false);
+      setItemImage(null);
+      setPreviewImage("");
+    } else if (fileSize >= 2e5) {
+      alert('Selected image is too big. Must not be more than 200kb');
+      setOverlayRemoved(false);
+      setItemImage(null);
+      setPreviewImage("");
+    }
   }
 
   // FUNCTION TO SUBMIT ITEM DETAILS
@@ -99,7 +112,7 @@ const AdminCreateItemPage = () => {
     <>
       <Navbar />
       <main className="d-flex justify-content-center align-items-center">
-        <form onSubmit={onSubmitHandler} className="rounded shadow p-5 my-5 w-75">
+        <form onSubmit={onSubmitHandler} className="rounded shadow-sm border border-light p-5 my-5 w-75">
           <h1>Create an Item</h1>
           <div className="form-group mb-3">
             <label htmlFor="name">Name of Item</label>
