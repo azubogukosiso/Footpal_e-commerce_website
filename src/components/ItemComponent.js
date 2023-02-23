@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import "./component_styles/ItemComponent.css";
 
 const ItemComponent = (props) => {
@@ -10,15 +11,15 @@ const ItemComponent = (props) => {
         <div className="cta d-flex flex-column flex-sm-column flex-xl-row">
           {
             props.isAdmin ? (null) : (
-              <button className="btn btn-dark">add to cart</button>
-            )
-          }
-          <span className="mx-2 my-2"></span>
-          <button className="btn btn-dark">more details</button>
-          <span className="mx-2 my-2"></span>
-          {
-            props.isAdmin ? (null) : (
-              <button className="btn btn-dark">add to wishlist</button>
+              <>
+                <button className="btn btn-dark">add to cart</button>
+                <span className="mx-2 my-2"></span>
+                <NavLink to={"/details/" + props.id}>
+                  <button className="btn btn-dark">more details</button>
+                </NavLink>
+                <span className="mx-2 my-2"></span>
+                <button className="btn btn-dark">add to wishlist</button>
+              </>
             )
           }
         </div>

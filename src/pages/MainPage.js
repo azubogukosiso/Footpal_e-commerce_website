@@ -19,6 +19,7 @@ const MainPage = () => {
     let instance = axios.create({
       withCredentials: true
     });
+
     // GETTING ALL ITEMS
     instance.get("http://localhost:5000/item/")
       .then(response => {
@@ -40,7 +41,7 @@ const MainPage = () => {
   }, [])
 
   const renderItems = items.map((item) => (
-    <ItemComponent key={uuidv4()} images={item.itemImage} names={item.itemName} prices={item.price} isAdmin={isAdmin} />
+    <ItemComponent key={uuidv4()} images={item.itemImage} names={item.itemName} prices={item.price} isAdmin={isAdmin} id={item._id} />
   ));
 
   const renderCategories = Categories.map((Category) => (

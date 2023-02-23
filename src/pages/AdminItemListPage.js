@@ -13,12 +13,12 @@ const AdminItemList = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const instanceOne = axios.create({
+    let instance = axios.create({
       withCredentials: true,
     });
+
     // GETTING THE DETAILS OF THE ADMIN USING AVAILABLE COOKIES
-    instanceOne
-      .get("http://localhost:5000/admin/check-cookie")
+    instance.get("http://localhost:5000/admin/check-cookie")
       .then((response) => { })
       .catch((error) => {
         console.log(error.response.data.message);
@@ -27,12 +27,8 @@ const AdminItemList = () => {
         }
       });
 
-    const instanceTwo = axios.create({
-      withCredentials: true,
-    });
     // GETTING ALL ITEMS
-    instanceTwo
-      .get("http://localhost:5000/item")
+    instance.get("http://localhost:5000/item")
       .then((response) => {
         const itemDetails = response.data;
         setItems(itemDetails);

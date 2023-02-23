@@ -66,16 +66,16 @@ const NavbarComponent = () => {
     <>
       <li className="nav-item mx-0 mx-lg-3">
         <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/">
-          Categories
-        </NavLink>
-      </li>
-      <li className="nav-item mx-0 mx-lg-3">
-        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/">
           Check Cart
         </NavLink>
       </li>
       <li className="nav-item mx-0 mx-lg-3">
         <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/">
+          See Wishlist
+        </NavLink>
+      </li>
+      <li className="nav-item mx-0 mx-lg-3">
+        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/profile">
           Your Profile
         </NavLink>
       </li>
@@ -95,16 +95,6 @@ const NavbarComponent = () => {
       <li className="nav-item mx-0 mx-lg-3">
         <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/signup">
           Sign Up
-        </NavLink>
-      </li>
-      <li className="nav-item mx-0 mx-lg-3">
-        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/admin/signin">
-          Sign In (Admin)
-        </NavLink>
-      </li>
-      <li className="nav-item mx-0 mx-lg-3">
-        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/admin/signup">
-          Sign Up (Admin)
         </NavLink>
       </li>
     </>

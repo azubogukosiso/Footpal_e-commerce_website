@@ -1,6 +1,8 @@
 import { useRef, useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
 
 import "./page_styles/AdminCreateItemPage.css";
 
@@ -64,6 +66,14 @@ const AdminCreateItemPage = () => {
     }
   }
 
+  const showSuccessMsg = () => {
+    toast.success('Item has been created!', {
+      position: toast.POSITION.TOP_RIGHT,
+      hideProgressBar: true,
+      pauseOnHover: false,
+    });
+  };
+
   // FUNCTION TO SUBMIT ITEM DETAILS
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -102,6 +112,7 @@ const AdminCreateItemPage = () => {
     instance.post("http://localhost:5000/item/create", newItem)
       .then(response => {
         console.log(response.data);
+        showSuccessMsg();
       })
       .catch(error => {
         console.log(error.response);
@@ -193,6 +204,7 @@ const AdminCreateItemPage = () => {
         </form>
       </main>
       <Footer />
+      <ToastContainer />
     </>
   )
 };
