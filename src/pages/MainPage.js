@@ -9,11 +9,13 @@ import Navbar from "../components/NavbarComponent";
 import HeaderImageComponent from "../components/HeaderImageComponent";
 import ItemComponent from "../components/ItemComponent";
 import CategoryComponent from "../components/CategoryComponent";
+import Modal from "../components/ModalComponent";
 import Footer from "../components/FooterComponent";
 
 const MainPage = () => {
   const [items, setItems] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     let instance = axios.create({
@@ -54,7 +56,7 @@ const MainPage = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar setIsOpen={setIsOpen} />
       <main>
         <HeaderImageComponent />
         <section className="most-purchased text-center">
@@ -75,6 +77,7 @@ const MainPage = () => {
             {renderCategories}
           </div>
         </section>
+        {isOpen && <Modal setIsOpen={setIsOpen} />}
       </main>
       <Footer />
     </>

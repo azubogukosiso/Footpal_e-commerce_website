@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const NavbarComponent = () => {
+const NavbarComponent = (props) => {
   const [cookie, setCookie] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -65,7 +65,7 @@ const NavbarComponent = () => {
   ) : (
     <>
       <li className="nav-item mx-0 mx-lg-3">
-        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/">
+        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" onClick={() => props.setIsOpen(true)}>
           Check Cart
         </NavLink>
       </li>
