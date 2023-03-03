@@ -12,7 +12,7 @@ const ItemComponent = (props) => {
           {
             props.isAdmin ? (null) : (
               <>
-                <button className="btn btn-dark">add to cart</button>
+                <button className="btn btn-dark" onClick={() => props.addToCart(props.item)}>add to cart</button>
                 <span className="mx-2 my-2"></span>
                 <NavLink to={"/details/" + props.id}>
                   <button className="btn btn-dark">more details</button>

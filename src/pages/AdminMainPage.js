@@ -12,7 +12,7 @@ const AdminMainPage = () => {
     const [adminUsername, setAdminUsername] = useState("");
 
     useEffect(() => {
-        const instance = axios.create({
+        let instance = axios.create({
             withCredentials: true
         });
 

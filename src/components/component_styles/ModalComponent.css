@@ -10,6 +10,8 @@
 }
 
 .cart-modal {
+    overflow: auto;
+    max-height: 500px;
     z-index: 5;
     top: 50%;
     left: 50%;

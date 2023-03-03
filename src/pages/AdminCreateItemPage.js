@@ -20,7 +20,7 @@ const AdminCreateItemPage = () => {
   const [previewImage, setPreviewImage] = useState("");
   const [overlayRemoved, setOverlayRemoved] = useState(false);
 
-  const inputRef = useRef(null);
+  const inputRef = useRef();
 
   useEffect(() => {
     const instance = axios.create({

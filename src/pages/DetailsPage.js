@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 import Navbar from "../components/NavbarComponent";
+import Modal from "../components/ModalComponent";
 import Footer from "../components/FooterComponent";
 
 const DetailsPage = () => {
@@ -11,6 +12,7 @@ const DetailsPage = () => {
     const [details, setDetails] = useState("");
     const [category, setCategory] = useState("");
     const [itemImage, setItemImage] = useState("");
+    const [isOpen, setIsOpen] = useState(false);
 
     const { id } = useParams();
 
@@ -46,7 +48,7 @@ const DetailsPage = () => {
 
     return (
         <>
-            <Navbar />
+            <Navbar setIsOpen={setIsOpen} />
             <main className='d-flex justify-content-center align-items-center'>
                 <div className="rounded d-flex align-items-center my-5 w-75 shadow-sm border border-light">
                     <div className="w-50 h-100 rounded-start overflow-hidden" style={{ objectFit: "cover" }}>
@@ -66,6 +68,7 @@ const DetailsPage = () => {
                         </div>
                     </div>
                 </div>
+                {isOpen && <Modal setIsOpen={setIsOpen} />}
             </main>
             <Footer />
         </>
