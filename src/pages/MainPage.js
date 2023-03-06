@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { Categories } from "../Arrays";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
 
 import "./page_styles/MainPage.css";
 
@@ -46,17 +48,51 @@ const MainPage = () => {
         } else { }
       })
       .catch(error => { });
+
+    // LOADING CART ITEMS FROM THE LOCAL STORAGE
+    const cartItemsLocalStorage = JSON.parse(localStorage.getItem("cart-items"));
+    if (cartItemsLocalStorage) {
+      setCartItems(cartItemsLocalStorage);
+    }
   }, [])
+
+  // SHOW SUCCESS MESSAGE - ITEM ADDED TO CART
+  const showSuccessMsgOne = () => {
+    toast.success('Item added to cart!', {
+      position: toast.POSITION.TOP_RIGHT,
+      hideProgressBar: true,
+      pauseOnHover: false,
+      autoClose: 125
+    });
+  };
+
+  // SHOW SUCCESS MESSAGE - ITEM ALREADY IN CART
+  const showSuccessMsgTwo = () => {
+    toast.info('Item already in cart!', {
+      position: toast.POSITION.TOP_RIGHT,
+      hideProgressBar: true,
+      pauseOnHover: false,
+      autoClose: 3000
+    });
+  };
+
+  // SAVES CART ITEMS TO LOCAL STORAGE
+  const saveToLocalStorage = (items) => {
+    localStorage.setItem("cart-items", JSON.stringify(items));
+  };
 
   // CLEAR ITEMS IN THE CART
   const clearCart = () => {
-    setCartItems([]);
+    const cartItemList = cartItems.filter(cartItem => cartItem._id === "");
+    setCartItems(cartItemList);
+    saveToLocalStorage(cartItemList);
   }
 
   // CLEAR JUST ONE ITEM IN THE CART
   const clearItem = (item) => {
     const cartItemList = cartItems.filter(cartItem => cartItem._id !== item._id);
     setCartItems(cartItemList);
+    saveToLocalStorage(cartItemList);
   }
 
   // FUNCTION TO ADD ITEMS TO CART
@@ -66,15 +102,15 @@ const MainPage = () => {
     for (let i = 0; i < cartItems.length; i++) {
       if (cartItems[i]._id === item._id) {
         itemAlreadyExists = true;
-        cartItems[i].quantity = cartItems[i].quantity + 1;
-        console.log("same");
+        showSuccessMsgTwo();
         break;
       }
     }
 
     if (!itemAlreadyExists) {
       cartItems.push(item);
-      console.log("different");
+      saveToLocalStorage(cartItems);
+      showSuccessMsgOne();
     }
   }
 
@@ -116,6 +152,7 @@ const MainPage = () => {
         {isOpen && <Modal setIsOpen={setIsOpen} cartItems={cartItems} clearCart={clearCart} clearItem={clearItem} />}
       </main>
       <Footer />
+      <ToastContainer />
     </>
   );
 };

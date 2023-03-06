@@ -66,6 +66,7 @@ const AdminCreateItemPage = () => {
     }
   }
 
+  // SHOW SUCCESS MESSAGE - ITEM HAS BEEN CREATED
   const showSuccessMsg = () => {
     toast.success('Item has been created!', {
       position: toast.POSITION.TOP_RIGHT,

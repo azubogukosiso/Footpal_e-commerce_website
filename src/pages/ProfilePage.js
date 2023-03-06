@@ -11,6 +11,12 @@ const ProfilePage = () => {
     const [customerEmail, setCustomerEmail] = useState("");
     const [customerDate, setCustomerDate] = useState("");
     const [isOpen, setIsOpen] = useState(false);
+    const [cartItems, setCartItems] = useState([]);
+
+    // ADDING QUANTITY PROPERTY TO CART ITEMS OBJECT
+    for (let i = 0; i < cartItems.length; i++) {
+        cartItems[i].quantity = 1;
+    }
 
     useEffect(() => {
         let instance = axios.create({
@@ -29,7 +35,24 @@ const ProfilePage = () => {
             .catch(error => {
                 console.log(error);
             })
+
+        // LOADING CART ITEMS FROM THE LOCAL STORAGE
+        const cartItemsLocalStorage = JSON.parse(localStorage.getItem("cart-items"));
+        if (cartItemsLocalStorage) {
+            setCartItems(cartItemsLocalStorage);
+        }
     }, [])
+
+    // CLEAR ITEMS IN THE CART
+    const clearCart = () => {
+        setCartItems([]);
+    }
+
+    // CLEAR JUST ONE ITEM IN THE CART
+    const clearItem = (item) => {
+        const cartItemList = cartItems.filter(cartItem => cartItem._id !== item._id);
+        setCartItems(cartItemList);
+    }
 
     if (gotUserDetails) {
         return (
@@ -41,7 +64,7 @@ const ProfilePage = () => {
                         <h5>Email: {customerEmail}</h5>
                         <h5>Date of account creation: {customerDate}</h5>
                     </div>
-                    {isOpen && <Modal setIsOpen={setIsOpen} />}
+                    {isOpen && <Modal setIsOpen={setIsOpen} cartItems={cartItems} clearCart={clearCart} clearItem={clearItem} />}
                 </main>
                 <Footer />
             </>
