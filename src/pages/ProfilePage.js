@@ -58,11 +58,11 @@ const ProfilePage = () => {
         return (
             <>
                 <Navbar setIsOpen={setIsOpen} />
-                <main className="d-flex border justify-content-center align-items-center">
-                    <div className="rounded shadow-sm border border-light p-5 my-3 w-75">
-                        <h5>Name: {customerUsername}</h5>
-                        <h5>Email: {customerEmail}</h5>
-                        <h5>Date of account creation: {customerDate}</h5>
+                <main className="d-flex justify-content-center align-items-center">
+                    <div className="rounded shadow-sm border border-light p-3 p-md-5 my-3 w-75">
+                        <h5>Name: <br /> {customerUsername}</h5> <br />
+                        <h5>Email: <br /> {customerEmail}</h5> <br />
+                        <h5>Date of account creation: <br /> {customerDate}</h5>
                     </div>
                     {isOpen && <Modal setIsOpen={setIsOpen} cartItems={cartItems} clearCart={clearCart} clearItem={clearItem} />}
                 </main>

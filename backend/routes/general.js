@@ -24,7 +24,7 @@ router.route("/check-cookie").post((req, res) => {
             }
         });
     } else {
-        res.status(400).send("No tokens!");
+        res.status(400).send("No tokens, no one is signed in");
     }
 });
 

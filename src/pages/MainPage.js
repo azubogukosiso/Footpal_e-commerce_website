@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { Categories } from "../Arrays";
@@ -17,13 +18,16 @@ import Footer from "../components/FooterComponent";
 const MainPage = () => {
   const [items, setItems] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isCustomer, setIsCustomer] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+
+  const navigate = useNavigate();
 
   // ADDING QUANTITY PROPERTY TO CART ITEMS OBJECT
   for (let i = 0; i < cartItems.length; i++) {
     cartItems[i].quantity = 1;
-  }
+  };
 
   useEffect(() => {
     let instance = axios.create({
@@ -45,9 +49,13 @@ const MainPage = () => {
       .then(response => {
         if (response.data.admin) {
           setIsAdmin(true);
-        } else { }
+        } else {
+          setIsCustomer(true);
+        }
       })
-      .catch(error => { });
+      .catch(error => {
+        console.log(error.response.data);
+      });
 
     // LOADING CART ITEMS FROM THE LOCAL STORAGE
     const cartItemsLocalStorage = JSON.parse(localStorage.getItem("cart-items"));
@@ -97,20 +105,24 @@ const MainPage = () => {
 
   // FUNCTION TO ADD ITEMS TO CART
   const addToCart = (item) => {
-    let itemAlreadyExists = false;
+    if (isCustomer) {
+      let itemAlreadyExists = false;
 
-    for (let i = 0; i < cartItems.length; i++) {
-      if (cartItems[i]._id === item._id) {
-        itemAlreadyExists = true;
-        showSuccessMsgTwo();
-        break;
+      for (let i = 0; i < cartItems.length; i++) {
+        if (cartItems[i]._id === item._id) {
+          itemAlreadyExists = true;
+          showSuccessMsgTwo();
+          break;
+        }
       }
-    }
 
-    if (!itemAlreadyExists) {
-      cartItems.push(item);
-      saveToLocalStorage(cartItems);
-      showSuccessMsgOne();
+      if (!itemAlreadyExists) {
+        cartItems.push(item);
+        saveToLocalStorage(cartItems);
+        showSuccessMsgOne();
+      }
+    } else {
+      navigate("/signin");
     }
   }
 
@@ -143,7 +155,7 @@ const MainPage = () => {
             {renderItems}
           </div>
         </section>
-        <section className="categories text-center mb-5">
+        <section className="categories text-center">
           <h1 className="pt-3 pb-2">categories</h1>
           <div className="row w-100 h-100 m-auto">
             {renderCategories}

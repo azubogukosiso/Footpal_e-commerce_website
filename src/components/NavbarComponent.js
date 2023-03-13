@@ -27,6 +27,8 @@ const NavbarComponent = (props) => {
 
   const navigate = useNavigate();
   const LogOut = (e) => {
+    localStorage.clear("cart-items");
+
     let instance = axios.create({
       withCredentials: true
     });
