@@ -18,9 +18,11 @@ const NavbarComponent = (props) => {
         setCookie(true);
         if (response.data.admin) {
           setIsAdmin(true);
-        } else { }
+        }
       })
-      .catch(error => { });
+      .catch(error => {
+        console.log(error.response.data);
+      });
   }, [])
 
   const navigate = useNavigate();

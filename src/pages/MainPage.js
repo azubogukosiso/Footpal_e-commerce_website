@@ -66,7 +66,7 @@ const MainPage = () => {
     });
   };
 
-  // SHOW SUCCESS MESSAGE - ITEM ALREADY IN CART
+  // SHOW INFO MESSAGE - ITEM ALREADY IN CART
   const showSuccessMsgTwo = () => {
     toast.info('Item already in cart!', {
       position: toast.POSITION.TOP_RIGHT,
