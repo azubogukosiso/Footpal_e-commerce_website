@@ -42,7 +42,7 @@ router.route("/update/:id").post((req, res) => {
 });
 
 // deletes an item
-router.route("/update/:id").delete((req, res) => {
+router.route("/delete/:id").delete((req, res) => {
     Item.findByIdAndDelete(req.params.id, (err, docs) => {
         if (err) {
             res.status(400).json("Error: " + err);

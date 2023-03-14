@@ -4,13 +4,13 @@ import axios from "axios";
 const CardItemComponent = (props) => {
     const publicFolder = "http://localhost:5000/images/";
 
-    const deleteItem = () => {
+    const deleteItem = (id) => {
         let instance = axios.create({
             withCredentials: true
         });
 
         // GETTING ALL ITEMS
-        instance.delete("http://localhost:5000/item/delete/:id")
+        instance.delete("http://localhost:5000/item/delete/" + id)
             .then(response => {
                 console.log(response);
             })
@@ -34,7 +34,7 @@ const CardItemComponent = (props) => {
                 <div className="d-flex align-items-center">
                     <NavLink to={"/admin/edit-item/" + props.id} className="btn btn-dark">Edit</NavLink>
                     <span className="mx-1"></span>
-                    <NavLink to="" className="btn btn-danger" onClick={() => deleteItem()}>Delete</NavLink>
+                    <NavLink to="" className="btn btn-danger" onClick={() => deleteItem(props.id)}>Delete</NavLink>
                 </div>
             </div>
         </div>
