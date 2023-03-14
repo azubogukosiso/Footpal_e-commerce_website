@@ -23,8 +23,8 @@ const AdminMainPage = () => {
                 setAdminUsername(adminDetails.username);
             })
             .catch(error => {
-                console.log(error.response.data.message);
-                if (error.response.data.message) {
+                console.log(error);
+                if (error) {
                     navigate("/admin/signin");
                 }
             })
@@ -35,7 +35,7 @@ const AdminMainPage = () => {
             <>
                 <Navbar />
                 <main className="d-flex border justify-content-center align-items-center">
-                    <div className="rounded shadow-sm border border-light p-5 my-3 w-75">
+                    <div className="rounded border border-light p-5 my-3 w-75" style={{ boxShadow: "0px 10px 15px 0px rgba(0,0,0,0.1)" }}>
                         <h4 className="text-center">Welcome, {adminUsername} 😊</h4>
                         <div className="d-flex justify-content-center mt-3">
                             <NavLink to="/admin/create-item" className="text-dark">Create Items</NavLink>

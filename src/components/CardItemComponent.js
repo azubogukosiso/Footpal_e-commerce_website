@@ -1,9 +1,26 @@
 import { NavLink } from "react-router-dom";
+import axios from "axios";
 
 const CardItemComponent = (props) => {
     const publicFolder = "http://localhost:5000/images/";
+
+    const deleteItem = () => {
+        let instance = axios.create({
+            withCredentials: true
+        });
+
+        // GETTING ALL ITEMS
+        instance.delete("http://localhost:5000/item/delete/:id")
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+    }
+
     return (
-        <div className="rounded d-flex align-items-center mb-3 w-100 shadow-sm border border-light" style={{ height: "200px" }}>
+        <div className="rounded d-flex align-items-center mb-3 w-100 border border-light" style={{ height: "200px", boxShadow: "0px 10px 15px 0px rgba(0,0,0,0.1)" }}>
             <div className="w-25 h-100 rounded-start overflow-hidden" style={{ objectFit: "cover" }}>
                 <img src={publicFolder + props.images} alt="" className="w-100 h-100" />
             </div>
@@ -17,7 +34,7 @@ const CardItemComponent = (props) => {
                 <div className="d-flex align-items-center">
                     <NavLink to={"/admin/edit-item/" + props.id} className="btn btn-dark">Edit</NavLink>
                     <span className="mx-1"></span>
-                    <NavLink to="" className="btn btn-danger">Delete</NavLink>
+                    <NavLink to="" className="btn btn-danger" onClick={() => deleteItem()}>Delete</NavLink>
                 </div>
             </div>
         </div>

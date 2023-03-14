@@ -128,7 +128,7 @@ const AdminEditItemPage = () => {
             <main className="d-flex justify-content-center align-items-center">
                 <form
                     onSubmit={onSubmitHandler}
-                    className="rounded shadow-sm border border-light p-5 my-5 w-75"
+                    className="rounded border border-light p-5 my-5 w-75" style={{ boxShadow: "0px 10px 15px 0px rgba(0,0,0,0.1)" }}
                 >
                     <h1>Edit Item</h1>
                     <div className="form-group mb-3">

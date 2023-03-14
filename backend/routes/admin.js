@@ -90,11 +90,10 @@ router.route("/check-cookie").get((req, res) => {
                 const admin = await Admin.findById(decodedToken.id);
                 res.status(200).send({ admin });
             } catch (err) {
-                console.log(err);
                 res.status(400).send({ message: "you're logged out" });
             }
         })
-    } catch {
+    } catch (err) {
         res.status(400).send({ message: "you're logged out" });
     }
 });

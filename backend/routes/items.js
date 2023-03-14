@@ -36,7 +36,18 @@ router.route("/update/:id").post((req, res) => {
         if (err) {
             res.status(400).json("Error: " + err);
         } else {
-            res.json("Item has been successfully edited!");
+            res.status(200).json("Item has been successfully edited!");
+        }
+    });
+});
+
+// deletes an item
+router.route("/update/:id").delete((req, res) => {
+    Item.findByIdAndDelete(req.params.id, (err, docs) => {
+        if (err) {
+            res.status(400).json("Error: " + err);
+        } else {
+            res.status(200).json("Item has been successfully deleted!");
         }
     });
 });

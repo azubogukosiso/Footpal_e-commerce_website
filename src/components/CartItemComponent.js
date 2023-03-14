@@ -23,7 +23,7 @@ const CartItemComponent = (props) => {
 	}
 
 	return (
-		<div className='rounded shadow mb-3 d-flex flex-column flex-lg-row p-2 align-items-center justify-content-between'>
+		<div className='rounded border border-light mb-3 d-flex flex-column flex-lg-row p-2 align-items-center justify-content-between' style={{ boxShadow: "0px 10px 15px 0px rgba(0,0,0,0.1)" }}>
 			<div className='rounded overflow-hidden w-50 h-100' style={{ objectFit: "cover" }}>
 				<img src={publicFolder + props.itemImage} alt="" className="w-100 h-100" />
 			</div>
