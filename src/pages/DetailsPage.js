@@ -124,7 +124,7 @@ const DetailsPage = () => {
 		<>
 			<Navbar setIsOpen={setIsOpen} />
 			<main className='d-flex justify-content-center align-items-center'>
-				<div className="rounded p-4 d-flex flex-column flex-sm-row align-items-center my-5 w-75 shadow-sm border border-light">
+				<div className="rounded p-4 d-flex flex-column flex-sm-row align-items-center my-5 w-75 border border-light" style={{ boxShadow: "0px 8px 15px 2px rgba(0,0,0,0.18)" }}>
 					<div className="w-100 h-100 rounded overflow-hidden" style={{ objectFit: "cover" }}>
 						<img src={itemImage} alt="" className="w-100 h-100" />
 					</div>

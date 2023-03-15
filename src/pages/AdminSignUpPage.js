@@ -71,7 +71,7 @@ const SignUpPage = () => {
             <main className="d-flex justify-content-center align-items-center">
                 <form
                     onSubmit={onSubmitHandler}
-                    className="rounded shadow-sm border border-light p-5 w-75 my-5"
+                    className="rounded border border-light p-5 w-75 my-5" style={{ boxShadow: "0px 8px 15px 2px rgba(0,0,0,0.18)" }}
                 >
                     <h1>Sign Up - Admin</h1>
                     <div className="form-group mb-3">

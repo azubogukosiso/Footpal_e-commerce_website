@@ -16,7 +16,7 @@ const ModalComponent = (props) => {
 	return (
 		<>
 			<div className='backdrop' onClick={() => props.setIsOpen(false)} />
-			<div className='cart-modal w-75 rounded bg-white shadow p-3 position-fixed'>
+			<div className='cart-modal w-75 rounded bg-white p-3 position-fixed' style={{ boxShadow: "0px 8px 15px 2px rgba(0,0,0,0.18)" }}>
 				<div className='d-flex flex-column flex-lg-row justify-content-between align-items-center'>
 					<div className="text-center d-lg-flex justify-content-start align-items-center">
 						<h1>Your Cart</h1>

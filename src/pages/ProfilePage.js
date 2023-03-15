@@ -59,7 +59,7 @@ const ProfilePage = () => {
             <>
                 <Navbar setIsOpen={setIsOpen} />
                 <main className="d-flex justify-content-center align-items-center">
-                    <div className="rounded border border-light p-3 px-4 p-md-5 my-3 w-75" style={{ boxShadow: "0px 10px 15px 0px rgba(0,0,0,0.1)" }}>
+                    <div className="rounded border border-light p-3 px-4 p-md-5 my-3 w-75" style={{ boxShadow: "0px 8px 15px 2px rgba(0,0,0,0.18)" }}>
                         <h5>Name: <br /> {customerUsername}</h5>
                         <hr />
                         <h5>Email: <br /> {customerEmail}</h5>

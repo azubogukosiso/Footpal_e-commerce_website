@@ -105,8 +105,8 @@ const NavbarComponent = (props) => {
   );
 
   return (
-    <section>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <section className="position-relative">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark position-fixed w-100">
         <div className="container my-2 px-5 px-md-3 px-lg-0">
           <NavLink className="navbar-brand" to="/">
             footpal

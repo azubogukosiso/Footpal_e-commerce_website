@@ -12,7 +12,8 @@ const CardItemComponent = (props) => {
         // GETTING ALL ITEMS
         instance.delete("http://localhost:5000/item/delete/" + id)
             .then(response => {
-                console.log(response);
+                console.log(response.data);
+                document.location.reload();
             })
             .catch(error => {
                 console.log(error);
@@ -20,7 +21,7 @@ const CardItemComponent = (props) => {
     }
 
     return (
-        <div className="rounded d-flex align-items-center mb-3 w-100 border border-light" style={{ height: "200px", boxShadow: "0px 10px 15px 0px rgba(0,0,0,0.1)" }}>
+        <div className="rounded d-flex align-items-center mb-3 w-100 border border-light" style={{ height: "200px", boxShadow: "0px 8px 15px 2px rgba(0,0,0,0.18)" }}>
             <div className="w-25 h-100 rounded-start overflow-hidden" style={{ objectFit: "cover" }}>
                 <img src={publicFolder + props.images} alt="" className="w-100 h-100" />
             </div>

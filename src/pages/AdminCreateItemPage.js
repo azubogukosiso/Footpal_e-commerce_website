@@ -124,7 +124,7 @@ const AdminCreateItemPage = () => {
     <>
       <Navbar />
       <main className="d-flex justify-content-center align-items-center">
-        <form onSubmit={onSubmitHandler} className="rounded border border-light p-5 my-5 w-75" style={{ boxShadow: "0px 10px 15px 0px rgba(0,0,0,0.1)" }}>
+        <form onSubmit={onSubmitHandler} className="rounded border border-light p-5 my-5 w-75" style={{ boxShadow: "0px 8px 15px 2px rgba(0,0,0,0.18)" }}>
           <h1>Create an Item</h1>
           <div className="form-group mb-3">
             <label htmlFor="name">Name of Item</label>
@@ -161,13 +161,13 @@ const AdminCreateItemPage = () => {
 
           <div className="form-group mb-3">
             <label htmlFor="price">Item Category</label>
-            <input
-              type="text"
-              required
-              className="form-control"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            />
+            <select required className="form-control" value={category} onChange={(e) => setCategory(e.target.value)}>
+              <option value="Work">Work</option>
+              <option value="Stylish">Stylish</option>
+              <option value="Sports">Sports</option>
+              <option value="Casual">Casual</option>
+              <option value="Industry">Industry</option>
+            </select>
           </div>
 
           <div className="form-group mb-3">

@@ -1,3 +1,7 @@
+section {
+    z-index: 1;
+}
+
 .navbar-brand {
     font-family: 'Comfortaa', cursive;
     font-weight: 700;
