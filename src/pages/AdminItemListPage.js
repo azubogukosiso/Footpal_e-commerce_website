@@ -18,14 +18,14 @@ const AdminItemList = () => {
     });
 
     // GETTING THE DETAILS OF THE ADMIN USING AVAILABLE COOKIES
-    instance.get("http://localhost:5000/admin/check-cookie")
-      .then((response) => { })
-      .catch((error) => {
-        console.log(error.response.data.message);
-        if (error.response.data.message) {
-          navigate("/admin/signin");
-        }
-      });
+    // instance.get("http://localhost:5000/admin/check-cookie")
+    //   .then((response) => { })
+    //   .catch((error) => {
+    //     console.log(error.response.data.message);
+    //     if (error.response.data.message) {
+    //       navigate("/admin/signin");
+    //     }
+    //   });
 
     // GETTING ALL ITEMS
     instance.get("http://localhost:5000/item")

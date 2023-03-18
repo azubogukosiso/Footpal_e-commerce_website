@@ -35,14 +35,14 @@ const DetailsPage = () => {
 		});
 
 		// GETTING THE DETAILS OF THE ADMIN USING AVAILABLE COOKIES
-		instance.get("http://localhost:5000/admin/check-cookie")
-			.then((response) => { })
-			.catch((error) => {
-				console.log(error.response.data.message);
-				if (error.response.data.message) {
-					navigate("/signin");
-				}
-			});
+		// instance.get("http://localhost:5000/admin/check-cookie")
+		// 	.then((response) => { })
+		// 	.catch((error) => {
+		// 		console.log(error.response.data.message);
+		// 		if (error.response.data.message) {
+		// 			navigate("/signin");
+		// 		}
+		// 	});
 
 		// GETTING DETAILS OF ITEM
 		instance.get("http://localhost:5000/item/" + id)
@@ -124,7 +124,7 @@ const DetailsPage = () => {
 		<>
 			<Navbar setIsOpen={setIsOpen} />
 			<main className='d-flex justify-content-center align-items-center'>
-				<div className="rounded p-4 d-flex flex-column flex-sm-row align-items-center my-5 w-75 border border-light" style={{ boxShadow: "0px 8px 15px 2px rgba(0,0,0,0.18)" }}>
+				<div className="rounded p-4 d-flex flex-column flex-sm-row align-items-center my-5 w-75 border border-dark" style={{ boxShadow: "-15px 15px 0px 0px rgba(0,0,0,1)" }}>
 					<div className="w-100 h-100 rounded overflow-hidden" style={{ objectFit: "cover" }}>
 						<img src={itemImage} alt="" className="w-100 h-100" />
 					</div>

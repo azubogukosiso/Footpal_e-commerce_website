@@ -1,29 +1,32 @@
-import { useState } from "react";
-
 const CartItemComponent = (props) => {
-	const [itemQty, setItemQty] = useState(props.itemQty);
-
 	const publicFolder = "http://localhost:5000/images/";
 
-	// CHANGING THE QUANTITY OF CART ITEMS
-	const changeQty = (item, changeOp, id, qty) => {
-		if (item._id === id) {
-			if (changeOp === "reduce") {
-				if (itemQty === 1) {
-					setItemQty(1);
-				} else {
-					setItemQty(itemQty - 1);
-					item.quantity = itemQty;
-				}
-			} else {
-				setItemQty(itemQty + 1);
-				item.quantity = itemQty;
+	// INCREASE THE QUANTITY OF ITEMS
+	const handleIncrease = (id) => {
+		const priceArray = [];
+		props.cartItems.map(item => {
+			if (item._id === id) {
+				item.quantity += 1;
 			}
-		}
-	}
+			priceArray.push(item.price * item.quantity);
+		})
+		props.updateTotalPrice(priceArray);
+	};
+
+	// REDUCE THE QUANTITY OF ITEMS
+	const handleDecrease = (id) => {
+		const priceArray = [];
+		props.cartItems.map(item => {
+			if (item._id === id && item.quantity > 1) {
+				item.quantity -= 1;
+			}
+			priceArray.push(item.price * item.quantity);
+		})
+		props.updateTotalPrice(priceArray);
+	};
 
 	return (
-		<div className='rounded border border-light mb-3 d-flex flex-column flex-lg-row p-2 align-items-center justify-content-between' style={{ boxShadow: "0px 8px 15px 2px rgba(0,0,0,0.18)" }}>
+		<div className='rounded border border-dark mb-5 d-flex flex-column flex-lg-row p-2 align-items-center justify-content-between' style={{ boxShadow: "10px 10px 0px 0px rgba(0,0,0,1)" }}>
 			<div className='rounded overflow-hidden w-50 h-100' style={{ objectFit: "cover" }}>
 				<img src={publicFolder + props.itemImage} alt="" className="w-100 h-100" />
 			</div>
@@ -38,9 +41,9 @@ const CartItemComponent = (props) => {
 					</button>
 				</div>
 				<div className='me-0 me-sm-3'>
-					<button className='btn btn-dark' onClick={() => changeQty(props.item, "reduce", props.item._id, props.itemQty)}>-</button>
-					<span className='mx-4'>{itemQty}</span>
-					<button className='btn btn-dark' onClick={() => changeQty(props.item, "increase", props.item._id, props.itemQty)}>+</button>
+					<button className='btn btn-dark' onClick={() => handleDecrease(props.item._id)}>-</button>
+					<span className='mx-4'>{props.itemQty}</span>
+					<button className='btn btn-dark' onClick={() => handleIncrease(props.item._id)}>+</button>
 				</div>
 			</div>
 		</div>

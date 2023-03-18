@@ -21,7 +21,7 @@ const CardItemComponent = (props) => {
     }
 
     return (
-        <div className="rounded d-flex align-items-center mb-3 w-100 border border-light" style={{ height: "200px", boxShadow: "0px 8px 15px 2px rgba(0,0,0,0.18)" }}>
+        <div className="rounded d-flex align-items-center mb-5 w-100 border border-dark" style={{ height: "200px", boxShadow: "10px 10px 0px 0px rgba(0,0,0,1)" }}>
             <div className="w-25 h-100 rounded-start overflow-hidden" style={{ objectFit: "cover" }}>
                 <img src={publicFolder + props.images} alt="" className="w-100 h-100" />
             </div>

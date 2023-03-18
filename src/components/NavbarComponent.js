@@ -35,7 +35,6 @@ const NavbarComponent = (props) => {
 
     instance.post("http://localhost:5000/customers/logout")
       .then(response => {
-        console.log(response);
         if (response.data) {
           navigate("/");
           document.location.reload();
@@ -74,7 +73,7 @@ const NavbarComponent = (props) => {
         </NavLink>
       </li>
       <li className="nav-item mx-0 mx-lg-3">
-        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/">
+        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/wishlist">
           See Wishlist
         </NavLink>
       </li>
@@ -105,8 +104,8 @@ const NavbarComponent = (props) => {
   );
 
   return (
-    <section className="position-relative">
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark position-fixed w-100">
+    <section>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark w-100">
         <div className="container my-2 px-5 px-md-3 px-lg-0">
           <NavLink className="navbar-brand" to="/">
             footpal

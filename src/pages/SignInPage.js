@@ -53,6 +53,7 @@ const SignInPage = () => {
     instance.post("http://localhost:5000/customers/signin", details)
       .then(response => {
         if (response.data) {
+          document.location.reload();
           navigate("/");
         }
       })
@@ -77,7 +78,7 @@ const SignInPage = () => {
       <main className="d-flex justify-content-center align-items-center">
         <form
           onSubmit={onSubmitHandler}
-          className="rounded border border-light p-5 my-5 w-75" style={{ boxShadow: "0px 8px 15px 2px rgba(0,0,0,0.18)" }}
+          className="rounded border border-dark p-5 my-5 w-75" style={{ boxShadow: "-15px 15px 0px 0px rgba(0,0,0,1)" }}
         >
           <h1>Sign In</h1>
           <div className="form-group mb-3">
@@ -85,7 +86,7 @@ const SignInPage = () => {
             <input
               type="email"
               required
-              className="form-control"
+              className="form-control border border-dark"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -94,7 +95,7 @@ const SignInPage = () => {
 
           <div className="form-group mb-4">
             <label htmlFor="password">Password</label>
-            <div className="d-flex border rounded p-1">
+            <div className="d-flex border rounded p-1 border border-dark">
               <input
                 type={passwordShown ? "text" : "password"}
                 required

@@ -1,16 +1,32 @@
+import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import './component_styles/ModalComponent.css';
 import CartItem from "./CartItemComponent";
 
 const ModalComponent = (props) => {
-	// GETTING THE TOTAL AMOUNT OF CART ITEMS
-	const priceArray = [];
-	props.cartItems.map(item => (
-		priceArray.push(item.price)
-	))
-	if (priceArray.length > 0) {
-		var totalPrice = priceArray.reduce((accumulator, currentValue) => accumulator + currentValue);
+	const [totalPrice, setTotalPrice] = useState();
+
+	useEffect(() => {
+		// GETTING THE TOTAL PRICE OF CART ITEMS AT FIRST
+		const priceArray = [];
+		props.cartItems.map(item => (
+			priceArray.push(item.price * item.quantity)
+		))
+		if (priceArray.length > 0) {
+			let total = priceArray.reduce((accumulator, currentValue) => accumulator + currentValue);
+			setTotalPrice(total);
+		} else {
+			setTotalPrice(0);
+		}
+	}, [props.cartItems]);
+
+	// UPDATING THE TOTAL PRICE ON QUANTITY CHANGE
+	const updateTotalPrice = (priceArray) => {
+		if (priceArray.length > 0) {
+			let newTotalPrice = priceArray.reduce((accumulator, currentValue) => accumulator + currentValue);
+			setTotalPrice(newTotalPrice);
+		}
 	}
 
 	return (
@@ -51,13 +67,14 @@ const ModalComponent = (props) => {
 						</button>
 					</div>
 				</div>
+				<hr />
 				<div className='my-3'>
 					{
 						props.cartItems.length > 0 ?
 							(
 								props.cartItems.map(item =>
 								(
-									<CartItem key={uuidv4()} itemName={item.itemName} itemQty={item.quantity} itemPrice={item.price} itemImage={item.itemImage} item={item} clearItem={props.clearItem} />
+									<CartItem key={uuidv4()} itemName={item.itemName} itemQty={item.quantity} itemPrice={item.price} itemImage={item.itemImage} item={item} cartItems={props.cartItems} clearItem={props.clearItem} updateTotalPrice={updateTotalPrice} />
 								)
 								)
 							) :

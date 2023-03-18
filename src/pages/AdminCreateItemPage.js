@@ -28,14 +28,14 @@ const AdminCreateItemPage = () => {
     });
 
     // GETTING THE DETAILS OF THE ADMIN USING AVAILABLE COOKIES
-    instance.get("http://localhost:5000/admin/check-cookie")
-      .then(response => { })
-      .catch(error => {
-        console.log(error.response.data.message);
-        if (error.response.data.message) {
-          navigate("/admin/signin");
-        }
-      });
+    // instance.get("http://localhost:5000/admin/check-cookie")
+    //   .then(response => { })
+    //   .catch(error => {
+    //     console.log(error.response.data.message);
+    //     if (error.response.data.message) {
+    //       navigate("/admin/signin");
+    //     }
+    //   });
   }, [navigate])
 
   // IMAGE SELECTION FUNCTIONALITY
@@ -124,14 +124,14 @@ const AdminCreateItemPage = () => {
     <>
       <Navbar />
       <main className="d-flex justify-content-center align-items-center">
-        <form onSubmit={onSubmitHandler} className="rounded border border-light p-5 my-5 w-75" style={{ boxShadow: "0px 8px 15px 2px rgba(0,0,0,0.18)" }}>
+        <form onSubmit={onSubmitHandler} className="rounded border border-dark p-5 my-5 w-75" style={{ boxShadow: "-15px 15px 0px 0px rgba(0,0,0,1)" }}>
           <h1>Create an Item</h1>
           <div className="form-group mb-3">
             <label htmlFor="name">Name of Item</label>
             <input
               type="text"
               required
-              className="form-control"
+              className="form-control border border-dark"
               value={itemName}
               onChange={(e) => setItemName(e.target.value)}
             />
@@ -142,7 +142,7 @@ const AdminCreateItemPage = () => {
             <input
               type="text"
               required
-              className="form-control"
+              className="form-control border border-dark"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
@@ -153,7 +153,7 @@ const AdminCreateItemPage = () => {
             <input
               type="text"
               required
-              className="form-control"
+              className="form-control border border-dark"
               value={details}
               onChange={(e) => setDetails(e.target.value)}
             />
@@ -161,7 +161,7 @@ const AdminCreateItemPage = () => {
 
           <div className="form-group mb-3">
             <label htmlFor="price">Item Category</label>
-            <select required className="form-control" value={category} onChange={(e) => setCategory(e.target.value)}>
+            <select required className="form-control border border-dark" value={category} onChange={(e) => setCategory(e.target.value)}>
               <option value="Work">Work</option>
               <option value="Stylish">Stylish</option>
               <option value="Sports">Sports</option>
@@ -181,7 +181,7 @@ const AdminCreateItemPage = () => {
               onChange={changeHandler}
             />
             <div className="col col-md-6">
-              <div className="create-item-img-container position-relative border border-2 rounded overflow-hidden w-100" role="button" onClick={handleClick}>
+              <div className="create-item-img-container position-relative border border-dark rounded overflow-hidden w-100" role="button" onClick={handleClick}>
                 <div className={overlayRemoved ? "create-item-overlay px-3 text-white position-absolute w-100 h-100 d-flex align-items-center justify-content-center d-none" : "create-item-overlay px-3 text-white position-absolute w-100 h-100 d-flex align-items-center justify-content-center"}
                 >
                   <p>Click to select an image</p>

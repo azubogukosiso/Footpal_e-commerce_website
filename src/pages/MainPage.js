@@ -4,7 +4,7 @@ import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { Categories } from "../Arrays";
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"
+import "react-toastify/dist/ReactToastify.css";
 
 import "./page_styles/MainPage.css";
 
@@ -15,7 +15,7 @@ import CategoryComponent from "../components/CategoryComponent";
 import Modal from "../components/ModalComponent";
 import Footer from "../components/FooterComponent";
 
-const MainPage = () => {
+const MainPage = (props) => {
   const [items, setItems] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isCustomer, setIsCustomer] = useState(false);
@@ -49,12 +49,12 @@ const MainPage = () => {
       .then(response => {
         if (response.data.admin) {
           setIsAdmin(true);
-        } else {
+        } else if (response.data.customer) {
           setIsCustomer(true);
         }
       })
       .catch(error => {
-        console.log(error.response.data);
+        console.log(error);
       });
 
     // LOADING CART ITEMS FROM THE LOCAL STORAGE
@@ -126,8 +126,13 @@ const MainPage = () => {
     }
   }
 
+  // FUNCTION TO ADD ITEMS TO WISHLIST
+  const addToWishlist = (item) => {
+    console.log(item);
+  }
+
   const renderItems = items.map((item) => (
-    <ItemComponent key={uuidv4()} images={item.itemImage} names={item.itemName} prices={item.price} isAdmin={isAdmin} id={item._id} addToCart={addToCart} item={item} />
+    <ItemComponent key={uuidv4()} images={item.itemImage} names={item.itemName} prices={item.price} isAdmin={isAdmin} id={item._id} addToCart={addToCart} addToWishlist={addToWishlist} item={item} />
   ));
 
   const renderCategories = Categories.map((Category) => (

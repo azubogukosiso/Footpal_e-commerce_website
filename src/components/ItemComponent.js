@@ -18,7 +18,7 @@ const ItemComponent = (props) => {
                   <button className="btn btn-dark">more details</button>
                 </NavLink>
                 <span className="mx-2 my-2"></span>
-                <button className="btn btn-dark">add to wishlist</button>
+                <button className="btn btn-dark" onClick={() => props.addToWishlist(props.item)}>add to wishlist</button>
               </>
             )
           }

@@ -1,15 +1,11 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 
 import Navbar from "../components/NavbarComponent";
 import Modal from "../components/ModalComponent";
 import Footer from "../components/FooterComponent";
 
-const ProfilePage = () => {
-    const [gotUserDetails, setGotUserDetails] = useState(false);
-    const [customerUsername, setCustomerName] = useState("");
-    const [customerEmail, setCustomerEmail] = useState("");
-    const [customerDate, setCustomerDate] = useState("");
+const ProfilePage = (props) => {
+    const [userDetails, setUserDetails] = useState(props.customer);
     const [isOpen, setIsOpen] = useState(false);
     const [cartItems, setCartItems] = useState([]);
 
@@ -19,23 +15,6 @@ const ProfilePage = () => {
     }
 
     useEffect(() => {
-        let instance = axios.create({
-            withCredentials: true
-        });
-
-        // GETTING THE DETAILS OF THE USER USING AVAILABLE COOKIES
-        instance.post("http://localhost:5000/general/check-cookie")
-            .then(response => {
-                const customerDetails = response.data.customer;
-                setCustomerName(customerDetails.username);
-                setCustomerEmail(customerDetails.email);
-                setCustomerDate(new Date(customerDetails.createdAt).toDateString());
-                setGotUserDetails(true);
-            })
-            .catch(error => {
-                console.log(error);
-            })
-
         // LOADING CART ITEMS FROM THE LOCAL STORAGE
         const cartItemsLocalStorage = JSON.parse(localStorage.getItem("cart-items"));
         if (cartItemsLocalStorage) {
@@ -54,17 +33,17 @@ const ProfilePage = () => {
         setCartItems(cartItemList);
     }
 
-    if (gotUserDetails) {
+    if (userDetails) {
         return (
             <>
                 <Navbar setIsOpen={setIsOpen} />
                 <main className="d-flex justify-content-center align-items-center">
-                    <div className="rounded border border-light p-3 px-4 p-md-5 my-3 w-75" style={{ boxShadow: "0px 8px 15px 2px rgba(0,0,0,0.18)" }}>
-                        <h5>Name: <br /> {customerUsername}</h5>
+                    <div className="rounded border border-dark p-3 px-4 p-md-5 my-3 w-75" style={{ boxShadow: "-15px 15px 0px 0px rgba(0,0,0,1)" }}>
+                        <h5>Name: <br /> {userDetails.username}</h5>
                         <hr />
-                        <h5>Email: <br /> {customerEmail}</h5>
+                        <h5>Email: <br /> {userDetails.email}</h5>
                         <hr />
-                        <h5>Date of account creation: <br /> {customerDate}</h5>
+                        <h5>Date of account creation: <br /> {new Date(userDetails.createdAt).toDateString()}</h5>
                     </div>
                     {isOpen && <Modal setIsOpen={setIsOpen} cartItems={cartItems} clearCart={clearCart} clearItem={clearItem} />}
                 </main>
