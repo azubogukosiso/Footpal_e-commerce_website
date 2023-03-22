@@ -22,15 +22,23 @@ const ProfilePage = (props) => {
         }
     }, [])
 
+    // SAVES CART ITEMS TO LOCAL STORAGE
+    const saveToLocalStorage = (items) => {
+        localStorage.setItem("cart-items", JSON.stringify(items));
+    };
+
     // CLEAR ITEMS IN THE CART
     const clearCart = () => {
-        setCartItems([]);
+        const cartItemList = cartItems.filter(cartItem => cartItem._id === "");
+        setCartItems(cartItemList);
+        saveToLocalStorage(cartItemList);
     }
 
     // CLEAR JUST ONE ITEM IN THE CART
     const clearItem = (item) => {
         const cartItemList = cartItems.filter(cartItem => cartItem._id !== item._id);
         setCartItems(cartItemList);
+        saveToLocalStorage(cartItemList);
     }
 
     if (userDetails) {

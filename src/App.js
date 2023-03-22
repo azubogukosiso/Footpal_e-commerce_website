@@ -46,30 +46,57 @@ function App() {
       })
   }, []);
 
-  return (
-    <BrowserRouter>
-      <div className="main-container container-fluid px-0">
-        <Routes>
-          <Route path="/" exact element={<Main />} />
+  if (loggedIn) {
+    return (
+      <BrowserRouter>
+        <div className="main-container container-fluid px-0">
+          <Routes>
+            <Route path="/" exact element={<Main />} />
 
-          {/* ONLY CUSTOMERS */}
-          <Route path="/signup" element={loggedIn ? isAdmin ? <Main /> : <Main /> : <SignUp />} />
-          <Route path="/signin" element={loggedIn ? isAdmin ? <Main /> : <Main /> : <SignIn />} />
-          <Route path="/wishlist" element={loggedIn ? isAdmin ? <Main /> : <Wishlist /> : <SignIn />} />
-          <Route path="/details/:id" element={loggedIn ? isAdmin ? <Main /> : <Details /> : <SignIn />} />
-          <Route path="/profile" element={loggedIn ? isAdmin ? <AdminMain /> : <Profile customer={customer} /> : <SignIn />} />
+            {/* ONLY CUSTOMERS */}
+            <Route path="/signup" element={loggedIn ? isAdmin ? <Main /> : <Main /> : <SignUp />} />
+            <Route path="/signin" element={loggedIn ? isAdmin ? <Main /> : <Main /> : <SignIn />} />
+            <Route path="/wishlist" element={loggedIn ? isAdmin ? <Main /> : <Wishlist /> : <SignIn />} />
+            <Route path="/details/:id" element={loggedIn ? isAdmin ? <Main /> : <Details /> : <SignIn />} />
+            <Route path="/profile" element={loggedIn ? isAdmin ? <AdminMain /> : <Profile customer={customer} /> : <SignIn />} />
 
-          {/* ONLY ADMINS */}
-          <Route path="/admin" element={loggedIn ? isCustomer ? <Main /> : <AdminMain admin={admin} /> : <SignIn />} />
-          <Route path="/admin/signin" element={loggedIn ? isCustomer ? <Main /> : <AdminSignIn /> : <AdminSignIn />} />
-          <Route path="/admin/signup" element={loggedIn ? isCustomer ? <Main /> : <AdminSignUp /> : <AdminSignUp />} />
-          <Route path="/admin/create-item" element={loggedIn ? isCustomer ? <Main /> : <AdminCreateItem /> : <SignIn />} />
-          <Route path="/admin/item-list" element={loggedIn ? isCustomer ? <Main /> : <AdminItemList /> : <SignIn />} />
-          <Route path="/admin/edit-item/:id" element={loggedIn ? isCustomer ? <Main /> : <AdminEditItem /> : <SignIn />} />
-        </Routes>
-      </div>
-    </BrowserRouter>
-  );
+            {/* ONLY ADMINS */}
+            <Route path="/admin" element={loggedIn ? isCustomer ? <Main /> : <AdminMain admin={admin} /> : <SignIn />} />
+            <Route path="/admin/signin" element={loggedIn ? isCustomer ? <Main /> : <AdminSignIn /> : <AdminSignIn />} />
+            <Route path="/admin/signup" element={loggedIn ? isCustomer ? <Main /> : <AdminSignUp /> : <AdminSignUp />} />
+            <Route path="/admin/create-item" element={loggedIn ? isCustomer ? <Main /> : <AdminCreateItem /> : <SignIn />} />
+            <Route path="/admin/item-list" element={loggedIn ? isCustomer ? <Main /> : <AdminItemList /> : <SignIn />} />
+            <Route path="/admin/edit-item/:id" element={loggedIn ? isCustomer ? <Main /> : <AdminEditItem /> : <SignIn />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    );
+  } else {
+    return (
+      <BrowserRouter>
+        <div className="main-container container-fluid px-0">
+          <Routes>
+            <Route path="/" exact element={<Main />} />
+
+            {/* ONLY CUSTOMERS */}
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/wishlist" element={loggedIn ? isAdmin ? <Main /> : <Wishlist /> : <SignIn />} />
+            <Route path="/details/:id" element={loggedIn ? isAdmin ? <Main /> : <Details /> : <SignIn />} />
+            <Route path="/profile" element={loggedIn ? isAdmin ? <AdminMain /> : <Profile customer={customer} /> : <SignIn />} />
+
+            {/* ONLY ADMINS */}
+            <Route path="/admin" element={loggedIn ? isCustomer ? <Main /> : <AdminMain admin={admin} /> : <SignIn />} />
+            <Route path="/admin/signin" element={loggedIn ? isCustomer ? <Main /> : <AdminSignIn /> : <AdminSignIn />} />
+            <Route path="/admin/signup" element={loggedIn ? isCustomer ? <Main /> : <AdminSignUp /> : <AdminSignUp />} />
+            <Route path="/admin/create-item" element={loggedIn ? isCustomer ? <Main /> : <AdminCreateItem /> : <SignIn />} />
+            <Route path="/admin/item-list" element={loggedIn ? isCustomer ? <Main /> : <AdminItemList /> : <SignIn />} />
+            <Route path="/admin/edit-item/:id" element={loggedIn ? isCustomer ? <Main /> : <AdminEditItem /> : <SignIn />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    );
+  }
 }
 
 export default App;

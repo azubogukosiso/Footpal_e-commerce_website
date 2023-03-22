@@ -1,5 +1,6 @@
 const router = require("express").Router();
 let Item = require("../models/item.model");
+let Wish = require("../models/wish.model");
 
 // ---------- LIST OF ROUTES -------------
 // gets a list of all items
@@ -14,7 +15,6 @@ router.route("/").get((req, res) => {
 // create a new item
 router.route("/create").post(async (req, res) => {
     const newItem = new Item(req.body);
-    console.log(newItem);
     try {
         const savedItem = await newItem.save();
         res.status(200).json(savedItem);
@@ -39,6 +39,32 @@ router.route("/update/:id").post((req, res) => {
             res.status(200).json("Item has been successfully edited!");
         }
     });
+});
+
+// adds an item to the wishlist database
+router.route("/add-to-wishlist").post(async (req, res) => {
+    const wishItem = new Wish(req.body);
+    try {
+        const savedItem = await wishItem.save();
+        res.status(200).json(savedItem);
+    } catch (err) {
+        res.send(err);
+    }
+});
+
+// gets all items in the wishlist database
+router.route("/wishlist").post((req, res) => {
+    Wish.find()
+        .then(wishes => {
+            if (wishes.length > 0) {
+                res.status(200).json(wishes);
+            } else {
+                res.send("No Items in wishlist");
+            }
+        })
+        .catch(err => {
+            res.status(500).send("Error: " + err);
+        });
 });
 
 // deletes an item

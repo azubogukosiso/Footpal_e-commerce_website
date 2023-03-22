@@ -53,8 +53,8 @@ const SignInPage = () => {
     instance.post("http://localhost:5000/customers/signin", details)
       .then(response => {
         if (response.data) {
-          document.location.reload();
           navigate("/");
+          document.location.reload();
         }
       })
       .catch(error => {

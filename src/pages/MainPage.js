@@ -15,10 +15,11 @@ import CategoryComponent from "../components/CategoryComponent";
 import Modal from "../components/ModalComponent";
 import Footer from "../components/FooterComponent";
 
-const MainPage = (props) => {
+const MainPage = () => {
   const [items, setItems] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isCustomer, setIsCustomer] = useState(false);
+  const [customerEmail, setCustomerEmail] = useState();
   const [isOpen, setIsOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
 
@@ -50,6 +51,7 @@ const MainPage = (props) => {
         if (response.data.admin) {
           setIsAdmin(true);
         } else if (response.data.customer) {
+          setCustomerEmail(response.data.customer.email);
           setIsCustomer(true);
         }
       })
@@ -64,8 +66,31 @@ const MainPage = (props) => {
     }
   }, [])
 
+  // FUNCTION TO ADD ITEMS TO CART
+  const addToCart = (item) => {
+    if (isCustomer) {
+      let itemAlreadyExists = false;
+
+      for (let i = 0; i < cartItems.length; i++) {
+        if (cartItems[i]._id === item._id) {
+          itemAlreadyExists = true;
+          showSuccessMsgTwoCart();
+          break;
+        }
+      }
+
+      if (!itemAlreadyExists) {
+        cartItems.push(item);
+        saveToLocalStorage(cartItems);
+        showSuccessMsgOneCart();
+      }
+    } else {
+      navigate("/signin");
+    }
+  }
+
   // SHOW SUCCESS MESSAGE - ITEM ADDED TO CART
-  const showSuccessMsgOne = () => {
+  const showSuccessMsgOneCart = () => {
     toast.success('Item added to cart!', {
       position: toast.POSITION.TOP_RIGHT,
       hideProgressBar: true,
@@ -75,7 +100,7 @@ const MainPage = (props) => {
   };
 
   // SHOW INFO MESSAGE - ITEM ALREADY IN CART
-  const showSuccessMsgTwo = () => {
+  const showSuccessMsgTwoCart = () => {
     toast.info('Item already in cart!', {
       position: toast.POSITION.TOP_RIGHT,
       hideProgressBar: true,
@@ -103,33 +128,65 @@ const MainPage = (props) => {
     saveToLocalStorage(cartItemList);
   }
 
-  // FUNCTION TO ADD ITEMS TO CART
-  const addToCart = (item) => {
+
+  // FUNCTION TO ADD ITEMS TO WISHLIST
+  const addToWishlist = (item) => {
     if (isCustomer) {
-      let itemAlreadyExists = false;
+      let _id = item._id;
+      let itemName = item.itemName;
+      let price = item.price;
+      let details = item.details;
+      let category = item.category;
+      let itemImage = item.itemImage;
 
-      for (let i = 0; i < cartItems.length; i++) {
-        if (cartItems[i]._id === item._id) {
-          itemAlreadyExists = true;
-          showSuccessMsgTwo();
-          break;
-        }
-      }
+      const wishItem = {
+        _id,
+        customerEmail,
+        itemName,
+        price,
+        details,
+        category,
+        itemImage,
+      };
 
-      if (!itemAlreadyExists) {
-        cartItems.push(item);
-        saveToLocalStorage(cartItems);
-        showSuccessMsgOne();
-      }
+      let instance = axios.create({
+        withCredentials: true
+      });
+
+      instance.post("http://localhost:5000/item/add-to-wishlist", wishItem)
+        .then(response => {
+          // THIS CODE TELLS IF THERE IS A DUPLICATE ITEM IN THE DATABASE
+          if (response.data.code !== 11000) {
+            showSuccessMsgOneWishlist();
+          } else {
+            showSuccessMsgTwoWishlist();
+          }
+        })
+        .catch();
     } else {
       navigate("/signin");
     }
   }
 
-  // FUNCTION TO ADD ITEMS TO WISHLIST
-  const addToWishlist = (item) => {
-    console.log(item);
-  }
+  // SHOW SUCCESS MESSAGE - ITEM ADDED TO WISHLIST
+  const showSuccessMsgOneWishlist = () => {
+    toast.success('Item added to wishlist!', {
+      position: toast.POSITION.TOP_RIGHT,
+      hideProgressBar: true,
+      pauseOnHover: false,
+      autoClose: 125
+    });
+  };
+
+  // SHOW INFO MESSAGE - ITEM ALREADY IN WISHLIST
+  const showSuccessMsgTwoWishlist = () => {
+    toast.info('Item already in wishlist!', {
+      position: toast.POSITION.TOP_RIGHT,
+      hideProgressBar: true,
+      pauseOnHover: false,
+      autoClose: 3000
+    });
+  };
 
   const renderItems = items.map((item) => (
     <ItemComponent key={uuidv4()} images={item.itemImage} names={item.itemName} prices={item.price} isAdmin={isAdmin} id={item._id} addToCart={addToCart} addToWishlist={addToWishlist} item={item} />
