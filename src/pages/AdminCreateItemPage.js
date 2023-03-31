@@ -1,5 +1,5 @@
-import { useRef, useState, useEffect } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useRef, useState } from "react";
+import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"
@@ -9,9 +9,7 @@ import "./page_styles/AdminCreateItemPage.css";
 import Navbar from "../components/NavbarComponent";
 import Footer from "../components/FooterComponent";
 
-const AdminCreateItemPage = () => {
-  const navigate = useNavigate();
-
+const AdminCreateItemPage = (props) => {
   const [itemName, setItemName] = useState("");
   const [price, setPrice] = useState("");
   const [details, setDetails] = useState("");
@@ -22,21 +20,6 @@ const AdminCreateItemPage = () => {
 
   const inputRef = useRef();
 
-  useEffect(() => {
-    const instance = axios.create({
-      withCredentials: true
-    });
-
-    // GETTING THE DETAILS OF THE ADMIN USING AVAILABLE COOKIES
-    // instance.get("http://localhost:5000/admin/check-cookie")
-    //   .then(response => { })
-    //   .catch(error => {
-    //     console.log(error.response.data.message);
-    //     if (error.response.data.message) {
-    //       navigate("/admin/signin");
-    //     }
-    //   });
-  }, [navigate])
 
   // IMAGE SELECTION FUNCTIONALITY
   const handleClick = () => {
@@ -122,9 +105,9 @@ const AdminCreateItemPage = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar admin={props.admin} />
       <main className="d-flex justify-content-center align-items-center">
-        <form onSubmit={onSubmitHandler} className="rounded border border-dark p-5 my-5 w-75" style={{ boxShadow: "-15px 15px 0px 0px rgba(0,0,0,1)" }}>
+        <form onSubmit={onSubmitHandler} className="rounded border border-dark p-4 p-md-5 my-5 w-75" style={{ boxShadow: "-15px 15px 0px 0px rgba(0,0,0,1)" }}>
           <h1>Create an Item</h1>
           <div className="form-group mb-3">
             <label htmlFor="name">Name of Item</label>

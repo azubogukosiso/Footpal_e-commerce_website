@@ -1,28 +1,27 @@
 const router = require("express").Router();
-const mongoose = require('mongoose');
 const jwt = require("jsonwebtoken");
 
 let Admin = require("../models/admin.model");
 
-// handle errors
+// HANDLE ERRORS
 const handleErrors = (err) => {
     console.log(err.message);
     const errors = { username: "", password: "" };
 
-    // admin validation errors for signing up
+    // ADMIN VALIDATION ERRORS FOR SIGNING UP
     if (err.message.includes("Admin validation failed")) {
         Object.values(err.errors).forEach(({ properties }) => {
             errors[properties.path] = properties.message;
         });
     }
 
-    // incorrect username error for login
+    // INCORRECT USERNAME FOR LOGIN
     if (err.message.includes("Incorrect Username")) {
         errors.username = "The username is not correct";
         return errors;
     }
 
-    // incorrect pasword error for login
+    // INCORRECT PASSWORD FOR LOGIN
     if (err.message.includes("Incorrect Password")) {
         errors.password = "The password is not correct";
         return errors;
@@ -32,9 +31,9 @@ const handleErrors = (err) => {
 };
 
 
-// create cookie validity time 
-const maxAge = 3 * 24 * 60 * 60; // 3 days
-// create jwt using fxn
+// CREATE COOKIE VALIDITY TIME
+const maxAge = 3 * 24 * 60 * 60; // 3 DAYS
+// FUNCTION FOR CREATING JWT
 const createToken = (id) => {
     console.log("This is the admin's id: " + id);
     return jwt.sign({ id }, "kosi secret", {
@@ -42,8 +41,9 @@ const createToken = (id) => {
     });
 };
 
-// --------- LIST OF ROUTES ----------
-// creates an admin
+// ============== LIST OF ROUTES ==============
+
+// CREATES AN ADMIN
 router.route("/signup").post(async (req, res) => {
     const admin_details = {
         username: req.body.username,
@@ -62,7 +62,7 @@ router.route("/signup").post(async (req, res) => {
     }
 });
 
-// signs in an admin
+// SIGNS IN AN ADMIN
 router.route("/signin").post(async (req, res) => {
     const { username, password } = req.body;
 
@@ -78,7 +78,7 @@ router.route("/signin").post(async (req, res) => {
     }
 });
 
-// checks for the presence of a cookie - to know if a user is logged in
+// CHECKS FOR THE PRESENCE OF A COOKIE - TO KNOW IF A USER IS LOGGED IN
 router.route("/check-cookie").get((req, res) => {
     const token = req.cookies.jwt;
     console.log(token);
@@ -98,7 +98,7 @@ router.route("/check-cookie").get((req, res) => {
     }
 });
 
-// logs out an admin
+// LOGS OUT AN ADMIN
 router.route("/logout").post((req, res) => {
     res.cookie("jwt", "", { maxAge: 1 });
     res.status(200).send({ message: 'cookies sent, you have logged out' });

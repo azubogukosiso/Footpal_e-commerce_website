@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 
@@ -7,25 +6,14 @@ import Navbar from "../components/NavbarComponent";
 import CardItemComponent from "../components/CardItemComponent";
 import Footer from "../components/FooterComponent";
 
-const AdminItemList = () => {
+const AdminItemList = (props) => {
   const [items, setItems] = useState([]);
 
-  const navigate = useNavigate();
 
-  useEffect(() => {
+  const loadAllItems = () => {
     let instance = axios.create({
       withCredentials: true,
     });
-
-    // GETTING THE DETAILS OF THE ADMIN USING AVAILABLE COOKIES
-    // instance.get("http://localhost:5000/admin/check-cookie")
-    //   .then((response) => { })
-    //   .catch((error) => {
-    //     console.log(error.response.data.message);
-    //     if (error.response.data.message) {
-    //       navigate("/admin/signin");
-    //     }
-    //   });
 
     // GETTING ALL ITEMS
     instance.get("http://localhost:5000/item")
@@ -36,13 +24,17 @@ const AdminItemList = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, [navigate]);
+  };
+
+  useEffect(() => {
+    loadAllItems();
+  }, []);
 
   return (
     <>
-      <Navbar />
+      <Navbar admin={props.admin} />
       <main className="d-flex justify-content-center align-items-center">
-        <div className="my-5 w-75">
+        <div className="my-5 w-75 d-flex justify-content-center align-items-center flex-column">
           {items.map((item) => {
             return (
               <CardItemComponent
@@ -53,6 +45,7 @@ const AdminItemList = () => {
                 details={item.details}
                 categories={item.category}
                 id={item._id}
+                loadAllItems={loadAllItems}
               />
             );
           })}

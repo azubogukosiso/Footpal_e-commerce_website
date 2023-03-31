@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 
 const wishSchema = new Schema(
     {
-        _id: {
-            type: Schema.Types.ObjectId,
+        mainId: {
+            type: String,
             required: true,
         },
         customerEmail: {

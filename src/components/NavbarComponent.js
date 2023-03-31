@@ -1,13 +1,14 @@
-import "./component_styles/NavbarComponent.css";
 import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
+
+import "./component_styles/NavbarComponent.css";
 
 const NavbarComponent = (props) => {
   const [cookie, setCookie] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  useEffect(() => {
+  const checkLoggedIn = () => {
     let instance = axios.create({
       withCredentials: true
     });
@@ -15,14 +16,20 @@ const NavbarComponent = (props) => {
     // CHECK WHO'S LOGGED IN - ADMIN OR CUSTOMER
     instance.post("http://localhost:5000/general/check-cookie")
       .then(response => {
-        setCookie(true);
-        if (response.data.admin) {
-          setIsAdmin(true);
+        if (response.data !== "No tokens") {
+          setCookie(true);
+          if (response.data.admin) {
+            setIsAdmin(true);
+          }
         }
       })
       .catch(error => {
-        console.log(error.response.data);
+        console.log(error);
       });
+  }
+
+  useEffect(() => {
+    checkLoggedIn();
   }, [])
 
   const navigate = useNavigate();
@@ -37,7 +44,8 @@ const NavbarComponent = (props) => {
       .then(response => {
         if (response.data) {
           navigate("/");
-          document.location.reload();
+          setCookie(false);
+          setIsAdmin(false);
         }
       })
   }

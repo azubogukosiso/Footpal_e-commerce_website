@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 
 let Admin = require("../models/admin.model");
@@ -8,8 +7,8 @@ let Customer = require("../models/customer.model");
 router.route("/check-cookie").post((req, res) => {
     const token = req.cookies.jwt;
 
-    if (token) { // check if json web token exists
-        jwt.verify(token, 'kosi secret', async (err, decodedToken) => { // check if token is valid
+    if (token) { // CHECK IF JSON WEB TOKEN EXISTS
+        jwt.verify(token, 'kosi secret', async (err, decodedToken) => { // CHECK IF TOKEN IS VALID
             if (err) {
                 console.log(err.message);
             } else {
@@ -24,7 +23,7 @@ router.route("/check-cookie").post((req, res) => {
             }
         });
     } else {
-        res.status(400).send("No tokens, no one is signed in");
+        res.send("No tokens");
     }
 });
 

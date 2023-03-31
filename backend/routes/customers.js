@@ -1,32 +1,33 @@
 const router = require("express").Router();
-let Customer = require("../models/customer.model");
 const jwt = require("jsonwebtoken");
 
-// handle errors
+let Customer = require("../models/customer.model");
+
+// HANDLE ERRORS
 const handleErrors = (err) => {
     console.log(err.message, err.code);
     const errors = { email: "", password: "" };
 
-    // duplicate email error code - for signing up
+    // DUPLICATE EMAIL ERROR CODE - FOR SIGNING UP
     if (err.code === 11000) {
         errors.email = "That email is already registered, use another";
         return errors;
     }
 
-    // customer validation errors - for signing up
+    // CUSTOMER VALIDATION ERRORS - FOR SIGNING UP
     if (err.message.includes("Customer validation failed")) {
         Object.values(err.errors).forEach(({ properties }) => {
             errors[properties.path] = properties.message;
         });
     }
 
-    // incorrect email error for login
+    // INCORRECT EMAIL ERROR FOR LOGIN
     if (err.message.includes("Incorrect Email")) {
         errors.email = "This email is not registered";
         return errors;
     }
 
-    // incorrect pasword error for login
+    // INCORRECT PASWORD ERROR FOR LOGIN
     if (err.message.includes("Incorrect Password")) {
         errors.password = "The password is not correct";
         return errors;
@@ -36,7 +37,7 @@ const handleErrors = (err) => {
 };
 
 
-// create cookie validity time 
+// CREATE COOKIE VALIDITY TIME
 const maxAge = 3 * 24 * 60 * 60; // 3 days
 // create jwt using fxn
 const createToken = (id) => {
@@ -46,8 +47,9 @@ const createToken = (id) => {
     });
 };
 
-// ---------- LIST OF ROUTES -------------
-// gets a list of all customers
+// ============== LIST OF ROUTES ==============
+
+// GETS A LIST OF ALL CUSTOMERS
 router.route("/").get((req, res) => {
     Customer.find()
         .sort({ createdAt: -1 })
@@ -55,7 +57,7 @@ router.route("/").get((req, res) => {
         .catch(err => res.status(400).json("Error: " + err));
 });
 
-// signs up a new customer
+// SIGNS UP A NEW CUSTOMER
 router.route("/signup").post(async (req, res) => {
     const customer_details = {
         username: req.body.username,
@@ -75,7 +77,7 @@ router.route("/signup").post(async (req, res) => {
     }
 });
 
-// signs in a customer
+// SIGNS IN A CUSTOMER
 router.route("/signin").post(async (req, res) => {
     const { email, password } = req.body;
 
@@ -91,7 +93,7 @@ router.route("/signin").post(async (req, res) => {
     }
 });
 
-// logs out a customer
+// LOGS OUT A CUSTOMER
 router.route("/logout").post((req, res) => {
     res.cookie("jwt", "", { maxAge: 1 });
     res.status(200).send({ message: 'cookies sent, you have logged out' });

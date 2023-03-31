@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { Categories } from "../Arrays";
 import { ToastContainer, toast } from "react-toastify";
+import PulseLoader from "react-spinners/PulseLoader";
+import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 
 import "./page_styles/MainPage.css";
@@ -15,13 +16,14 @@ import CategoryComponent from "../components/CategoryComponent";
 import Modal from "../components/ModalComponent";
 import Footer from "../components/FooterComponent";
 
-const MainPage = () => {
+const MainPage = (props) => {
   const [items, setItems] = useState([]);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isCustomer, setIsCustomer] = useState(false);
   const [customerEmail, setCustomerEmail] = useState();
   const [isOpen, setIsOpen] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -38,8 +40,8 @@ const MainPage = () => {
     // GETTING ALL ITEMS
     instance.get("http://localhost:5000/item/")
       .then(response => {
-        const itemDetails = response.data;
-        setItems(itemDetails);
+        setItems(response.data);
+        setLoading(false);
       })
       .catch(error => {
         console.log(error);
@@ -64,7 +66,7 @@ const MainPage = () => {
     if (cartItemsLocalStorage) {
       setCartItems(cartItemsLocalStorage);
     }
-  }, [])
+  }, [props.admin])
 
   // FUNCTION TO ADD ITEMS TO CART
   const addToCart = (item) => {
@@ -129,10 +131,11 @@ const MainPage = () => {
   }
 
 
+
   // FUNCTION TO ADD ITEMS TO WISHLIST
   const addToWishlist = (item) => {
     if (isCustomer) {
-      let _id = item._id;
+      let mainId = item._id;
       let itemName = item.itemName;
       let price = item.price;
       let details = item.details;
@@ -140,7 +143,7 @@ const MainPage = () => {
       let itemImage = item.itemImage;
 
       const wishItem = {
-        _id,
+        mainId,
         customerEmail,
         itemName,
         price,
@@ -155,11 +158,10 @@ const MainPage = () => {
 
       instance.post("http://localhost:5000/item/add-to-wishlist", wishItem)
         .then(response => {
-          // THIS CODE TELLS IF THERE IS A DUPLICATE ITEM IN THE DATABASE
-          if (response.data.code !== 11000) {
-            showSuccessMsgOneWishlist();
-          } else {
+          if (response.data === "Item already in wishlist") {
             showSuccessMsgTwoWishlist();
+          } else {
+            showSuccessMsgOneWishlist();
           }
         })
         .catch();
@@ -188,15 +190,20 @@ const MainPage = () => {
     });
   };
 
-  const renderItems = items.map((item) => (
-    <ItemComponent key={uuidv4()} images={item.itemImage} names={item.itemName} prices={item.price} isAdmin={isAdmin} id={item._id} addToCart={addToCart} addToWishlist={addToWishlist} item={item} />
-  ));
+  let renderItems;
+  if (!loading) {
+    renderItems = items.map((item) => (
+      <ItemComponent key={uuidv4()} images={item.itemImage} names={item.itemName} prices={item.price} isAdmin={isAdmin} id={item._id} addToCart={addToCart} addToWishlist={addToWishlist} item={item} />
+    ))
+  } else {
+    renderItems = <PulseLoader color="#000" className="justify-content-center my-5" size={20} />
+  }
 
-  const renderCategories = Categories.map((Category) => (
+  const renderCategories = Categories.map((category) => (
     <CategoryComponent
       key={uuidv4()}
-      images={Category.image}
-      names={Category.name}
+      images={category.image}
+      names={category.name}
     />
   ));
 

@@ -1,18 +1,19 @@
 const router = require("express").Router();
+
 let Item = require("../models/item.model");
 let Wish = require("../models/wish.model");
 
-// ---------- LIST OF ROUTES -------------
-// gets a list of all items
+// ============== LIST OF ROUTES ==============
+
+// GETS A LIST OF ALL ITEMS
 router.route("/").get((req, res) => {
     Item.find()
         .sort({ createdAt: -1 })
         .then(items => res.json(items))
-        .catch(err => res.status(400).json("Error: " + err));
+        .catch(err => res.status(500).json("Error: " + err));
 });
 
-
-// create a new item
+// CREATES A NEW ITEM
 router.route("/create").post(async (req, res) => {
     const newItem = new Item(req.body);
     try {
@@ -23,38 +24,66 @@ router.route("/create").post(async (req, res) => {
     }
 });
 
-// gets a particular exercise using its id
+// GETS A PARTICULAR EXERCISE USING ITS ID
 router.route("/:id").get((req, res) => {
     Item.findById(req.params.id)
         .then(item => res.json(item))
-        .catch((err) => res.status(400).json("Error: " + err));
+        .catch((err) => res.status(404).json("Error: " + err));
 });
 
-// updates an item
+// UPDATES AN ITEM
 router.route("/update/:id").post((req, res) => {
     Item.findByIdAndUpdate(req.params.id, req.body, (err, docs) => {
         if (err) {
-            res.status(400).json("Error: " + err);
+            res.status(404).json("Error: " + err);
         } else {
             res.status(200).json("Item has been successfully edited!");
         }
     });
 });
 
-// adds an item to the wishlist database
+// ADDS AN ITEM TO THE WISHLIST DATABASE
 router.route("/add-to-wishlist").post(async (req, res) => {
-    const wishItem = new Wish(req.body);
-    try {
-        const savedItem = await wishItem.save();
-        res.status(200).json(savedItem);
-    } catch (err) {
-        res.send(err);
-    }
+    Wish.find({ mainId: req.body.mainId })
+        .then(async (docs) => {
+            if (docs) {
+                let emailMatch = false;
+                docs.map(doc => {
+                    if (doc.customerEmail === req.body.customerEmail) {
+                        emailMatch = true;
+                        return emailMatch;
+                    }
+                })
+                if (!emailMatch) {
+                    const wishItem = new Wish(req.body);
+                    try {
+                        const savedItem = await wishItem.save();
+                        res.status(200).json(savedItem);
+                    } catch (err) {
+                        res.send(err);
+                    }
+                } else {
+                    res.send("Item already in wishlist");
+                }
+            } else {
+                console.log("first else, no doc at all!");
+                const wishItem = new Wish(req.body);
+                try {
+                    const savedItem = await wishItem.save();
+                    res.status(200).json(savedItem);
+                } catch (err) {
+                    res.send(err);
+                }
+            }
+        })
+        .catch(err => {
+            console.log(err);
+        });
 });
 
-// gets all items in the wishlist database
+// GETS ALL ITEMS IN THE WISHLIST DATABASE
 router.route("/wishlist").post((req, res) => {
-    Wish.find()
+    Wish.find({ customerEmail: req.body.email })
         .then(wishes => {
             if (wishes.length > 0) {
                 res.status(200).json(wishes);
@@ -67,11 +96,22 @@ router.route("/wishlist").post((req, res) => {
         });
 });
 
-// deletes an item
+// REMOVES AN ITEM FROM THE WISHLIST DATABASE
+router.route("/remove-wish/:id").delete((req, res) => {
+    Wish.findByIdAndDelete(req.params.id, (err, docs) => {
+        if (err) {
+            res.status(404).json("Error: " + err);
+        } else {
+            res.status(200).json("Item has been removed from wishlist!");
+        }
+    });
+});
+
+// DELETES AN ITEM
 router.route("/delete/:id").delete((req, res) => {
     Item.findByIdAndDelete(req.params.id, (err, docs) => {
         if (err) {
-            res.status(400).json("Error: " + err);
+            res.status(404).json("Error: " + err);
         } else {
             res.status(200).json("Item has been successfully deleted!");
         }

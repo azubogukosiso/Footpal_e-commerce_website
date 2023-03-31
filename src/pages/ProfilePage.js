@@ -5,7 +5,7 @@ import Modal from "../components/ModalComponent";
 import Footer from "../components/FooterComponent";
 
 const ProfilePage = (props) => {
-    const [userDetails, setUserDetails] = useState(props.customer);
+    const userDetails = props.customer;
     const [isOpen, setIsOpen] = useState(false);
     const [cartItems, setCartItems] = useState([]);
 

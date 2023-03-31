@@ -8,7 +8,7 @@ import Navbar from "../components/NavbarComponent";
 import Modal from "../components/ModalComponent";
 import Footer from "../components/FooterComponent";
 
-const DetailsPage = () => {
+const DetailsPage = (props) => {
 	const [items, setItems] = useState([]);
 	const [itemName, setItemName] = useState("");
 	const [price, setPrice] = useState("");
@@ -17,6 +17,8 @@ const DetailsPage = () => {
 	const [itemImage, setItemImage] = useState("");
 	const [isOpen, setIsOpen] = useState(false);
 	const [cartItems, setCartItems] = useState([]);
+	const [isCustomer, setIsCustomer] = useState(false);
+	const customerEmail = props.customer.email;
 
 	// ADDING QUANTITY PROPERTY TO CART ITEMS OBJECT
 	for (let i = 0; i < cartItems.length; i++) {
@@ -30,19 +32,13 @@ const DetailsPage = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
+		if (customerEmail) {
+			setIsCustomer(true);
+		}
+
 		let instance = axios.create({
 			withCredentials: true
 		});
-
-		// GETTING THE DETAILS OF THE ADMIN USING AVAILABLE COOKIES
-		// instance.get("http://localhost:5000/admin/check-cookie")
-		// 	.then((response) => { })
-		// 	.catch((error) => {
-		// 		console.log(error.response.data.message);
-		// 		if (error.response.data.message) {
-		// 			navigate("/signin");
-		// 		}
-		// 	});
 
 		// GETTING DETAILS OF ITEM
 		instance.get("http://localhost:5000/item/" + id)
@@ -60,7 +56,7 @@ const DetailsPage = () => {
 		if (cartItemsLocalStorage) {
 			setCartItems(cartItemsLocalStorage);
 		}
-	}, [id, navigate])
+	}, [id, navigate, customerEmail])
 
 	// SHOW SUCCESS MESSAGE - ITEM ADDED TO CART
 	const showSuccessMsgOne = () => {
@@ -120,12 +116,72 @@ const DetailsPage = () => {
 		}
 	}
 
+
+
+	// FUNCTION TO ADD ITEMS TO WISHLIST
+	const addToWishlist = (item) => {
+		if (isCustomer) {
+			let mainId = item._id;
+			let itemName = item.itemName;
+			let price = item.price;
+			let details = item.details;
+			let category = item.category;
+			let itemImage = item.itemImage;
+
+			const wishItem = {
+				mainId,
+				customerEmail,
+				itemName,
+				price,
+				details,
+				category,
+				itemImage,
+			};
+
+			let instance = axios.create({
+				withCredentials: true
+			});
+
+			instance.post("http://localhost:5000/item/add-to-wishlist", wishItem)
+				.then(response => {
+					if (response.data === "Item already in wishlist") {
+						showSuccessMsgTwoWishlist();
+					} else {
+						showSuccessMsgOneWishlist();
+					}
+				})
+				.catch();
+		} else {
+			navigate("/signin");
+		}
+	}
+
+	// SHOW SUCCESS MESSAGE - ITEM ADDED TO WISHLIST
+	const showSuccessMsgOneWishlist = () => {
+		toast.success('Item added to wishlist!', {
+			position: toast.POSITION.TOP_RIGHT,
+			hideProgressBar: true,
+			pauseOnHover: false,
+			autoClose: 125
+		});
+	};
+
+	// SHOW INFO MESSAGE - ITEM ALREADY IN WISHLIST
+	const showSuccessMsgTwoWishlist = () => {
+		toast.info('Item already in wishlist!', {
+			position: toast.POSITION.TOP_RIGHT,
+			hideProgressBar: true,
+			pauseOnHover: false,
+			autoClose: 3000
+		});
+	};
+
 	return (
 		<>
 			<Navbar setIsOpen={setIsOpen} />
 			<main className='d-flex justify-content-center align-items-center'>
-				<div className="rounded p-4 d-flex flex-column flex-sm-row align-items-center my-5 w-75 border border-dark" style={{ boxShadow: "-15px 15px 0px 0px rgba(0,0,0,1)" }}>
-					<div className="w-100 h-100 rounded overflow-hidden" style={{ objectFit: "cover" }}>
+				<div className="rounded p-3 d-flex flex-column flex-sm-row align-items-center my-5 w-75 border border-dark" style={{ boxShadow: "-15px 15px 0px 0px rgba(0,0,0,1)" }}>
+					<div className="w-75 h-75 rounded overflow-hidden" style={{ objectFit: "cover" }}>
 						<img src={itemImage} alt="" className="w-100 h-100" />
 					</div>
 					<div className="mx-4 w-100 mt-4 mt-sm-0">
@@ -138,7 +194,7 @@ const DetailsPage = () => {
 						<div className="d-flex flex-column flex-md-row">
 							<button className="btn btn-dark" onClick={() => addToCart(items)}>add to cart</button>
 							<span className="mx-2 my-2"></span>
-							<button className="btn btn-dark">add to wishlist</button>
+							<button className="btn btn-dark" onClick={() => addToWishlist(items)}>add to wishlist</button>
 						</div>
 					</div>
 				</div>

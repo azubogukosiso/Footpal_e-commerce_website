@@ -56,7 +56,6 @@ const SignUpPage = () => {
       .then(response => {
         if (response.data) {
           navigate("/");
-          document.location.reload();
         }
       })
       .catch(error => {
@@ -79,7 +78,7 @@ const SignUpPage = () => {
       <main className="d-flex justify-content-center align-items-center">
         <form
           onSubmit={onSubmitHandler}
-          className="rounded border border-dark p-5 w-75 my-5" style={{ boxShadow: "-15px 15px 0px 0px rgba(0,0,0,1)" }}
+          className="rounded border border-dark p-4 p-md-5 w-75 my-5" style={{ boxShadow: "-15px 15px 0px 0px rgba(0,0,0,1)" }}
         >
           <h1>Sign Up</h1>
           <div className="form-group mb-3">
