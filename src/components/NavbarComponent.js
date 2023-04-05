@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import axios from "axios";
 
 import "./component_styles/NavbarComponent.css";
@@ -32,7 +32,6 @@ const NavbarComponent = (props) => {
     checkLoggedIn();
   }, [])
 
-  const navigate = useNavigate();
   const LogOut = (e) => {
     localStorage.clear("cart-items");
 
@@ -43,9 +42,9 @@ const NavbarComponent = (props) => {
     instance.post("http://localhost:5000/customers/logout")
       .then(response => {
         if (response.data) {
-          navigate("/");
           setCookie(false);
           setIsAdmin(false);
+          window.location.href = "/";
         }
       })
   }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import axios from "axios";
 
 import "./page_styles/SignInPage.css";
@@ -35,7 +35,6 @@ const AdminLoginPage = () => {
     }, 5000)
   };
 
-  const navigate = useNavigate();
 
   // FUNCTION TO SUBMIT USER DETAILS
   const onSubmitHandler = (e) => {
@@ -55,7 +54,7 @@ const AdminLoginPage = () => {
         console.log(response.data);
         if (response.data) {
           if (document.cookie) {
-            navigate("/admin/");
+            window.location.href = "/admin/";
           }
         }
       })

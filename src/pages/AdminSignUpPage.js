@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import axios from "axios";
 
 import "./page_styles/SignInPage.css";
@@ -33,8 +33,6 @@ const SignUpPage = () => {
         }, 5000)
     }
 
-    const navigate = useNavigate();
-
     // FUNCTION TO SUBMIT USER DETAILS
     const onSubmitHandler = (e) => {
         e.preventDefault();
@@ -51,7 +49,7 @@ const SignUpPage = () => {
         instance.post("http://localhost:5000/admin/signup", admin)
             .then(response => {
                 if (response.data) {
-                    navigate("/admin/");
+                    window.location.href = "/admin/";
                 }
             })
             .catch(error => {

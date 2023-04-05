@@ -48,11 +48,9 @@ function App() {
         }
       })
       .catch(error => {
-        console.log("This from the client-side:", error);
+        console.log(error);
       });
   }, []);
-
-  console.log(loggedIn);
 
   if (loggedIn) {
     return (
