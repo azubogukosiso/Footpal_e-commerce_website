@@ -7,13 +7,14 @@ const path = require('path');
 
 const app = express();
 
-// route imports
+// ROUTE IMPORTS
 const generalRouter = require("./routes/general");
 const customersRouter = require("./routes/customers");
 const adminRouter = require("./routes/admin");
 const itemRouter = require("./routes/items");
+const stripe = require("./routes/stripe");
 
-// connection to the dbase
+// CONNECTION TO THE DATABASE
 mongoose.connect("mongodb://localhost:27017/Footpal-Database", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -49,3 +50,4 @@ app.use("/general", generalRouter);
 app.use("/customers", customersRouter);
 app.use("/admin", adminRouter);
 app.use("/item", itemRouter);
+app.use("/stripe", stripe);

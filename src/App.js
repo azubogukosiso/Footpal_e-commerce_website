@@ -12,6 +12,7 @@ import SignUp from "./pages/SignUpPage";
 import SignIn from "./pages/SignInPage";
 import Details from "./pages/DetailsPage";
 import Profile from "./pages/ProfilePage";
+import CheckoutSuccess from "./pages/CheckoutSuccess"
 import AdminSignIn from "./pages/AdminSigninPage";
 import AdminSignUp from "./pages/AdminSignUpPage";
 import AdminMain from "./pages/AdminMainPage";
@@ -69,6 +70,8 @@ function App() {
             <Route path="/details/:id" element={loggedIn ? isAdmin ? <Main /> : <Details customer={customer} /> : <SignIn />} />
 
             <Route path="/profile" element={loggedIn ? isAdmin ? <AdminMain /> : <Profile customer={customer} /> : <SignIn />} />
+
+            <Route path="/checkout-success" element={loggedIn ? isAdmin ? <Main /> : <CheckoutSuccess /> : <SignIn />} />
 
             {/* ONLY ADMINS */}
             <Route path="/admin" element={loggedIn ? isCustomer ? <Main /> : <AdminMain admin={admin} /> : <SignIn />} />

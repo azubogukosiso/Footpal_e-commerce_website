@@ -66,7 +66,7 @@ const MainPage = (props) => {
     if (cartItemsLocalStorage) {
       setCartItems(cartItemsLocalStorage);
     }
-  }, [props.admin])
+  }, [props.admin]);
 
   // FUNCTION TO ADD ITEMS TO CART
   const addToCart = (item) => {
@@ -89,7 +89,7 @@ const MainPage = (props) => {
     } else {
       navigate("/signin");
     }
-  }
+  };
 
   // SHOW SUCCESS MESSAGE - ITEM ADDED TO CART
   const showSuccessMsgOneCart = () => {
@@ -121,14 +121,14 @@ const MainPage = (props) => {
     const cartItemList = cartItems.filter(cartItem => cartItem._id === "");
     setCartItems(cartItemList);
     saveToLocalStorage(cartItemList);
-  }
+  };
 
   // CLEAR JUST ONE ITEM IN THE CART
   const clearItem = (item) => {
     const cartItemList = cartItems.filter(cartItem => cartItem._id !== item._id);
     setCartItems(cartItemList);
     saveToLocalStorage(cartItemList);
-  }
+  };
 
 
 
@@ -168,7 +168,7 @@ const MainPage = (props) => {
     } else {
       navigate("/signin");
     }
-  }
+  };
 
   // SHOW SUCCESS MESSAGE - ITEM ADDED TO WISHLIST
   const showSuccessMsgOneWishlist = () => {
@@ -197,7 +197,7 @@ const MainPage = (props) => {
     ))
   } else {
     renderItems = <PulseLoader color="#000" className="justify-content-center my-5" size={20} />
-  }
+  };
 
   const renderCategories = Categories.map((category) => (
     <CategoryComponent
@@ -230,7 +230,7 @@ const MainPage = (props) => {
             {renderCategories}
           </div>
         </section>
-        {isOpen && <Modal setIsOpen={setIsOpen} cartItems={cartItems} clearCart={clearCart} clearItem={clearItem} />}
+        {isOpen && <Modal setIsOpen={setIsOpen} cartItems={cartItems} clearCart={clearCart} clearItem={clearItem} customerEmail={customerEmail} />}
       </main>
       <Footer />
       <ToastContainer />

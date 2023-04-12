@@ -14,7 +14,6 @@ router.route("/check-cookie").post((req, res) => {
             } else {
                 let customer = await Customer.findById(decodedToken.id);
                 if (customer) {
-                    console.log(customer);
                     res.status(200).send({ customer });
                 } else {
                     let admin = await Admin.findById(decodedToken.id);

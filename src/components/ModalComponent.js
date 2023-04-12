@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
+import PulseLoader from "react-spinners/PulseLoader";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
 
 import './component_styles/ModalComponent.css';
 import CartItem from "./CartItemComponent";
 
 const ModalComponent = (props) => {
 	const [totalPrice, setTotalPrice] = useState();
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
-		// GETTING THE TOTAL PRICE OF CART ITEMS AT FIRST
+		// GETTING THE TOTAL PRICE OF CART ITEMS AT FIRST RENDER
 		const priceArray = [];
 		props.cartItems.map(item => (
 			priceArray.push(item.price * item.quantity)
@@ -19,7 +22,7 @@ const ModalComponent = (props) => {
 		} else {
 			setTotalPrice(0);
 		}
-	}, [props.cartItems]);
+	}, [props.cartItems, props.customerEmail]);
 
 	// UPDATING THE TOTAL PRICE ON QUANTITY CHANGE
 	const updateTotalPrice = (priceArray) => {
@@ -28,6 +31,23 @@ const ModalComponent = (props) => {
 			setTotalPrice(newTotalPrice);
 		}
 	}
+
+	// SENDS THE CART ITEMS TO BE HANDLED BY STRIPE
+	const handleCheckout = () => {
+		setLoading(true);
+		console.log(props.cartItems);
+		const cartItems = props.cartItems;
+		axios.post("http://localhost:5000/stripe/create-checkout-session", {
+			cartItems,
+			customerEmail: props.customerEmail
+		}).then(res => {
+			if (res.data.url) {
+				window.location.href = res.data.url
+			}
+		}).catch(err => {
+			console.log(err.message);
+		});
+	};
 
 	return (
 		<>
@@ -84,8 +104,8 @@ const ModalComponent = (props) => {
 					}
 					{
 						props.cartItems.length > 0 &&
-						<button className='btn btn-dark w-100'>
-							Checkout
+						<button className='btn btn-dark w-100' onClick={() => handleCheckout()}>
+							{loading ? (<PulseLoader color="#fff" className="d-flex justify-content-center align-items-center" size={10} />) : (<>Checkout</>)}
 						</button>
 					}
 				</div>

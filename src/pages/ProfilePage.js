@@ -12,7 +12,7 @@ const ProfilePage = (props) => {
     // ADDING QUANTITY PROPERTY TO CART ITEMS OBJECT
     for (let i = 0; i < cartItems.length; i++) {
         cartItems[i].quantity = 1;
-    }
+    };
 
     useEffect(() => {
         // LOADING CART ITEMS FROM THE LOCAL STORAGE
@@ -20,7 +20,7 @@ const ProfilePage = (props) => {
         if (cartItemsLocalStorage) {
             setCartItems(cartItemsLocalStorage);
         }
-    }, [])
+    }, []);
 
     // SAVES CART ITEMS TO LOCAL STORAGE
     const saveToLocalStorage = (items) => {
@@ -32,14 +32,14 @@ const ProfilePage = (props) => {
         const cartItemList = cartItems.filter(cartItem => cartItem._id === "");
         setCartItems(cartItemList);
         saveToLocalStorage(cartItemList);
-    }
+    };
 
     // CLEAR JUST ONE ITEM IN THE CART
     const clearItem = (item) => {
         const cartItemList = cartItems.filter(cartItem => cartItem._id !== item._id);
         setCartItems(cartItemList);
         saveToLocalStorage(cartItemList);
-    }
+    };
 
     if (userDetails) {
         return (
@@ -57,8 +57,8 @@ const ProfilePage = (props) => {
                 </main>
                 <Footer />
             </>
-        )
-    }
+        );
+    };
 }
 
-export default ProfilePage
+export default ProfilePage;
