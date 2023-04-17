@@ -11,9 +11,10 @@ router.post("/create-checkout-session", async (req, res) => {
     const customer = await stripe.customers.create({
         metadata: {
             userId: req.body.customerEmail,
-            // cart: JSON.stringify(req.body.cartItems)
         }
     });
+
+    console.log("First log - the customer's details: ", customer);
 
     const line_items = req.body.cartItems.map(item => {
         return {
@@ -31,6 +32,8 @@ router.post("/create-checkout-session", async (req, res) => {
             quantity: item.quantity,
         };
     });
+
+    console.log("Second log - the items ordered for: ", line_items);
 
     const session = await stripe.checkout.sessions.create({
         shipping_address_collection: { allowed_countries: ['US', 'CA'] },
@@ -67,6 +70,8 @@ router.post("/create-checkout-session", async (req, res) => {
         success_url: 'http://localhost:3000/checkout-success',
         cancel_url: 'http://localhost:3000/',
     });
+
+    console.log("Third log - the session: ", session);
 
     res.send({ url: session.url });
 })
@@ -125,14 +130,14 @@ router.post('/webhook', express.raw({ type: 'application/json' }), (req, res) =>
         eventType = req.body.type;
     }
 
-    // HANDLE THE EVENT
+    // HANDLE THE EVENT - CHECKOUT COMPLETED
     if (eventType === "checkout.session.completed") {
         stripe.customers.retrieve(data.customer).then(customer => {
             stripe.checkout.sessions.listLineItems(
                 data.id,
                 {},
                 function (err, lineItems) {
-                    console.log("line_items: ", lineItems)
+                    console.log("line_items: ", lineItems);
                     createOrder(customer, data, lineItems);
                 }
             );

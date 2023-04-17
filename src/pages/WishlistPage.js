@@ -46,6 +46,8 @@ const WishListPage = (props) => {
 		if (cartItemsLocalStorage) {
 			setCartItems(cartItemsLocalStorage);
 		}
+
+		// eslint-disable-next-line
 	}, []);
 
 	// SAVES CART ITEMS TO LOCAL STORAGE
