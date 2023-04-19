@@ -22,7 +22,7 @@ const ModalComponent = (props) => {
 		} else {
 			setTotalPrice(0);
 		}
-	}, [props.cartItems, props.customerEmail]);
+	}, [props.cartItems]);
 
 	// UPDATING THE TOTAL PRICE ON QUANTITY CHANGE
 	const updateTotalPrice = (priceArray) => {
@@ -42,7 +42,8 @@ const ModalComponent = (props) => {
 			customerEmail: props.customerEmail
 		}).then(res => {
 			if (res.data.url) {
-				window.location.href = res.data.url
+				console.log(res.data.url);
+				window.location.href = res.data.url;
 			}
 		}).catch(err => {
 			console.log(err.message);

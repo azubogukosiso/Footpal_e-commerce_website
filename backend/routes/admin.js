@@ -2,6 +2,7 @@ const router = require("express").Router();
 const jwt = require("jsonwebtoken");
 
 let Admin = require("../models/admin.model");
+let Order = require("../models/order.model");
 
 // HANDLE ERRORS
 const handleErrors = (err) => {
@@ -97,6 +98,13 @@ router.route("/check-cookie").get((req, res) => {
         res.status(400).send({ message: "you're logged out" });
     }
 });
+
+// RETRIEVE ORDERS MADE
+router.route("/orders").get((req, res) => {
+    Order.find()
+        .then(orders => res.json(orders))
+        .catch(err => res.status(500).json("Error: " + err));
+})
 
 // LOGS OUT AN ADMIN
 router.route("/logout").post((req, res) => {

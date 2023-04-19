@@ -1,10 +1,16 @@
+import axios from "axios";
 import { NavLink } from "react-router-dom";
 
 import Navbar from "../components/NavbarComponent";
 import Footer from "../components/FooterComponent";
+import { useEffect } from "react";
 
 const AdminMainPage = (props) => {
     const adminUsername = props.admin.username;
+
+    useEffect(() => {
+        axios.get("http://localhost:5000/admin/orders").then(res => console.log(res.data)).catch(err => console.log(err));
+    }, []);
 
     return (
         <>
