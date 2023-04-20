@@ -9,7 +9,6 @@ import Footer from "../components/FooterComponent";
 const AdminItemList = (props) => {
   const [items, setItems] = useState([]);
 
-
   const loadAllItems = () => {
     let instance = axios.create({
       withCredentials: true,

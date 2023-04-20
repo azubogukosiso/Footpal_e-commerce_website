@@ -19,6 +19,7 @@ import AdminSignUp from "./pages/AdminSignUpPage";
 import AdminMain from "./pages/AdminMainPage";
 import AdminCreateItem from "./pages/AdminCreateItemPage";
 import AdminItemList from "./pages/AdminItemListPage";
+import AdminOrderList from "./pages/AdminOrderListPage";
 import AdminEditItem from "./pages/AdminEditItemPage";
 import NotFoundPage from "./pages/NotFoundPage";
 
@@ -107,6 +108,8 @@ function App() {
           <Route path="/admin/create-item" element={loggedIn ? isCustomer ? <Main /> : <AdminCreateItem /> : <SignIn />} />
 
           <Route path="/admin/item-list" element={loggedIn ? isCustomer ? <Main /> : <AdminItemList /> : <SignIn />} />
+
+          <Route path="/admin/order-list" element={loggedIn ? isCustomer ? <Main /> : <AdminOrderList /> : <SignIn />} />
 
           <Route path="/admin/edit-item/:id" element={loggedIn ? isCustomer ? <Main /> : <AdminEditItem /> : <SignIn />} />
 

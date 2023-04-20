@@ -1,0 +1,7 @@
+.navlink {
+    transition: 0.3s;
+}
+
+.navlink:hover {
+    background-color: #ddd;
+}
