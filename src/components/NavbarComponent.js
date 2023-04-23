@@ -66,6 +66,11 @@ const NavbarComponent = (props) => {
           Item List
         </NavLink>
       </li>
+      <li className="nav-item mx-0 mx-lg-3">
+        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/admin/order-list">
+          Order List
+        </NavLink>
+      </li>
       <li className="nav-item ms-0 mx-lg-3">
         <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" onClick={LogOut}>
           Log Out

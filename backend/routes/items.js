@@ -97,7 +97,7 @@ router.route("/wishlist").post((req, res) => {
 
 // REMOVES AN ITEM FROM THE WISHLIST DATABASE
 router.route("/remove-wish/:id").delete((req, res) => {
-	Wish.findByIdAndDelete(req.params.id, (err, docs) => {
+	Wish.findByIdAndDelete(req.params.id, (err) => {
 		if (err) {
 			res.status(404).json("Error: " + err);
 		} else {
@@ -108,11 +108,11 @@ router.route("/remove-wish/:id").delete((req, res) => {
 
 // DELETES AN ITEM
 router.route("/delete/:id").delete((req, res) => {
-	Item.findByIdAndDelete(req.params.id, (err, docs) => {
+	Item.findByIdAndDelete(req.params.id, (err) => {
 		if (err) {
 			res.status(404).json("Error: " + err);
 		} else {
-			res.status(200).json("Item has been successfully deleted!");
+			res.status(200).json("Item has been deleted!");
 		}
 	});
 });

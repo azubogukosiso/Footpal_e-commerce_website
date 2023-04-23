@@ -104,7 +104,29 @@ router.route("/orders").get((req, res) => {
     Order.find()
         .then(orders => res.json(orders))
         .catch(err => res.status(500).json("Error: " + err));
+});
+
+// CONFIRM THE DELIVERY OF AN ITEM
+router.route("/orders/:id").post((req, res) => {
+    Order.findByIdAndUpdate(req.params.id, { delivery_status: "delivered" }, (err) => {
+        if (err) {
+            res.status(404).json("Error: " + err);
+        } else {
+            res.status(200).json("Order has been updated");
+        }
+    })
 })
+
+// DELETE AN ORDER
+router.route("/orders/:id").delete((req, res) => {
+    Order.findByIdAndDelete(req.params.id, (err) => {
+        if (err) {
+            res.status(404).json("Error: " + err);
+        } else {
+            res.status(200).json("Order has been deleted");
+        }
+    });
+});
 
 // LOGS OUT AN ADMIN
 router.route("/logout").post((req, res) => {
