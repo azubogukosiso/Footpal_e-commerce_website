@@ -12,12 +12,18 @@ import Footer from "../components/FooterComponent";
 const AdminOrderListPage = (props) => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [msg, setMsg] = useState();
 
     const getOrders = () => {
         axios.get("http://localhost:5000/admin/orders")
             .then(res => {
-                setLoading(false);
-                setOrders(res.data);
+                if (res.data === "No Orders for now") {
+                    setLoading(false);
+                    setMsg(res.data);
+                } else {
+                    setLoading(false);
+                    setOrders(res.data);
+                }
             })
             .catch(err => console.log(err));
     }
@@ -62,7 +68,11 @@ const AdminOrderListPage = (props) => {
             <Navbar admin={props.admin} />
             <main className="d-flex justify-content-center align-items-center">
                 <div className='my-5 w-75 d-flex justify-content-center align-items-center flex-column'>
-                    {renderItems}
+                    {
+                        msg ? (
+                            <h2>{msg}</h2>
+                        ) : renderItems
+                    }
                 </div>
             </main>
             <Footer />

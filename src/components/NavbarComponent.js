@@ -51,9 +51,14 @@ const NavbarComponent = (props) => {
 
   let navigationList = cookie ? isAdmin ? (
     <>
+      <li className="nav-item mx-0 mx-lg-3">
+        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/">
+          Main
+        </NavLink>
+      </li>
       <li className="nav-item ms-0 mx-lg-3">
         <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/admin">
-          Main
+          Dashboard
         </NavLink>
       </li>
       <li className="nav-item mx-0 mx-lg-3">
@@ -79,6 +84,11 @@ const NavbarComponent = (props) => {
     </>
   ) : (
     <>
+      <li className="nav-item mx-0 mx-lg-3">
+        <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/">
+          Main
+        </NavLink>
+      </li>
       <li className="nav-item mx-0 mx-lg-3">
         <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" onClick={() => props.setIsOpen(true)}>
           Check Cart

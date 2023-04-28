@@ -1,3 +1,11 @@
+.cat-link {
+    transition: 0.15s;
+}
+
+.cat-link:hover {
+    background: rgba(10, 10, 10, 0.3);
+}
+
 .item-container {
     height: 400px;
 }

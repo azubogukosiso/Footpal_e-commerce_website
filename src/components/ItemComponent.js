@@ -12,13 +12,13 @@ const ItemComponent = (props) => {
           {
             props.isAdmin ? (null) : (
               <>
-                <button className="btn btn-dark" onClick={() => props.addToCart(props.item)}>add to cart</button>
+                <button className="btn btn-dark" onClick={() => props.addToCart(props.item)}>Add to Cart</button>
                 <span className="mx-2 my-2"></span>
                 <NavLink to={"/details/" + props.id}>
-                  <button className="btn btn-dark">more details</button>
+                  <button className="btn btn-dark">More Details</button>
                 </NavLink>
                 <span className="mx-2 my-2"></span>
-                <button className="btn btn-dark" onClick={() => props.addToWishlist(props.item)}>add to wishlist</button>
+                <button className="btn btn-dark" onClick={() => props.addToWishlist(props.item)}>Add to Wishlist</button>
               </>
             )
           }

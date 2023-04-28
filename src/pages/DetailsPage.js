@@ -49,7 +49,9 @@ const DetailsPage = (props) => {
 				setDetails(response.data.details);
 				setCategory(response.data.category);
 				setItemImage(publicFolder + response.data.itemImage);
-			})
+			}).catch(error => {
+				console.log(error);
+			});
 
 		// LOADING CART ITEMS FROM THE LOCAL STORAGE
 		const cartItemsLocalStorage = JSON.parse(localStorage.getItem("cart-items"));
@@ -180,21 +182,25 @@ const DetailsPage = (props) => {
 		<>
 			<Navbar setIsOpen={setIsOpen} />
 			<main className='d-flex justify-content-center align-items-center'>
-				<div className="rounded p-3 d-flex flex-column flex-sm-row align-items-center my-5 w-75 border border-dark" style={{ boxShadow: "-15px 15px 0px 0px rgba(0,0,0,1)" }}>
-					<div className="w-75 h-75 rounded overflow-hidden" style={{ objectFit: "cover" }}>
-						<img src={itemImage} alt="" className="w-100 h-100" />
-					</div>
-					<div className="mx-4 w-100 mt-4 mt-sm-0">
-						<div>
-							<h4>{itemName}</h4>
-							<h5><span className="badge bg-dark">{category}</span></h5>
-							<h6>$ {price}</h6>
-							<h6>{details}</h6>
+				<div className="my-5 w-75 d-flex justify-content-center align-items-center flex-column">
+
+
+					<div className="rounded p-3 d-flex flex-column flex-sm-row align-items-center my-5 w-100 border border-dark" style={{ boxShadow: "10px 10px 0px 0px rgba(0,0,0,1)" }}>
+						<div className="w-75 h-75 rounded overflow-hidden" style={{ objectFit: "cover" }}>
+							<img src={itemImage} alt="" className="w-100 h-100" />
 						</div>
-						<div className="d-flex flex-column flex-md-row">
-							<button className="btn btn-dark" onClick={() => addToCart(items)}>add to cart</button>
-							<span className="mx-2 my-2"></span>
-							<button className="btn btn-dark" onClick={() => addToWishlist(items)}>add to wishlist</button>
+						<div className="mx-4 w-100 mt-4 mt-sm-0">
+							<div>
+								<h4>{itemName}</h4>
+								<h5><span className="badge bg-dark">{category}</span></h5>
+								<h6>$ {price}</h6>
+								<h6>{details}</h6>
+							</div>
+							<div className="d-flex flex-column flex-md-row">
+								<button className="btn btn-dark" onClick={() => addToCart(items)}>Add to Cart</button>
+								<span className="mx-2 my-2"></span>
+								<button className="btn btn-dark" onClick={() => addToWishlist(items)}>Add to Wishlist</button>
+							</div>
 						</div>
 					</div>
 				</div>

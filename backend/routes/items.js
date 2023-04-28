@@ -82,6 +82,7 @@ router.route("/add-to-wishlist").post(async (req, res) => {
 
 // GETS ALL ITEMS IN THE WISHLIST DATABASE
 router.route("/wishlist").post((req, res) => {
+	console.log(req.body);
 	Wish.find({ customerEmail: req.body.email })
 		.then(wishes => {
 			if (wishes.length > 0) {
@@ -104,6 +105,22 @@ router.route("/remove-wish/:id").delete((req, res) => {
 			res.status(200).json("Item has been removed from wishlist!");
 		}
 	});
+});
+
+// GETS ALL ITEMS OF A CERTAIN CATEGORY
+router.route("/category").post((req, res) => {
+	const namesCaps = req.body.category.charAt(0).toUpperCase() + req.body.category.slice(1);
+
+	Item.find({ category: namesCaps })
+		.then(items => {
+			if (items.length > 0) {
+				res.status(200).json(items);
+			} else {
+				res.send("There are no items of this category at the moment.");
+			}
+		}).catch(err => {
+			res.status(500).send("Error: " + err);
+		})
 });
 
 // DELETES AN ITEM

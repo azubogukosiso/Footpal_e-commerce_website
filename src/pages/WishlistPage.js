@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
+import PulseLoader from "react-spinners/PulseLoader";
 
 import Navbar from "../components/NavbarComponent";
 import WishItem from "../components/WishItemComponent";
@@ -12,6 +13,7 @@ const WishListPage = (props) => {
 	const [wishItems, setWishItems] = useState([]);
 	const [isOpen, setIsOpen] = useState(false);
 	const [cartItems, setCartItems] = useState([]);
+	const [loading, setLoading] = useState(true);
 	const userDetails = props.customer;
 
 	// ADDING QUANTITY PROPERTY TO CART ITEMS OBJECT
@@ -28,8 +30,10 @@ const WishListPage = (props) => {
 		instance.post("http://localhost:5000/item/wishlist", userDetails)
 			.then(response => {
 				if (response.data === "No Items in wishlist") {
+					setLoading(false);
 					setMsg(response.data);
 				} else {
+					setLoading(false);
 					setWishItems(response.data);
 				}
 			})
@@ -69,26 +73,31 @@ const WishListPage = (props) => {
 		saveToLocalStorage(cartItemList);
 	}
 
+	let renderItems;
+	if (!loading) {
+		renderItems = wishItems.map(item => (
+			<WishItem key={uuidv4()} itemName={item.itemName}
+				itemImage={item.itemImage}
+				category={item.category}
+				details={item.details}
+				price={item.price}
+				mainId={item.mainId}
+				id={item._id}
+				loadWishItems={loadWishItems} />
+		))
+	} else {
+		renderItems = <PulseLoader color="#000" className="justify-content-center my-5" size={20} />
+	}
+
 	return (
 		<>
 			<Navbar setIsOpen={setIsOpen} />
 			<main className="d-flex justify-content-center align-items-center">
-				<div className="my-5 w-75">
+				<div className="my-5 w-75 d-flex justify-content-center align-items-center flex-column">
 					{
 						msg ? (
-							<h4>{msg}</h4>
-						) : (
-							wishItems.map(item => (
-								<WishItem key={uuidv4()} itemName={item.itemName}
-									itemImage={item.itemImage}
-									category={item.category}
-									details={item.details}
-									price={item.price}
-									mainId={item.mainId}
-									id={item._id}
-									loadWishItems={loadWishItems} />
-							))
-						)
+							<h2>{msg}</h2>
+						) : renderItems
 					}
 				</div>
 				{isOpen && <Modal setIsOpen={setIsOpen} cartItems={cartItems} clearCart={clearCart} clearItem={clearItem} />}

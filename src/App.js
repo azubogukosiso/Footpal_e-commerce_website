@@ -40,10 +40,12 @@ function App() {
         if (response.data.customer) {
           setLoggedIn(true);
           setIsCustomer(true);
+          console.log(response.data.customer);
           setCustomer(response.data.customer);
         } else if (response.data.admin) {
           setLoggedIn(true);
           setIsAdmin(true);
+          console.log(response.data.admin);
           setAdmin(response.data.admin);
         } else {
           setLoggedIn(false);
@@ -55,27 +57,6 @@ function App() {
         console.log(error);
       });
   }, []);
-
-  // if (loggedIn) {
-  //   return (
-  //     <div className="main-container container-fluid px-0">
-  //       <Routes>
-  //         <Route path="/categories" element={loggedIn ? isAdmin ? <AdminMain /> : <CategoryItemsPage /> : <SignIn />} />
-  //         <Route path="/checkout-success" element={loggedIn ? isAdmin ? <AdminMain /> : <CheckoutSuccess /> : <SignIn />} />
-  //         <Route path="/stuff" element={loggedIn ? isAdmin ? <AdminMain /> : <CheckoutSuccess /> : <SignIn />} />
-  //         <Route path="*" element={<NotFoundPage />} />
-  //       </Routes>
-  //     </div>
-  //   );
-  // } else {
-  //   return (
-  //     <div className="main-container container-fluid px-0">
-  //       <Routes>
-  //         <Route path="/checkout-success" element={loggedIn ? isAdmin ? <AdminMain /> : <CheckoutSuccess customer={customer} /> : <SignIn />} />
-  //       </Routes>
-  //     </div>
-  //   );
-  // }
 
   if (loggedIn) {
     return (
@@ -96,7 +77,7 @@ function App() {
 
           <Route path="/checkout-success" element={loggedIn ? isAdmin ? <AdminMain /> : <CheckoutSuccess customer={customer} /> : <SignIn />} />
 
-          <Route path="/categories/:category-name" element={<CategoryItems customer={customer} />} />
+          <Route path="/categories/:category" element={loggedIn ? isAdmin ? <CategoryItems admin={admin} /> : <CategoryItems customer={customer} /> : <SignIn />} />
 
           {/* ONLY ADMINS */}
           <Route path="/admin" element={loggedIn ? isCustomer ? <Main /> : <AdminMain admin={admin} /> : <SignIn />} />

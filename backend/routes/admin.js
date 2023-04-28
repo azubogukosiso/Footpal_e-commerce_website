@@ -102,7 +102,13 @@ router.route("/check-cookie").get((req, res) => {
 // RETRIEVE ORDERS MADE
 router.route("/orders").get((req, res) => {
     Order.find()
-        .then(orders => res.json(orders))
+        .then(orders => {
+            if (orders.length > 0) {
+                res.status(200).json(orders);
+            } else {
+                res.send("No Orders for now");
+            }
+        })
         .catch(err => res.status(500).json("Error: " + err));
 });
 

@@ -213,19 +213,19 @@ const MainPage = (props) => {
       <main>
         <HeaderImageComponent />
         <section className="most-purchased text-center">
-          <h1 className="pt-3 pb-2">most purchased</h1>
+          <h1 className="pt-3 pb-2">Most Purchased</h1>
           <div className="row w-100 h-100 m-auto">
             {renderItems}
           </div>
         </section>
         <section className="new-additions text-center">
-          <h1 className="pt-3 pb-2">new additions</h1>
+          <h1 className="pt-3 pb-2">Recently Added</h1>
           <div className="row w-100 h-100 m-auto">
             {renderItems}
           </div>
         </section>
         <section className="categories text-center">
-          <h1 className="pt-3 pb-2">categories</h1>
+          <h1 className="pt-3 pb-2">Categories</h1>
           <div className="row w-100 h-100 m-auto">
             {renderCategories}
           </div>
