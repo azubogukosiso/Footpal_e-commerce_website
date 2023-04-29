@@ -18,7 +18,7 @@ const CategoryItemComponent = (props) => {
                         <></>
                     ) : (
                         <div className="d-flex flex-column flex-md-row">
-                            <NavLink to={"/details/" + props.id} className="btn btn-dark">Details</NavLink>
+                            <NavLink to={"/details/" + props.id} className="btn btn-dark">More Details</NavLink>
                         </div>
                     )
 

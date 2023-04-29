@@ -31,12 +31,11 @@ const WishItemComponent = (props) => {
                     <h4>{props.itemName}</h4>
                     <h5><span className="badge bg-dark">{props.categories}</span></h5>
                     <h6>$ {props.price}</h6>
-                    <h6>{props.details}</h6>
                 </div>
                 <div className="d-flex flex-column flex-md-row">
-                    <NavLink to={"/details/" + props.mainId} className="btn btn-dark">Details</NavLink>
+                    <NavLink to={"/details/" + props.mainId} className="btn btn-dark">More Details</NavLink>
                     <span className="mx-2 my-2"></span>
-                    <NavLink className="btn btn-danger" onClick={() => removeWishItem(props.id)}>Remove</NavLink>
+                    <NavLink className="btn btn-danger" onClick={() => removeWishItem(props.id)}>Remove from Wishlist</NavLink>
                 </div>
             </div>
         </div>
