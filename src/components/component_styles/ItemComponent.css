@@ -2,16 +2,25 @@
     height: 400px;
 }
 
-.item-container:hover>.overlay {
-    opacity: 1;
-    pointer-events: all;
-}
-
 .overlay {
     background: rgba(0, 0, 0, 0.6);
-    opacity: 0;
-    pointer-events: none;
     transition: 0.15s;
+}
+
+@media screen and (min-width: 768px) {
+
+    .overlay {
+        background: rgba(0, 0, 0, 0.6);
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.15s;
+    }
+
+    .item-container:hover>.overlay {
+        opacity: 1;
+        pointer-events: all;
+    }
+
 }
 
 .cta button {
