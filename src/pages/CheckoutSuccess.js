@@ -5,7 +5,7 @@ import Navbar from "../components/NavbarComponent";
 import Modal from "../components/ModalComponent";
 import Footer from "../components/FooterComponent";
 
-const CheckoutSuccess = (props) => {
+const CheckoutSuccess = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [cartItems, setCartItems] = useState();
 
