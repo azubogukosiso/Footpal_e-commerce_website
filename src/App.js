@@ -40,12 +40,10 @@ function App() {
         if (response.data.customer) {
           setLoggedIn(true);
           setIsCustomer(true);
-          console.log(response.data.customer);
           setCustomer(response.data.customer);
         } else if (response.data.admin) {
           setLoggedIn(true);
           setIsAdmin(true);
-          console.log(response.data.admin);
           setAdmin(response.data.admin);
         } else {
           setLoggedIn(false);
@@ -85,6 +83,8 @@ function App() {
           <Route path="/admin/signin" element={loggedIn ? isCustomer ? <Main /> : <AdminSignIn /> : <AdminSignIn />} />
 
           <Route path="/admin/signup" element={loggedIn ? isCustomer ? <Main /> : <AdminSignUp /> : <AdminSignUp />} />
+
+          <Route path="/details/:id" element={loggedIn ? isCustomer ? <Main /> : <Details admin={admin} /> : <SignIn />} />
 
           <Route path="/admin/create-item" element={loggedIn ? isCustomer ? <Main /> : <AdminCreateItem /> : <SignIn />} />
 

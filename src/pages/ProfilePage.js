@@ -46,12 +46,12 @@ const ProfilePage = (props) => {
             <>
                 <Navbar setIsOpen={setIsOpen} />
                 <main className="d-flex justify-content-center align-items-center">
-                    <div className="rounded border border-dark p-3 px-4 p-md-5 my-3 w-75" style={{ boxShadow: "-15px 15px 0px 0px rgba(0,0,0,1)" }}>
-                        <h5>Name: <br /> {userDetails.username}</h5>
+                    <div className="rounded border border-dark p-3 px-4 p-md-5 my-3 w-75" style={{ boxShadow: "10px 10px 0px 0px rgba(0,0,0,1)" }}>
+                        <h5><span><strong>Name:</strong></span> {userDetails.username}</h5>
                         <hr />
-                        <h5>Email: <br /> {userDetails.email}</h5>
+                        <h5><span><strong>Email:</strong></span> {userDetails.email}</h5>
                         <hr />
-                        <h5>Date of account creation: <br /> {new Date(userDetails.createdAt).toDateString()}</h5>
+                        <h5><span><strong>Date of account creation:</strong></span> {new Date(userDetails.createdAt).toDateString()}</h5>
                     </div>
                     {isOpen && <Modal setIsOpen={setIsOpen} cartItems={cartItems} clearCart={clearCart} clearItem={clearItem} />}
                 </main>

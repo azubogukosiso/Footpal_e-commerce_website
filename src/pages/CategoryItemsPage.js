@@ -9,7 +9,7 @@ import CategoryItem from "../components/CategoryItemComponent";
 import Modal from "../components/ModalComponent";
 import Footer from "../components/FooterComponent";
 
-const CategoryItemsPage = () => {
+const CategoryItemsPage = (props) => {
     const [msg, setMsg] = useState();
     const [isOpen, setIsOpen] = useState(false);
     const [categoryItems, setCategoryItems] = useState([]);
@@ -72,7 +72,8 @@ const CategoryItemsPage = () => {
                 category={item.category}
                 details={item.details}
                 price={item.price}
-                id={item._id} />
+                id={item._id}
+                admin={props.admin} />
         ))
     } else {
         renderItems = <PulseLoader color="#000" className="justify-content-center my-5" size={20} />

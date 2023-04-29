@@ -1,7 +1,7 @@
 const FooterComponent = () => {
   return (
     <footer className="bg-dark text-white text-center py-4">
-      Footpal - Made By Azubogu Kosiso
+      Footpal - Made By <a href="https://azubogukosiso.netlify.app" target="_blank" rel="noreferrer" className="text-white">Azubogu Kosiso</a>
     </footer>
   );
 };
