@@ -15,7 +15,7 @@ const AdminOrderListPage = (props) => {
     const [msg, setMsg] = useState();
 
     const getOrders = () => {
-        axios.get("http://localhost:5000/admin/orders")
+        axios.get(`${process.env.REACT_APP_API_URL}admin/orders`)
             .then(res => {
                 if (res.data === "No Orders for now") {
                     setLoading(false);

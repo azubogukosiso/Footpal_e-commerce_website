@@ -27,7 +27,7 @@ const WishListPage = (props) => {
 			withCredentials: true
 		});
 
-		instance.post("http://localhost:5000/item/wishlist", userDetails)
+		instance.post(`${process.env.REACT_APP_API_URL}item/wishlist`, userDetails)
 			.then(response => {
 				if (response.data === "No Items in wishlist") {
 					setLoading(false);

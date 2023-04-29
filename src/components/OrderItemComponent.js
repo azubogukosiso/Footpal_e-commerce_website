@@ -34,7 +34,7 @@ const OrderItemComponent = (props) => {
                         deliveryStatus === "pending" ?
                             (
                                 <button className='btn btn-success' onClick={() => {
-                                    axios.post("http://localhost:5000/admin/orders/" + props.order._id).then(res => {
+                                    axios.post(`${process.env.REACT_APP_API_URL}admin/orders/` + props.order._id).then(res => {
                                         if (res.data) {
                                             props.getOrders();
                                             props.toastOne();
@@ -44,7 +44,7 @@ const OrderItemComponent = (props) => {
                             ) :
                             (
                                 <button className='btn btn-danger' onClick={() => {
-                                    axios.delete("http://localhost:5000/admin/orders/" + props.order._id).then(res => {
+                                    axios.delete(`${process.env.REACT_APP_API_URL}admin/orders/` + props.order._id).then(res => {
                                         if (res.data) {
                                             props.getOrders();
                                             props.toastTwo();

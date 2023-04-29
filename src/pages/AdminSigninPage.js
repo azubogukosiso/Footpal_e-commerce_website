@@ -49,7 +49,7 @@ const AdminLoginPage = () => {
       withCredentials: true
     });
 
-    instance.post("http://localhost:5000/admin/signin", details)
+    instance.post(`${process.env.REACT_APP_API_URL}admin/signin`, details)
       .then(response => {
         console.log(response.data);
         if (response.data) {

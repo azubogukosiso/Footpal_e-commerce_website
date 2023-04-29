@@ -27,7 +27,7 @@ const DetailsPage = (props) => {
 
 	const { id } = useParams();
 
-	const publicFolder = "http://localhost:5000/images/";
+	const publicFolder = `${process.env.REACT_APP_API_URL}images/`;
 
 	const navigate = useNavigate();
 
@@ -41,7 +41,7 @@ const DetailsPage = (props) => {
 		});
 
 		// GETTING DETAILS OF ITEM
-		instance.get("http://localhost:5000/item/" + id)
+		instance.get(`${process.env.REACT_APP_API_URL}item/` + id)
 			.then(response => {
 				setItems(response.data);
 				setItemName(response.data.itemName);
@@ -144,7 +144,7 @@ const DetailsPage = (props) => {
 				withCredentials: true
 			});
 
-			instance.post("http://localhost:5000/item/add-to-wishlist", wishItem)
+			instance.post(`${process.env.REACT_APP_API_URL}item/add-to-wishlist`, wishItem)
 				.then(response => {
 					if (response.data === "Item already in wishlist") {
 						showSuccessMsgTwoWishlist();

@@ -51,7 +51,7 @@ const SignUpPage = () => {
       withCredentials: true
     });
 
-    instance.post("http://localhost:5000/customers/signup", user)
+    instance.post(`${process.env.REACT_APP_API_URL}customers/signup`, user)
       .then(response => {
         if (response.data) {
           window.location.href = "/";

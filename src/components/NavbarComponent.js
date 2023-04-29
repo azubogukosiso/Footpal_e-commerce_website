@@ -14,7 +14,7 @@ const NavbarComponent = (props) => {
     });
 
     // CHECK WHO'S LOGGED IN - ADMIN OR CUSTOMER
-    instance.post("http://localhost:5000/general/check-cookie")
+    instance.post(`${process.env.REACT_APP_API_URL}general/check-cookie`)
       .then(response => {
         if (response.data !== "No tokens") {
           setCookie(true);
@@ -39,7 +39,7 @@ const NavbarComponent = (props) => {
       withCredentials: true
     });
 
-    instance.post("http://localhost:5000/customers/logout")
+    instance.post(`${process.env.REACT_APP_API_URL}customers/logout`)
       .then(response => {
         if (response.data) {
           setCookie(false);

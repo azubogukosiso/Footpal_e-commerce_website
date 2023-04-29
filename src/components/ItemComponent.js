@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import "./component_styles/ItemComponent.css";
 
 const ItemComponent = (props) => {
-  const publicFolder = "http://localhost:5000/images/";
+  const publicFolder = `${process.env.REACT_APP_API_URL}images/`;
   return (
     <div className="item-container position-relative col-12 col-sm-6 col-md-4 p-0">
       <div className="overlay px-3 text-white position-absolute w-100 h-100 d-flex align-items-center justify-content-center flex-column">

@@ -37,7 +37,7 @@ const ModalComponent = (props) => {
 		setLoading(true);
 		console.log(props.cartItems);
 		const cartItems = props.cartItems;
-		axios.post("http://localhost:5000/stripe/create-checkout-session", {
+		axios.post(`${process.env.REACT_APP_API_URL}stripe/create-checkout-session`, {
 			cartItems,
 			customerEmail: props.customerEmail
 		}).then(res => {

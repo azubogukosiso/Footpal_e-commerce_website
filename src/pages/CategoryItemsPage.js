@@ -25,7 +25,7 @@ const CategoryItemsPage = (props) => {
     const namesCaps = category.charAt(0).toUpperCase() + category.slice(1);
 
     useEffect(() => {
-        axios.post("http://localhost:5000/item/category", { category })
+        axios.post(`${process.env.REACT_APP_API_URL}item/category`, { category })
             .then(response => {
                 if (response.data === "There are no items of this category at the moment.") {
                     setLoading(false);

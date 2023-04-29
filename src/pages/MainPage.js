@@ -38,7 +38,7 @@ const MainPage = (props) => {
     });
 
     // GETTING ALL ITEMS
-    instance.get("http://localhost:5000/item/")
+    instance.get(`${process.env.REACT_APP_API_URL}item/`)
       .then(response => {
         setItems(response.data);
         setLoading(false);
@@ -48,7 +48,7 @@ const MainPage = (props) => {
       });
 
     // CHECK WHO'S LOGGED IN - ADMIN OR CUSTOMER
-    instance.post("http://localhost:5000/general/check-cookie")
+    instance.post(`${process.env.REACT_APP_API_URL}general/check-cookie`)
       .then(response => {
         if (response.data.admin) {
           setIsAdmin(true);
@@ -156,7 +156,7 @@ const MainPage = (props) => {
         withCredentials: true
       });
 
-      instance.post("http://localhost:5000/item/add-to-wishlist", wishItem)
+      instance.post(`${process.env.REACT_APP_API_URL}item/add-to-wishlist`, wishItem)
         .then(response => {
           if (response.data === "Item already in wishlist") {
             showSuccessMsgTwoWishlist();

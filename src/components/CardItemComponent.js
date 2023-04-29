@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import axios from "axios";
 
 const CardItemComponent = (props) => {
-    const publicFolder = "http://localhost:5000/images/";
+    const publicFolder = `${process.env.REACT_APP_API_URL}images/`;
 
     const deleteItem = (id) => {
         let instance = axios.create({
@@ -10,7 +10,7 @@ const CardItemComponent = (props) => {
         });
 
         // GETTING ALL ITEMS
-        instance.delete("http://localhost:5000/item/delete/" + id)
+        instance.delete(`${process.env.REACT_APP_API_URL}item/delete/` + id)
             .then(response => {
                 if (response) {
                     props.loadAllItems();

@@ -49,7 +49,7 @@ const SignInPage = () => {
       withCredentials: true
     });
 
-    instance.post("http://localhost:5000/customers/signin", details)
+    instance.post(`${process.env.REACT_APP_API_URL}customers/signin`, details)
       .then(response => {
         if (response.data) {
           window.location.href = "/";

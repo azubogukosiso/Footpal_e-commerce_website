@@ -82,7 +82,7 @@ const AdminCreateItemPage = (props) => {
         const Imageinstance = axios.create({
           withCredentials: true
         });
-        await Imageinstance.post("http://localhost:5000/upload", data);
+        await Imageinstance.post(`${process.env.REACT_APP_API_URL}upload`, data);
       } catch (err) {
         console.log(err);
       }
@@ -93,7 +93,7 @@ const AdminCreateItemPage = (props) => {
       withCredentials: true
     });
 
-    instance.post("http://localhost:5000/item/create", newItem)
+    instance.post(`${process.env.REACT_APP_API_URL}item/create`, newItem)
       .then(response => {
         console.log(response.data);
         showSuccessMsg();

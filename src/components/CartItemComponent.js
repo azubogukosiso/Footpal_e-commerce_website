@@ -1,5 +1,5 @@
 const CartItemComponent = (props) => {
-	const publicFolder = "http://localhost:5000/images/";
+	const publicFolder = `${process.env.REACT_APP_API_URL}images/`;
 
 	// INCREASE THE QUANTITY OF ITEMS
 	const handleIncrease = (id) => {

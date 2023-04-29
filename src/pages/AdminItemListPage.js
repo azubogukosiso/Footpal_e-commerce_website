@@ -17,7 +17,7 @@ const AdminItemList = (props) => {
     });
 
     // GETTING ALL ITEMS
-    instance.get("http://localhost:5000/item")
+    instance.get(`${process.env.REACT_APP_API_URL}item`)
       .then((response) => {
         setLoading(false);
         const itemDetails = response.data;

@@ -12,7 +12,7 @@ const AdminEditItemPage = (props) => {
 
 	const { id } = useParams();
 
-	const publicFolder = "http://localhost:5000/images/";
+	const publicFolder = `${process.env.REACT_APP_API_URL}images/`;
 
 	const [itemName, setItemName] = useState("");
 	const [price, setPrice] = useState("");
@@ -29,17 +29,8 @@ const AdminEditItemPage = (props) => {
 			withCredentials: true
 		});
 
-		// GETTING THE DETAILS OF THE ADMIN USING AVAILABLE COOKIES
-		// instance.get("http://localhost:5000/admin/check-cookie")
-		// 	.then(response => { })
-		// 	.catch(error => {
-		// 		if (error.response.data.message) {
-		// 			navigate("/admin/signin");
-		// 		}
-		// 	});
-
 		// GETTING DETAILS OF ITEM TO BE EDITED
-		instance.get("http://localhost:5000/item/" + id)
+		instance.get(`${process.env.REACT_APP_API_URL}item/` + id)
 			.then(response => {
 				setItemName(response.data.itemName);
 				setPrice(response.data.price);
@@ -101,7 +92,7 @@ const AdminEditItemPage = (props) => {
 				const Imageinstance = axios.create({
 					withCredentials: true
 				});
-				await Imageinstance.post("http://localhost:5000/upload", data);
+				await Imageinstance.post(`${process.env.REACT_APP_API_URL}upload`, data);
 			} catch (err) {
 				console.log(err);
 			}
@@ -112,7 +103,7 @@ const AdminEditItemPage = (props) => {
 			withCredentials: true
 		});
 
-		instance.post("http://localhost:5000/item/update/" + id, editedItem)
+		instance.post(`${process.env.REACT_APP_API_URL}item/update/` + id, editedItem)
 			.then(response => {
 				if (response.data === "Item has been successfully edited!") {
 					navigate("/admin/item-list");

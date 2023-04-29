@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import axios from "axios";
 
 const WishItemComponent = (props) => {
-    const publicFolder = "http://localhost:5000/images/";
+    const publicFolder = `${process.env.REACT_APP_API_URL}images/`;
 
     const removeWishItem = (id) => {
         let instance = axios.create({
@@ -10,7 +10,7 @@ const WishItemComponent = (props) => {
         });
 
         // REMOVING AN ITEM FROM WISHLIST
-        instance.delete("http://localhost:5000/item/remove-wish/" + id)
+        instance.delete(`${process.env.REACT_APP_API_URL}item/remove-wish/` + id)
             .then(response => {
                 if (response) {
                     props.loadWishItems();
