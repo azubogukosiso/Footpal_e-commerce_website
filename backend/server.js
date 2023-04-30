@@ -7,6 +7,10 @@ const multer = require('multer');
 const path = require('path');
 
 const app = express();
+const dotenv = require('dotenv');
+dotenv.config();
+
+const PORT = process.env.PORT || 5000;
 
 // ROUTE IMPORTS
 const generalRouter = require("./routes/general");
@@ -16,17 +20,14 @@ const itemRouter = require("./routes/items");
 const stripe = require("./routes/stripe");
 
 // CONNECTION TO THE DATABASE
-mongoose.connect("mongodb://localhost:27017/Footpal-Database", {
+mongoose.connect(process.env.MONGO_URL_LOCAL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
 db.once("open", () => {
-    console.log("Connection successful!");
-    app.listen(5000, () => {
-        console.log("server is running at port 5000")
-    });
+    app.listen(PORT);
 });
 
 app.use(cors({ credentials: true, origin: true }));
