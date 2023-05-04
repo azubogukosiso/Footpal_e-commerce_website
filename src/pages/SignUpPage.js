@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
 
 import "./page_styles/SignInPage.css";
 
@@ -28,6 +30,16 @@ const SignUpPage = () => {
     }
   }
 
+  // SHOW ERROR MESSAGE - NO INTERNET
+  const showErrorMsg = () => {
+    toast.error("Dear Customer, it seems you're offline! Ensure that you're connected to the internet and then refresh your browser", {
+      position: toast.POSITION.TOP_RIGHT,
+      hideProgressBar: true,
+      pauseOnHover: false,
+      autoClose: false
+    });
+  };
+
   // HIDE ERROR MESSAGES AFTER 5 SECS
   const hideErrors = () => {
     setTimeout(() => {
@@ -35,7 +47,6 @@ const SignUpPage = () => {
       setPwdErrMsg("");
     }, 5000)
   }
-
 
   // FUNCTION TO SUBMIT USER DETAILS
   const onSubmitHandler = (e) => {
@@ -57,9 +68,9 @@ const SignUpPage = () => {
           window.location.href = "/";
         }
       })
-      .catch(error => {
-        if (error.response) {
-          const errMsg = error.response.data.errors;
+      .catch(err => {
+        if (err.response) {
+          const errMsg = err.response.data.errors;
           if (errMsg.email) {
             setEmailErrMsg(errMsg.email);
             hideErrors();
@@ -67,6 +78,8 @@ const SignUpPage = () => {
             setPwdErrMsg(errMsg.password);
             hideErrors();
           }
+        } else {
+          err && showErrorMsg();
         }
       });
   };
@@ -133,6 +146,7 @@ const SignUpPage = () => {
         </form>
       </main>
       <Footer />
+      <ToastContainer />
     </>
   );
 };

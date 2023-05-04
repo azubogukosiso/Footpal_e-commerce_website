@@ -1,22 +1,22 @@
 export const Categories = [
   {
     name: "work",
-    image: require("./images/image1.jpg"),
+    image: require("./images/work.jpg"),
   },
   {
     name: "stylish",
-    image: require("./images/image2.jpg"),
+    image: require("./images/stylish.jpg"),
   },
   {
     name: "sports",
-    image: require("./images/image3.jpg"),
+    image: require("./images/sports.jpg"),
   },
   {
     name: "casual",
-    image: require("./images/image4.jpg"),
+    image: require("./images/casual.jpg"),
   },
   {
     name: "industry",
-    image: require("./images/image5.jpg"),
+    image: require("./images/industry.jpg"),
   },
 ];

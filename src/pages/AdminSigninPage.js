@@ -51,7 +51,6 @@ const AdminLoginPage = () => {
 
     instance.post(`${process.env.REACT_APP_API_URL}admin/signin`, details)
       .then(response => {
-        console.log(response.data);
         if (response.data) {
           if (document.cookie) {
             window.location.href = "/admin/";
@@ -59,10 +58,8 @@ const AdminLoginPage = () => {
         }
       })
       .catch(error => {
-        console.log(error.response);
         if (error.response) {
           const errMsg = error.response.data.errors;
-          console.log(errMsg);
           if (errMsg.username) {
             setUsernameErrMsg(errMsg.username);
             hideErrors();

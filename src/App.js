@@ -35,7 +35,7 @@ function App() {
       withCredentials: true
     });
 
-    instance.post("http://localhost:5000/general/check-cookie")
+    instance.post(`${process.env.REACT_APP_API_URL}general/check-cookie`)
       .then(response => {
         if (response.data.customer) {
           setLoggedIn(true);
@@ -80,7 +80,7 @@ function App() {
           {/* ONLY ADMINS */}
           <Route path="/admin" element={loggedIn ? isCustomer ? <Main /> : <AdminMain admin={admin} /> : <SignIn />} />
 
-          <Route path="/admin/signin" element={loggedIn ? isCustomer ? <Main /> : <AdminSignIn /> : <AdminSignIn />} />
+          <Route path="/admin/signin" element={loggedIn ? isCustomer ? <Main /> : <AdminMain admin={admin} /> : <AdminSignIn />} />
 
           <Route path="/admin/signup" element={loggedIn ? isCustomer ? <Main /> : <AdminSignUp /> : <AdminSignUp />} />
 

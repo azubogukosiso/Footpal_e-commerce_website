@@ -29,6 +29,16 @@ const DetailsPage = (props) => {
 
 	const publicFolder = `${process.env.REACT_APP_API_URL}images/`;
 
+	// SHOW ERROR MESSAGE - NO INTERNET
+	const showErrorMsg = () => {
+		toast.error("Dear Customer, it seems you're offline! Ensure that you're connected to the internet and then refresh your browser", {
+			position: toast.POSITION.TOP_RIGHT,
+			hideProgressBar: true,
+			pauseOnHover: false,
+			autoClose: false
+		});
+	};
+
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -49,8 +59,8 @@ const DetailsPage = (props) => {
 				setDetails(response.data.details);
 				setCategory(response.data.category);
 				setItemImage(publicFolder + response.data.itemImage);
-			}).catch(error => {
-				console.log(error);
+			}).catch(err => {
+				err && showErrorMsg();
 			});
 
 		// LOADING CART ITEMS FROM THE LOCAL STORAGE

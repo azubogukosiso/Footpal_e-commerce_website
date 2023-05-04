@@ -6,7 +6,6 @@ let Order = require("../models/order.model");
 
 // HANDLE ERRORS
 const handleErrors = (err) => {
-    console.log(err.message);
     const errors = { username: "", password: "" };
 
     // ADMIN VALIDATION ERRORS FOR SIGNING UP
@@ -36,7 +35,6 @@ const handleErrors = (err) => {
 const maxAge = 3 * 24 * 60 * 60; // 3 DAYS
 // FUNCTION FOR CREATING JWT
 const createToken = (id) => {
-    console.log("This is the admin's id: " + id);
     return jwt.sign({ id }, "kosi secret", {
         expiresIn: maxAge,
     });
@@ -54,7 +52,6 @@ router.route("/signup").post(async (req, res) => {
     try {
         const admin = await Admin.create(admin_details);
         const token = createToken(admin._id);
-        console.log("This is the token: " + token);
         res.cookie("jwt", token, { httpOnly: false, maxAge: maxAge * 1000 });
         res.status(201).send({ message: 'cookies sent, sign up successful' });
     } catch (err) {
@@ -74,7 +71,6 @@ router.route("/signin").post(async (req, res) => {
         res.status(200).send({ message: 'cookies sent, you are signed in' });
     } catch (err) {
         const errors = handleErrors(err);
-        console.log(errors);
         res.status(400).send({ errors });
     }
 });
@@ -82,12 +78,10 @@ router.route("/signin").post(async (req, res) => {
 // CHECKS FOR THE PRESENCE OF A COOKIE - TO KNOW IF A USER IS LOGGED IN
 router.route("/check-cookie").get((req, res) => {
     const token = req.cookies.jwt;
-    console.log(token);
 
     try {
         jwt.verify(token, 'kosi secret', async (err, decodedToken) => {
             try {
-                console.log(decodedToken.id);
                 const admin = await Admin.findById(decodedToken.id);
                 res.status(200).send({ admin });
             } catch (err) {

@@ -13,7 +13,7 @@ const AdminCreateItemPage = (props) => {
   const [itemName, setItemName] = useState("");
   const [price, setPrice] = useState("");
   const [details, setDetails] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState("Work");
   const [itemImage, setItemImage] = useState(null);
   const [previewImage, setPreviewImage] = useState("");
   const [overlayRemoved, setOverlayRemoved] = useState(false);
@@ -58,6 +58,16 @@ const AdminCreateItemPage = (props) => {
     });
   };
 
+  // SHOW ERROR MESSAGE - NO INTERNET
+  const showErrorMsg = () => {
+    toast.error("Dear Customer, it seems you're offline! Ensure that you're connected to the internet and then refresh your browser", {
+      position: toast.POSITION.TOP_RIGHT,
+      hideProgressBar: true,
+      pauseOnHover: false,
+      autoClose: false
+    });
+  };
+
   // FUNCTION TO SUBMIT ITEM DETAILS
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -84,7 +94,7 @@ const AdminCreateItemPage = (props) => {
         });
         await Imageinstance.post(`${process.env.REACT_APP_API_URL}upload`, data);
       } catch (err) {
-        console.log(err);
+        err && showErrorMsg();
       }
     }
 
@@ -95,11 +105,10 @@ const AdminCreateItemPage = (props) => {
 
     instance.post(`${process.env.REACT_APP_API_URL}item/create`, newItem)
       .then(response => {
-        console.log(response.data);
-        showSuccessMsg();
+        response && showSuccessMsg();
       })
-      .catch(error => {
-        console.log(error.response);
+      .catch(err => {
+        err && showErrorMsg();
       });
   };
 
@@ -107,7 +116,7 @@ const AdminCreateItemPage = (props) => {
     <>
       <Navbar admin={props.admin} />
       <main className="d-flex justify-content-center align-items-center">
-        <form onSubmit={onSubmitHandler} className="rounded border border-dark p-4 p-md-5 my-5 w-75" style={{ boxShadow: "-15px 15px 0px 0px rgba(0,0,0,1)" }}>
+        <form onSubmit={onSubmitHandler} className="rounded border border-dark p-4 p-md-5 my-5 w-75" style={{ boxShadow: "10px 10px 0px 0px rgba(0,0,0,1)" }}>
           <h1>Create an Item</h1>
           <div className="form-group mb-3">
             <label htmlFor="name">Name of Item</label>
@@ -167,7 +176,7 @@ const AdminCreateItemPage = (props) => {
               <div className="create-item-img-container position-relative border border-dark rounded overflow-hidden w-100" role="button" onClick={handleClick}>
                 <div className={overlayRemoved ? "create-item-overlay px-3 text-white position-absolute w-100 h-100 d-flex align-items-center justify-content-center d-none" : "create-item-overlay px-3 text-white position-absolute w-100 h-100 d-flex align-items-center justify-content-center"}
                 >
-                  <p>Click to select an image</p>
+                  <p className="text-dark">Click to select an image</p>
                 </div>
                 <img className="w-100 h-100 object-fit-cover" src={previewImage} alt="" />
               </div>

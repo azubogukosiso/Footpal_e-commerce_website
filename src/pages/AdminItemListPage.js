@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import PulseLoader from "react-spinners/PulseLoader";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
 
 import Navbar from "../components/NavbarComponent";
 import CardItemComponent from "../components/CardItemComponent";
@@ -10,6 +12,16 @@ import Footer from "../components/FooterComponent";
 const AdminItemList = (props) => {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // SHOW ERROR MESSAGE - NO INTERNET
+  const showErrorMsg = () => {
+    toast.error("Dear Customer, it seems you're offline! Ensure that you're connected to the internet and then refresh your browser", {
+      position: toast.POSITION.TOP_RIGHT,
+      hideProgressBar: true,
+      pauseOnHover: false,
+      autoClose: false
+    });
+  };
 
   const loadAllItems = () => {
     let instance = axios.create({
@@ -23,8 +35,8 @@ const AdminItemList = (props) => {
         const itemDetails = response.data;
         setItems(itemDetails);
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((err) => {
+        err && showErrorMsg();
       });
   };
 
@@ -53,6 +65,7 @@ const AdminItemList = (props) => {
 
   return (
     <>
+      <ToastContainer />
       <Navbar admin={props.admin} />
       <main className="d-flex justify-content-center align-items-center">
         <div className="my-5 w-75 d-flex justify-content-center align-items-center flex-column">

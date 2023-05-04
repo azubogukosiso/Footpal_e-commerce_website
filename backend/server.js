@@ -20,14 +20,16 @@ const itemRouter = require("./routes/items");
 const stripe = require("./routes/stripe");
 
 // CONNECTION TO THE DATABASE
-mongoose.connect(process.env.MONGO_URL_ATLAS, {
+mongoose.connect(process.env.MONGO_URL_LOCAL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
 db.once("open", () => {
-    app.listen(PORT);
+    app.listen(PORT, () => {
+        console.log("server has started");
+    });
 });
 
 app.use(cors({ credentials: true, origin: true }));

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
 
 import "./page_styles/SignInPage.css";
 
@@ -35,6 +37,16 @@ const SignInPage = () => {
     }, 5000)
   }
 
+  // SHOW ERROR MESSAGE - NO INTERNET
+  const showErrorMsg = () => {
+    toast.error("Dear Customer, it seems you're offline! Ensure that you're connected to the internet and then refresh your browser", {
+      position: toast.POSITION.TOP_RIGHT,
+      hideProgressBar: true,
+      pauseOnHover: false,
+      autoClose: false
+    });
+  };
+
 
   // FUNCTION TO SUBMIT USER DETAILS
   const onSubmitHandler = (e) => {
@@ -66,6 +78,8 @@ const SignInPage = () => {
             setPwdErrMsg(errMsg.password);
             hideErrors();
           }
+        } else {
+          showErrorMsg();
         }
       });
   };
@@ -123,6 +137,7 @@ const SignInPage = () => {
         </form>
       </main>
       <Footer />
+      <ToastContainer />
     </>
   );
 };

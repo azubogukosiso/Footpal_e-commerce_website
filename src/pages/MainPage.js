@@ -164,10 +164,22 @@ const MainPage = (props) => {
             showSuccessMsgOneWishlist();
           }
         })
-        .catch();
+        .catch(err => {
+          err && showErrorMsg();
+        });
     } else {
       navigate("/signin");
     }
+  };
+
+  // SHOW ERROR MESSAGE - NO INTERNET
+  const showErrorMsg = () => {
+    toast.error("Dear Customer, it seems you're offline! Ensure that you're connected to the internet and then refresh your browser", {
+      position: toast.POSITION.TOP_RIGHT,
+      hideProgressBar: true,
+      pauseOnHover: false,
+      autoClose: false
+    });
   };
 
   // SHOW SUCCESS MESSAGE - ITEM ADDED TO WISHLIST

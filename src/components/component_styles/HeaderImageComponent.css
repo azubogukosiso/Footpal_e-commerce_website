@@ -2,6 +2,16 @@
     height: 400px;
 }
 
+.carousel-img {
+    transform: translate(0, -300px);
+}
+
+@media screen and (max-width: 991px) {
+    .carousel-img {
+        transform: translate(0, 0);
+    }
+}
+
 @media screen and (max-width: 576px) {
     .img-container {
         height: 200px;

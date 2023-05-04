@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
 
 import "./page_styles/AdminCreateItemPage.css";
 
@@ -39,7 +41,7 @@ const AdminEditItemPage = (props) => {
 				setPreviewImage(publicFolder + response.data.itemImage);
 				setOverlayRemoved(true);
 			})
-	}, [navigate, id])
+	}, [navigate, id, publicFolder])
 
 	// IMAGE SELECTION FUNCTIONALITY
 	const handleClick = () => {
@@ -69,6 +71,16 @@ const AdminEditItemPage = (props) => {
 		}
 	}
 
+	// SHOW ERROR MESSAGE - NO INTERNET
+	const showErrorMsg = () => {
+		toast.error("Dear Customer, it seems you're offline! Ensure that you're connected to the internet and then refresh your browser", {
+			position: toast.POSITION.TOP_RIGHT,
+			hideProgressBar: true,
+			pauseOnHover: false,
+			autoClose: false
+		});
+	};
+
 	// FUNCTION TO SUBMIT ITEM DETAILS
 	const onSubmitHandler = async (e) => {
 		e.preventDefault();
@@ -94,7 +106,7 @@ const AdminEditItemPage = (props) => {
 				});
 				await Imageinstance.post(`${process.env.REACT_APP_API_URL}upload`, data);
 			} catch (err) {
-				console.log(err);
+				err && showErrorMsg();
 			}
 		}
 
@@ -109,12 +121,13 @@ const AdminEditItemPage = (props) => {
 					navigate("/admin/item-list");
 				}
 			})
-			.catch(error => {
-				console.log(error.response);
+			.catch(err => {
+				err && showErrorMsg();
 			});
 	};
 	return (
 		<>
+			<ToastContainer />
 			<Navbar admin={props.admin} />
 			<main className="d-flex justify-content-center align-items-center">
 				<form

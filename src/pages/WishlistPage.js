@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import PulseLoader from "react-spinners/PulseLoader";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
 
 import Navbar from "../components/NavbarComponent";
 import WishItem from "../components/WishItemComponent";
@@ -21,6 +23,16 @@ const WishListPage = (props) => {
 		cartItems[i].quantity = 1;
 	}
 
+	// SHOW ERROR MESSAGE - NO INTERNET
+	const showErrorMsg = () => {
+		toast.error("Dear Customer, it seems you're offline! Ensure that you're connected to the internet and then refresh your browser", {
+			position: toast.POSITION.TOP_RIGHT,
+			hideProgressBar: true,
+			pauseOnHover: false,
+			autoClose: false
+		});
+	};
+
 	// FUNCTION TO LOAD ITEMS FROM WISHLIST
 	const loadWishItems = () => {
 		let instance = axios.create({
@@ -37,8 +49,8 @@ const WishListPage = (props) => {
 					setWishItems(response.data);
 				}
 			})
-			.catch(error => {
-				console.log(error);
+			.catch(err => {
+				err && showErrorMsg();
 			});
 	}
 
@@ -103,6 +115,7 @@ const WishListPage = (props) => {
 				{isOpen && <Modal setIsOpen={setIsOpen} cartItems={cartItems} clearCart={clearCart} clearItem={clearItem} />}
 			</main>
 			<Footer />
+			<ToastContainer />
 		</>
 	)
 }

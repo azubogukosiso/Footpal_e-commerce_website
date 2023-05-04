@@ -3,6 +3,8 @@ import { v4 as uuidv4 } from "uuid";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import PulseLoader from "react-spinners/PulseLoader";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
 
 import Navbar from "../components/NavbarComponent";
 import CategoryItem from "../components/CategoryItemComponent";
@@ -24,6 +26,16 @@ const CategoryItemsPage = (props) => {
     const { category } = useParams();
     const namesCaps = category.charAt(0).toUpperCase() + category.slice(1);
 
+    // SHOW ERROR MESSAGE - NO INTERNET
+    const showErrorMsg = () => {
+        toast.error("Dear Customer, it seems you're offline! Ensure that you're connected to the internet and then refresh your browser", {
+            position: toast.POSITION.TOP_RIGHT,
+            hideProgressBar: true,
+            pauseOnHover: false,
+            autoClose: false
+        });
+    };
+
     useEffect(() => {
         axios.post(`${process.env.REACT_APP_API_URL}item/category`, { category })
             .then(response => {
@@ -34,8 +46,8 @@ const CategoryItemsPage = (props) => {
                     setLoading(false);
                     setCategoryItems(response.data);
                 }
-            }).catch(error => {
-                console.log(error);
+            }).catch(err => {
+                err && showErrorMsg();
             });
 
         // LOADING CART ITEMS FROM THE LOCAL STORAGE
@@ -86,7 +98,7 @@ const CategoryItemsPage = (props) => {
                 <div className="my-5 w-75 d-flex justify-content-center align-items-center flex-column">
                     {
                         msg ? (
-                            <h2>{msg}</h2>
+                            <h2 className="text-center">{msg}</h2>
 
                         ) : (
                             <>
@@ -99,6 +111,7 @@ const CategoryItemsPage = (props) => {
                 {isOpen && <Modal setIsOpen={setIsOpen} cartItems={cartItems} clearCart={clearCart} clearItem={clearItem} />}
             </main>
             <Footer />
+            <ToastContainer />
         </>
     )
 }

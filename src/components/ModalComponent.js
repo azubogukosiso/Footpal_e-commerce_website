@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import PulseLoader from "react-spinners/PulseLoader";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"
 
 import './component_styles/ModalComponent.css';
 import CartItem from "./CartItemComponent";
@@ -32,10 +34,19 @@ const ModalComponent = (props) => {
 		}
 	}
 
+	// SHOW ERROR MESSAGE - NO INTERNET
+	const showErrorMsg = () => {
+		toast.error("Dear Customer, it seems you're offline! Ensure that you're connected to the internet and then refresh your browser", {
+			position: toast.POSITION.TOP_RIGHT,
+			hideProgressBar: true,
+			pauseOnHover: false,
+			autoClose: false
+		});
+	};
+
 	// SENDS THE CART ITEMS TO BE HANDLED BY STRIPE
 	const handleCheckout = () => {
 		setLoading(true);
-		console.log(props.cartItems);
 		const cartItems = props.cartItems;
 		axios.post(`${process.env.REACT_APP_API_URL}stripe/create-checkout-session`, {
 			cartItems,
@@ -46,12 +57,13 @@ const ModalComponent = (props) => {
 				window.location.href = res.data.url;
 			}
 		}).catch(err => {
-			console.log(err.message);
+			err && showErrorMsg();
 		});
 	};
 
 	return (
 		<>
+			<ToastContainer />
 			<div className='backdrop' onClick={() => props.setIsOpen(false)} />
 			<div className='cart-modal w-75 rounded bg-white p-3 position-fixed' style={{ boxShadow: "0px 8px 15px 2px rgba(0,0,0,0.18)" }}>
 				<div className='d-flex flex-column flex-lg-row justify-content-between align-items-center'>
@@ -106,7 +118,7 @@ const ModalComponent = (props) => {
 					{
 						props.cartItems.length > 0 &&
 						<button className='btn btn-dark w-100' onClick={() => handleCheckout()}>
-							{loading ? (<PulseLoader color="#fff" className="d-flex justify-content-center align-items-center" size={10} />) : (<>Checkout</>)}
+							{loading ? (<PulseLoader color="#fff" className="d-flex justify-content-center align-items-center" size={15} />) : (<>Checkout</>)}
 						</button>
 					}
 				</div>
