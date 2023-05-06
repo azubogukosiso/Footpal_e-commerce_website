@@ -71,7 +71,7 @@ const DetailsPage = (props) => {
 		if (cartItemsLocalStorage) {
 			setCartItems(cartItemsLocalStorage);
 		}
-	}, [id, navigate, customerEmail])
+	}, [id, navigate, customerEmail, publicFolder])
 
 	// SHOW SUCCESS MESSAGE - ITEM ADDED TO CART
 	const showSuccessMsgOne = () => {
