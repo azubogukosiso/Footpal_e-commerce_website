@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import PulseLoader from "react-spinners/PulseLoader";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"
@@ -18,6 +19,7 @@ const DetailsPage = (props) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [cartItems, setCartItems] = useState([]);
 	const [isCustomer, setIsCustomer] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const customerEmail = props.customer.email;
 
 	// ADDING QUANTITY PROPERTY TO CART ITEMS OBJECT
@@ -59,6 +61,7 @@ const DetailsPage = (props) => {
 				setDetails(response.data.details);
 				setCategory(response.data.category);
 				setItemImage(publicFolder + response.data.itemImage);
+				setLoading(false);
 			}).catch(err => {
 				err && showErrorMsg();
 			});
@@ -193,26 +196,30 @@ const DetailsPage = (props) => {
 			<Navbar setIsOpen={setIsOpen} />
 			<main className='d-flex justify-content-center align-items-center'>
 				<div className="my-5 w-75 d-flex justify-content-center align-items-center flex-column">
-
-
-					<div className="rounded p-3 d-flex flex-column flex-sm-row align-items-center my-5 w-100 border border-dark" style={{ boxShadow: "10px 10px 0px 0px rgba(0,0,0,1)" }}>
-						<div className="w-75 h-75 rounded overflow-hidden" style={{ objectFit: "cover" }}>
-							<img src={itemImage} alt="" className="w-100 h-100" />
-						</div>
-						<div className="mx-4 w-100 mt-4 mt-sm-0">
-							<div>
-								<h4>{itemName}</h4>
-								<h5><span className="badge bg-dark">{category}</span></h5>
-								<h6>$ {price}</h6>
-								<h6>{details}</h6>
+					{
+						loading ? (
+							<PulseLoader color="#000" className="justify-content-center my-5" size={20} />
+						) : (
+							<div className="rounded p-3 d-flex flex-column flex-sm-row align-items-center my-5 w-100 border border-dark" style={{ boxShadow: "10px 10px 0px 0px rgba(0,0,0,1)" }}>
+								<div className="w-75 h-75 rounded overflow-hidden" style={{ objectFit: "cover" }}>
+									<img src={itemImage} alt="" className="w-100 h-100" />
+								</div>
+								<div className="mx-4 w-100 mt-4 mt-sm-0">
+									<div>
+										<h4>{itemName}</h4>
+										<h5><span className="badge bg-dark">{category}</span></h5>
+										<h6>$ {price}</h6>
+										<h6>{details}</h6>
+									</div>
+									<div className="d-flex flex-column flex-md-row">
+										<button className="btn btn-dark" onClick={() => addToCart(items)}>Add to Cart</button>
+										<span className="mx-2 my-2"></span>
+										<button className="btn btn-dark" onClick={() => addToWishlist(items)}>Add to Wishlist</button>
+									</div>
+								</div>
 							</div>
-							<div className="d-flex flex-column flex-md-row">
-								<button className="btn btn-dark" onClick={() => addToCart(items)}>Add to Cart</button>
-								<span className="mx-2 my-2"></span>
-								<button className="btn btn-dark" onClick={() => addToWishlist(items)}>Add to Wishlist</button>
-							</div>
-						</div>
-					</div>
+						)
+					}
 				</div>
 				{isOpen && <Modal setIsOpen={setIsOpen} cartItems={cartItems} clearCart={clearCart} clearItem={clearItem} />}
 			</main>
