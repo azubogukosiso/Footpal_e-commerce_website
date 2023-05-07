@@ -201,10 +201,12 @@ const DetailsPage = (props) => {
 							<PulseLoader color="#000" className="justify-content-center my-5" size={20} />
 						) : (
 							<div className="rounded p-3 d-flex flex-column flex-sm-row align-items-center my-5 w-100 border border-dark" style={{ boxShadow: "10px 10px 0px 0px rgba(0,0,0,1)" }}>
-								<div className="w-75 h-75 rounded overflow-hidden" style={{ objectFit: "cover" }}>
-									<img src={itemImage} alt="" className="w-100 h-100" />
+								<div className="row w-100 ms-sm-1">
+									<div className="p-0 col-12 w-100 h-100 rounded overflow-hidden" style={{ objectFit: "cover" }}>
+										<img src={itemImage} alt="" className="w-100 h-100" />
+									</div>
 								</div>
-								<div className="mx-4 w-100 mt-4 mt-sm-0">
+								<div className="mx-5 w-100 mt-4 mt-sm-0">
 									<div>
 										<h4>{itemName}</h4>
 										<h5><span className="badge bg-dark">{category}</span></h5>

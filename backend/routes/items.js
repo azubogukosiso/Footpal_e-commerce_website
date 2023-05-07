@@ -10,6 +10,7 @@ let Wish = require("../models/wish.model");
 router.route("/").get((req, res) => {
 	Item.find()
 		.sort({ createdAt: -1 })
+		.limit(6)
 		.then(items => res.json(items))
 		.catch(err => res.status(500).json("Error: " + err));
 });
