@@ -7,6 +7,14 @@ let Wish = require("../models/wish.model");
 // ============== LIST OF ROUTES ==============
 
 // GETS A LIST OF ALL ITEMS
+router.route("/all").get((req, res) => {
+	Item.find()
+		.sort({ createdAt: -1 })
+		.then(items => res.json(items))
+		.catch(err => res.status(500).json("Error: " + err));
+});
+
+// GETS A LIST OF ITEMS FOR DISPLAY
 router.route("/").get((req, res) => {
 	Item.find()
 		.sort({ createdAt: -1 })

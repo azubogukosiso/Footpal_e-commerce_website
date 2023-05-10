@@ -79,7 +79,7 @@ const SignUpPage = () => {
             hideErrors();
           }
         } else {
-          err && showErrorMsg();
+          showErrorMsg();
         }
       });
   };

@@ -25,7 +25,7 @@ const WishListPage = (props) => {
 
 	// SHOW ERROR MESSAGE - NO INTERNET
 	const showErrorMsg = () => {
-		toast.error("Dear Customer, it seems you're offline! Ensure that you're connected to the internet and then refresh your browser", {
+		toast.error("Unable to get wishlist items! Check your internet connection and try again.", {
 			position: toast.POSITION.TOP_RIGHT,
 			hideProgressBar: true,
 			pauseOnHover: false,

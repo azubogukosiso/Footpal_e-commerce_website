@@ -4,6 +4,7 @@ const CartItemComponent = (props) => {
 	// INCREASE THE QUANTITY OF ITEMS
 	const handleIncrease = (id) => {
 		const priceArray = [];
+		// eslint-disable-next-line
 		props.cartItems.map(item => {
 			if (item._id === id) {
 				item.quantity += 1;
@@ -15,7 +16,9 @@ const CartItemComponent = (props) => {
 
 	// REDUCE THE QUANTITY OF ITEMS
 	const handleDecrease = (id) => {
+		// eslint-disable-next-line
 		const priceArray = [];
+		// eslint-disable-next-line
 		props.cartItems.map(item => {
 			if (item._id === id && item.quantity > 1) {
 				item.quantity -= 1;

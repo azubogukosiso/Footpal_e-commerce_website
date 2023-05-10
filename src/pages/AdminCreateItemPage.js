@@ -58,16 +58,6 @@ const AdminCreateItemPage = (props) => {
     });
   };
 
-  // SHOW ERROR MESSAGE - NO INTERNET
-  const showErrorMsg = () => {
-    toast.error("Dear Customer, it seems you're offline! Ensure that you're connected to the internet and then refresh your browser", {
-      position: toast.POSITION.TOP_RIGHT,
-      hideProgressBar: true,
-      pauseOnHover: false,
-      autoClose: false
-    });
-  };
-
   // FUNCTION TO SUBMIT ITEM DETAILS
   const onSubmitHandler = async (e) => {
     e.preventDefault();
@@ -93,9 +83,7 @@ const AdminCreateItemPage = (props) => {
           withCredentials: true
         });
         await Imageinstance.post(`${process.env.REACT_APP_API_URL}upload`, data);
-      } catch (err) {
-        err && showErrorMsg();
-      }
+      } catch (err) { }
     }
 
     // SUBMITS ALL DETAILS
@@ -107,9 +95,7 @@ const AdminCreateItemPage = (props) => {
       .then(response => {
         response && showSuccessMsg();
       })
-      .catch(err => {
-        err && showErrorMsg();
-      });
+      .catch(() => { });
   };
 
   return (

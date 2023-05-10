@@ -106,6 +106,7 @@ let endpointSecret;
 
 // COMPLETE PAYMENT AND RECORD IT IN THE DATABASE
 router.post('/webhook', express.raw({ type: 'application/json' }), (req, res) => {
+    console.log("the webhook route");
     const sig = req.headers['stripe-signature'];
 
     let data;

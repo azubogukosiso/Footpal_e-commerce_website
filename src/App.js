@@ -21,7 +21,8 @@ import AdminCreateItem from "./pages/AdminCreateItemPage";
 import AdminItemList from "./pages/AdminItemListPage";
 import AdminOrderList from "./pages/AdminOrderListPage";
 import AdminEditItem from "./pages/AdminEditItemPage";
-import NotFoundPage from "./pages/NotFoundPage";
+import NotFound from "./pages/NotFoundPage";
+import OrderList from "./pages/OrderListPage";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -69,13 +70,15 @@ function App() {
 
           <Route path="/wishlist" element={loggedIn ? isAdmin ? <Main /> : <Wishlist customer={customer} /> : <SignIn />} />
 
+          <Route path="/track-order" element={loggedIn ? isAdmin ? <Main /> : <OrderList customer={customer} /> : <SignIn />} />
+
           <Route path="/details/:id" element={loggedIn ? isAdmin ? <Main /> : <Details customer={customer} /> : <SignIn />} />
 
           <Route path="/profile" element={loggedIn ? isAdmin ? <AdminMain /> : <Profile customer={customer} /> : <SignIn />} />
 
-          <Route path="/checkout-success" element={loggedIn ? isAdmin ? <AdminMain /> : <CheckoutSuccess customer={customer} /> : <SignIn />} />
+          <Route path="/checkout-success" element={loggedIn ? isAdmin ? <AdminMain /> : <CheckoutSuccess /> : <SignIn />} />
 
-          <Route path="/categories/:category" element={loggedIn ? isAdmin ? <CategoryItems admin={admin} /> : <CategoryItems customer={customer} /> : <SignIn />} />
+          <Route path="/categories/:category" element={loggedIn ? isAdmin ? <CategoryItems admin={admin} /> : <CategoryItems /> : <SignIn />} />
 
           {/* ONLY ADMINS */}
           <Route path="/admin" element={loggedIn ? isCustomer ? <Main /> : <AdminMain admin={admin} /> : <SignIn />} />
@@ -94,7 +97,7 @@ function App() {
 
           <Route path="/admin/edit-item/:id" element={loggedIn ? isCustomer ? <Main /> : <AdminEditItem /> : <SignIn />} />
 
-          <Route path="*" element={<NotFoundPage />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     );

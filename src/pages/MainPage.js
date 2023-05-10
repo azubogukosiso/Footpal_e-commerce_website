@@ -38,7 +38,7 @@ const MainPage = (props) => {
     });
 
     // GETTING ALL ITEMS
-    instance.get(`${process.env.REACT_APP_API_URL}item/`)
+    instance.get(`${process.env.REACT_APP_API_URL}item`)
       .then(response => {
         setItems(response.data);
         setLoading(false);
@@ -163,23 +163,10 @@ const MainPage = (props) => {
           } else {
             showSuccessMsgOneWishlist();
           }
-        })
-        .catch(err => {
-          err && showErrorMsg();
         });
     } else {
       navigate("/signin");
     }
-  };
-
-  // SHOW ERROR MESSAGE - NO INTERNET
-  const showErrorMsg = () => {
-    toast.error("Dear Customer, it seems you're offline! Ensure that you're connected to the internet and then refresh your browser", {
-      position: toast.POSITION.TOP_RIGHT,
-      hideProgressBar: true,
-      pauseOnHover: false,
-      autoClose: false
-    });
   };
 
   // SHOW SUCCESS MESSAGE - ITEM ADDED TO WISHLIST

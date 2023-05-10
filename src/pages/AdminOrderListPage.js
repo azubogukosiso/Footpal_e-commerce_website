@@ -16,11 +16,11 @@ const AdminOrderListPage = (props) => {
 
 	// SHOW ERROR MESSAGE - NO INTERNET
 	const showErrorMsg = () => {
-		toast.error("Dear Customer, it seems you're offline! Ensure that you're connected to the internet and then refresh your browser", {
+		toast.error("Unable to complete operation! Check your internet connection and try again.", {
 			position: toast.POSITION.TOP_RIGHT,
 			hideProgressBar: true,
 			pauseOnHover: false,
-			autoClose: false
+			autoClose: 3000
 		});
 	};
 
@@ -34,9 +34,6 @@ const AdminOrderListPage = (props) => {
 					setLoading(false);
 					setOrders(res.data);
 				}
-			})
-			.catch(err => {
-				err && showErrorMsg();
 			});
 	}
 
@@ -56,7 +53,7 @@ const AdminOrderListPage = (props) => {
 			position: toast.POSITION.TOP_RIGHT,
 			hideProgressBar: true,
 			pauseOnHover: false,
-			autoClose: 2000
+			autoClose: 3000
 		});
 	};
 
@@ -64,7 +61,7 @@ const AdminOrderListPage = (props) => {
 	if (!loading) {
 		renderItems = orders.map(order =>
 		(
-			<OrderItem key={uuidv4()} order={order} getOrders={getOrders} toastOne={showSuccessMsgOneOrder} toastTwo={showSuccessMsgTwoOrder} />
+			<OrderItem key={uuidv4()} order={order} getOrders={getOrders} toastOne={showSuccessMsgOneOrder} toastTwo={showSuccessMsgTwoOrder} toastThree={showErrorMsg} />
 		)
 		)
 	} else {
@@ -77,7 +74,7 @@ const AdminOrderListPage = (props) => {
 
 	return (
 		<>
-			<Navbar admin={props.admin} />
+			<Navbar />
 			<main className="d-flex justify-content-center align-items-center">
 				<div className='my-5 w-75 d-flex justify-content-center align-items-center flex-column'>
 					{

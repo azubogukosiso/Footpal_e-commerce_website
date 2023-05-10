@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect } from "react";
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -65,6 +65,11 @@ const NavbarComponent = (props) => {
             </NavLink>
           </li>
           <li className="nav-item mx-0 mx-lg-3">
+            <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/track-order">
+              Track Orders
+            </NavLink>
+          </li>
+          <li className="nav-item mx-0 mx-lg-3">
             <NavLink className="nav-link text-white ps-3 ps-lg-2 rounded" to="/profile">
               Your Profile
             </NavLink>
@@ -121,9 +126,9 @@ const NavbarComponent = (props) => {
       });
   }
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     checkLoggedIn();
-  }, [])
+  })
 
   // LOGOUT USER
   const LogOut = (e) => {

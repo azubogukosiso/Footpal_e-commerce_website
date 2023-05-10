@@ -15,7 +15,7 @@ const AdminItemList = (props) => {
 
   // SHOW ERROR MESSAGE - NO INTERNET
   const showErrorMsg = () => {
-    toast.error("Dear Customer, it seems you're offline! Ensure that you're connected to the internet and then refresh your browser", {
+    toast.error("Unable to fetch items! Check your internet connection and try again.", {
       position: toast.POSITION.TOP_RIGHT,
       hideProgressBar: true,
       pauseOnHover: false,
@@ -29,7 +29,7 @@ const AdminItemList = (props) => {
     });
 
     // GETTING ALL ITEMS
-    instance.get(`${process.env.REACT_APP_API_URL}item`)
+    instance.get(`${process.env.REACT_APP_API_URL}item/all`)
       .then((response) => {
         setLoading(false);
         const itemDetails = response.data;
@@ -61,6 +61,7 @@ const AdminItemList = (props) => {
 
   useEffect(() => {
     loadAllItems();
+    // eslint-disable-next-line
   }, []);
 
   return (

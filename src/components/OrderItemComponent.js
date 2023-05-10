@@ -2,8 +2,6 @@ import axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 
 const OrderItemComponent = (props) => {
-    const deliveryStatus = props.order.delivery_status;
-
     return (
         <>
             <div className="rounded p-3 d-flex flex-column my-5 w-100 border border-dark" style={{ boxShadow: "10px 10px 0px 0px rgba(0,0,0,1)" }}>
@@ -22,35 +20,46 @@ const OrderItemComponent = (props) => {
                     {
                         props.order.products.map(product =>
                         (
-                            <li key={uuidv4()}>{product.description} - $ {product.amount_total / 100}</li>
+                            <li key={uuidv4()}>{product.description} - $ {(product.amount_total / 100) / product.quantity}, {product.quantity} item(s) ordered</li>
                         )
                         )
                     }
                 </ul> <hr />
                 <span><strong> Total Price:</strong></span>
-                $ {props.order.total / 100} <hr />
+                $ {props.order.total / 100}
                 <div>
                     {
-                        deliveryStatus === "pending" ?
-                            (
-                                <button className='btn btn-success' onClick={() => {
-                                    axios.post(`${process.env.REACT_APP_API_URL}admin/orders/` + props.order._id).then(res => {
-                                        if (res.data) {
-                                            props.getOrders();
-                                            props.toastOne();
-                                        }
-                                    });
-                                }}>Confirm Delivery</button>
-                            ) :
-                            (
-                                <button className='btn btn-danger' onClick={() => {
-                                    axios.delete(`${process.env.REACT_APP_API_URL}admin/orders/` + props.order._id).then(res => {
-                                        if (res.data) {
-                                            props.getOrders();
-                                            props.toastTwo();
-                                        }
-                                    });
-                                }}>Delete Order</button>
+                        !props.customer ?
+                            props.order.delivery_status === "pending" ?
+                                (
+                                    <>
+                                        <hr />
+                                        <button className='btn btn-success' onClick={() => {
+                                            axios.post(`${process.env.REACT_APP_API_URL}admin/orders/` + props.order._id).then(res => {
+                                                if (res.data) {
+                                                    props.getOrders();
+                                                    props.toastOne();
+                                                } else {
+                                                    props.toastThree();
+                                                }
+                                            });
+                                        }}>Confirm Delivery</button>
+                                    </>
+                                ) :
+                                (
+                                    <button className='btn btn-danger' onClick={() => {
+                                        axios.delete(`${process.env.REACT_APP_API_URL}admin/orders/` + props.order._id).then(res => {
+                                            if (res.data) {
+                                                props.getOrders();
+                                                props.toastTwo();
+                                            } else {
+                                                props.toastThree();
+                                            }
+                                        });
+                                    }}>Delete Order</button>
+                                )
+                            : (
+                                <></>
                             )
                     }
                 </div>

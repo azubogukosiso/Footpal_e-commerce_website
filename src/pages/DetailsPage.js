@@ -31,16 +31,6 @@ const DetailsPage = (props) => {
 
 	const publicFolder = `${process.env.REACT_APP_API_URL}images/`;
 
-	// SHOW ERROR MESSAGE - NO INTERNET
-	const showErrorMsg = () => {
-		toast.error("Dear Customer, it seems you're offline! Ensure that you're connected to the internet and then refresh your browser", {
-			position: toast.POSITION.TOP_RIGHT,
-			hideProgressBar: true,
-			pauseOnHover: false,
-			autoClose: false
-		});
-	};
-
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -62,8 +52,6 @@ const DetailsPage = (props) => {
 				setCategory(response.data.category);
 				setItemImage(publicFolder + response.data.itemImage);
 				setLoading(false);
-			}).catch(err => {
-				err && showErrorMsg();
 			});
 
 		// LOADING CART ITEMS FROM THE LOCAL STORAGE
@@ -130,8 +118,6 @@ const DetailsPage = (props) => {
 			showSuccessMsgOne();
 		}
 	}
-
-
 
 	// FUNCTION TO ADD ITEMS TO WISHLIST
 	const addToWishlist = (item) => {
