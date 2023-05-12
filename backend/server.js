@@ -26,9 +26,7 @@ mongoose.connect(process.env.MONGO_URL_ATLAS, {
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
 db.once("open", () => {
-    app.listen(PORT, () => {
-        console.log("server has started");
-    });
+    app.listen(PORT);
 });
 
 app.use(cors({ credentials: true, origin: true }));

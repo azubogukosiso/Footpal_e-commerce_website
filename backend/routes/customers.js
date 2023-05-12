@@ -5,7 +5,6 @@ let Customer = require("../models/customer.model");
 
 // HANDLE ERRORS
 const handleErrors = (err) => {
-    console.log(err.message, err.code);
     const errors = { email: "", password: "" };
 
     // DUPLICATE EMAIL ERROR CODE - FOR SIGNING UP
@@ -41,7 +40,6 @@ const handleErrors = (err) => {
 const maxAge = 3 * 24 * 60 * 60; // 3 days
 // create jwt using fxn
 const createToken = (id) => {
-    console.log("This is the customer's id: " + id);
     return jwt.sign({ id }, "kosi secret", {
         expiresIn: maxAge,
     });
@@ -68,7 +66,6 @@ router.route("/signup").post(async (req, res) => {
     try {
         const customer = await Customer.create(customer_details);
         const token = createToken(customer._id);
-        console.log("This is the token: " + token);
         res.cookie("jwt", token, { httpOnly: false, maxAge: maxAge * 1000 });
         res.status(201).send({ message: 'cookies sent, sign up successful' });
     } catch (err) {
@@ -88,7 +85,6 @@ router.route("/signin").post(async (req, res) => {
         res.status(200).send({ message: 'cookies sent, you are signed in' });
     } catch (err) {
         const errors = handleErrors(err);
-        console.log(errors);
         res.status(400).send({ errors });
     }
 });

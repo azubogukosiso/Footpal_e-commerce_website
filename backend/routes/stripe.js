@@ -15,8 +15,6 @@ router.post("/create-checkout-session", async (req, res) => {
         }
     });
 
-    console.log("First log - the customer's details: ", customer);
-
     const line_items = req.body.cartItems.map(item => {
         return {
             price_data: {
@@ -33,8 +31,6 @@ router.post("/create-checkout-session", async (req, res) => {
             quantity: item.quantity,
         };
     });
-
-    console.log("Second log - the items ordered for: ", line_items);
 
     const session = await stripe.checkout.sessions.create({
         shipping_address_collection: { allowed_countries: ['US', 'CA'] },
@@ -72,8 +68,6 @@ router.post("/create-checkout-session", async (req, res) => {
         cancel_url: 'http://localhost:3000/',
     });
 
-    console.log("Third log - the session: ", session);
-
     res.send({ url: session.url });
 })
 
@@ -93,7 +87,6 @@ const createOrder = async (customer, data, lineItems) => {
 
     try {
         const savedOrder = await newOrder.save();
-        console.log("Processed order: ", savedOrder)
     } catch (err) {
         console.log(err);
     }
@@ -102,11 +95,8 @@ const createOrder = async (customer, data, lineItems) => {
 
 let endpointSecret;
 
-// endpointSecret = "whsec_be43be9c5061b15d58ebfa8d35328f8306d5955350a99fb7f11819fdbb9206a3";
-
 // COMPLETE PAYMENT AND RECORD IT IN THE DATABASE
 router.post('/webhook', express.raw({ type: 'application/json' }), (req, res) => {
-    console.log("the webhook route");
     const sig = req.headers['stripe-signature'];
 
     let data;
@@ -118,9 +108,7 @@ router.post('/webhook', express.raw({ type: 'application/json' }), (req, res) =>
 
         try {
             event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
-            console.log("verified");
         } catch (err) {
-            console.log("failed");
             res.status(400).send(`Webhook Error: ${err.message}`);
             return;
         }
@@ -139,7 +127,6 @@ router.post('/webhook', express.raw({ type: 'application/json' }), (req, res) =>
                 data.id,
                 {},
                 function (err, lineItems) {
-                    console.log("line_items: ", lineItems);
                     createOrder(customer, data, lineItems);
                 }
             );

@@ -16,6 +16,7 @@ const OrderListPage = (props) => {
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [msg, setMsg] = useState();
+    const userDetails = props.customer;
 
     // SHOW ERROR MESSAGE - NO INTERNET
     const showErrorMsg = () => {
@@ -28,7 +29,7 @@ const OrderListPage = (props) => {
     };
 
     const getOrders = () => {
-        axios.get(`${process.env.REACT_APP_API_URL}admin/orders`)
+        axios.post(`${process.env.REACT_APP_API_URL}admin/orders`, userDetails)
             .then(res => {
                 if (res.data === "No Orders for now") {
                     setLoading(false);

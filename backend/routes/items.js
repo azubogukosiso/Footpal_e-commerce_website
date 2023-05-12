@@ -1,4 +1,3 @@
-// PROCESS FILE
 const router = require("express").Router();
 
 let Item = require("../models/item.model");
@@ -92,7 +91,6 @@ router.route("/add-to-wishlist").post(async (req, res) => {
 
 // GETS ALL ITEMS IN THE WISHLIST DATABASE
 router.route("/wishlist").post((req, res) => {
-	console.log(req.body);
 	Wish.find({ customerEmail: req.body.email })
 		.then(wishes => {
 			if (wishes.length > 0) {
