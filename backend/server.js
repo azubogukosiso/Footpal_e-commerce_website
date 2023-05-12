@@ -1,4 +1,3 @@
-// PROCESS FILE
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
@@ -20,7 +19,7 @@ const itemRouter = require("./routes/items");
 const stripe = require("./routes/stripe");
 
 // CONNECTION TO THE DATABASE
-mongoose.connect(process.env.MONGO_URL_LOCAL, {
+mongoose.connect(process.env.MONGO_URL_ATLAS, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
