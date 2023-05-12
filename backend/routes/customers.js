@@ -66,7 +66,7 @@ router.route("/signup").post(async (req, res) => {
     try {
         const customer = await Customer.create(customer_details);
         const token = createToken(customer._id);
-        res.cookie("jwt", token, { httpOnly: false, maxAge: maxAge * 1000 });
+        res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
         res.status(201).send({ message: 'cookies sent, sign up successful' });
     } catch (err) {
         const errors = handleErrors(err);
@@ -81,7 +81,7 @@ router.route("/signin").post(async (req, res) => {
     try {
         const customer = await Customer.login(email, password);
         const token = createToken(customer._id);
-        res.cookie("jwt", token, { httpOnly: false, maxAge: maxAge * 1000 });
+        res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
         res.status(200).send({ message: 'cookies sent, you are signed in' });
     } catch (err) {
         const errors = handleErrors(err);

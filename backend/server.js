@@ -29,7 +29,7 @@ db.once("open", () => {
     app.listen(PORT);
 });
 
-app.use(cors({ credentials: true, origin: true }));
+app.use(cors({ credentials: true, origin: ["http://localhost:3000", "https://footpal.onrender.com"] }));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/images", express.static(path.join(__dirname, "/images")));
