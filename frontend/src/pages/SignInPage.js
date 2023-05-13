@@ -63,10 +63,11 @@ const SignInPage = () => {
 
     instance.post(`${process.env.REACT_APP_API_URL}customers/signin`, details)
       .then(response => {
+        console.log(response);
         console.log(response.data);
-        if (response.data) {
-          window.location.href = "/";
-        }
+        // if (response.data) {
+        //   window.location.href = "/";
+        // }
       })
       .catch(error => {
         if (error.response) {
