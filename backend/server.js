@@ -19,7 +19,7 @@ const itemRouter = require("./routes/items");
 const stripe = require("./routes/stripe");
 
 // CONNECTION TO THE DATABASE
-mongoose.connect(process.env.MONGO_URL_LOCAL, {
+mongoose.connect(process.env.MONGO_URL_ATLAS, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
