@@ -5,7 +5,7 @@ let Admin = require("../models/admin.model");
 let Customer = require("../models/customer.model");
 
 router.route("/check-cookie").post((req, res) => {
-    const token = req.cookies.jwt;
+    const token = req.cookies.footpal_jwt;
 
     if (token) { // CHECK IF JSON WEB TOKEN EXISTS
         jwt.verify(token, 'kosi secret', async (err, decodedToken) => { // CHECK IF TOKEN IS VALID

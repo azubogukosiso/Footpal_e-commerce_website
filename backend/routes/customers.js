@@ -81,7 +81,7 @@ router.route("/signin").post(async (req, res) => {
     try {
         const customer = await Customer.login(email, password);
         const token = createToken(customer._id);
-        res.cookie("footpal_jwt", token, { httpOnly: false, maxAge: maxAge * 1000 }).send({ message: 'cookies sent, you are signed in' });
+        res.cookie("footpal_jwt", token, { httpOnly: true, maxAge: maxAge * 1000 }).send({ message: 'cookies sent, you are signed in' });
         res.status(200);
     } catch (err) {
         const errors = handleErrors(err);

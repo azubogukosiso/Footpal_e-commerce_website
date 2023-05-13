@@ -65,9 +65,9 @@ const SignInPage = () => {
       .then(response => {
         console.log(response);
         console.log(response.data);
-        // if (response.data) {
-        //   window.location.href = "/";
-        // }
+        if (response.data) {
+          window.location.href = "/";
+        }
       })
       .catch(error => {
         if (error.response) {

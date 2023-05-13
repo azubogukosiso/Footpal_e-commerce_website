@@ -19,7 +19,7 @@ const itemRouter = require("./routes/items");
 const stripe = require("./routes/stripe");
 
 // CONNECTION TO THE DATABASE
-mongoose.connect(process.env.MONGO_URL_ATLAS, {
+mongoose.connect(process.env.MONGO_URL_LOCAL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
@@ -29,9 +29,9 @@ db.once("open", () => {
     app.listen(PORT);
 });
 
+app.use(cookieParser());
 app.use(cors({ credentials: true, origin: ["http://localhost:3000", "https://footpal.onrender.com"] }));
 app.use(express.json());
-app.use(cookieParser());
 app.use("/images", express.static(path.join(__dirname, "/images")));
 
 const storage = multer.diskStorage({
