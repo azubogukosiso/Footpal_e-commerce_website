@@ -91,7 +91,7 @@ router.route("/signin").post(async (req, res) => {
 
 // LOGS OUT A CUSTOMER
 router.route("/logout").post((req, res) => {
-    res.cookie("jwt", "", { maxAge: 1 });
+    res.cookie("footpal_jwt", "", { maxAge: 1 });
     res.status(200).send({ message: 'cookies sent, you have logged out' });
 });
 
