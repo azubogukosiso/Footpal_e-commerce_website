@@ -64,8 +64,8 @@ router.post("/create-checkout-session", async (req, res) => {
         line_items,
         customer: customer.id,
         mode: 'payment',
-        success_url: 'http://localhost:3000/checkout-success',
-        cancel_url: 'http://localhost:3000/',
+        success_url: 'http://footpal.onrender.com/checkout-success',
+        cancel_url: 'https://footpal.onrender.com/',
     });
 
     res.send({ url: session.url });
