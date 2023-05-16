@@ -52,8 +52,8 @@ const AdminLoginPage = () => {
     instance.post(`${process.env.REACT_APP_API_URL}admin/signin`, details)
       .then(response => {
         if (response.data) {
-          if (document.cookie) {
-            window.location.href = "/admin/";
+          if (response.data) {
+            window.location.href = "/admin";
           }
         }
       })
