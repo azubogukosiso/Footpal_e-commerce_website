@@ -142,7 +142,7 @@ router.route("/orders/:id").delete((req, res) => {
 
 // LOGS OUT AN ADMIN
 router.route("/logout").post((req, res) => {
-    res.cookie("jwt", "", { maxAge: 1 });
+    res.cookie("jwt", "", { httpOnly: true, secure: true, sameSite: 'none', maxAge: 1 });
     res.status(200).send({ message: 'cookies sent, you have logged out' });
 });
 
