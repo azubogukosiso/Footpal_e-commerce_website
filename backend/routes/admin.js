@@ -52,7 +52,7 @@ router.route("/signup").post(async (req, res) => {
     try {
         const admin = await Admin.create(admin_details);
         const token = createToken(admin._id);
-        res.cookie("footpal_jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
+        res.cookie("footpal_jwt", token, { httpOnly: true, secure: true, sameSite: 'none', maxAge: maxAge * 1000 });
         res.status(201).send({ message: 'cookies sent, sign up successful' });
     } catch (err) {
         const errors = handleErrors(err);
@@ -67,7 +67,7 @@ router.route("/signin").post(async (req, res) => {
     try {
         const admin = await Admin.login(username, password);
         const token = createToken(admin._id);
-        res.cookie("footpal_jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
+        res.cookie("footpal_jwt", token, { httpOnly: true, secure: true, sameSite: 'none', maxAge: maxAge * 1000 });
         res.status(200).send({ message: 'cookies sent, you are signed in' });
     } catch (err) {
         const errors = handleErrors(err);
