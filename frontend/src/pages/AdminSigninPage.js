@@ -53,7 +53,7 @@ const AdminLoginPage = () => {
       .then(response => {
         if (response.data) {
           if (response.data) {
-            window.location.href = "/admin";
+            window.location.href = "/admin/";
           }
         }
       })
