@@ -49,7 +49,7 @@ const SignUpPage = () => {
         instance.post(`${process.env.REACT_APP_API_URL}admin/signup`, admin)
             .then(response => {
                 if (response.data) {
-                    window.location.href = "/admin/";
+                    window.location.href = "/admin";
                 }
             })
             .catch(error => {
