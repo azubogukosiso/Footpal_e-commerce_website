@@ -10,7 +10,7 @@ router.route("/check-cookie").post((req, res) => {
     if (token) { // CHECK IF JSON WEB TOKEN EXISTS
         jwt.verify(token, 'kosi secret', async (err, decodedToken) => { // CHECK IF TOKEN IS VALID
             if (err) {
-                console.log(err.message);
+                res.send("Invalid Token");
             } else {
                 let customer = await Customer.findById(decodedToken.id);
                 if (customer) {

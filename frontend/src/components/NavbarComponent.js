@@ -102,7 +102,7 @@ const NavbarComponent = (props) => {
 
     instance.post(`${process.env.REACT_APP_API_URL}general/check-cookie`)
       .then(response => {
-        if (response.data !== "No tokens") {
+        if (response.data !== "No tokens" && response.data !== "Invalid Token") {
           renderNavList(response.data);
         } else {
           setNavList(
