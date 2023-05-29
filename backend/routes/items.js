@@ -3,6 +3,8 @@ const router = require("express").Router();
 let Item = require("../models/item.model");
 let Wish = require("../models/wish.model");
 
+const uploadImage = require("../uploadImage");
+
 // ============== LIST OF ROUTES ==============
 
 // GETS A LIST OF ALL ITEMS
@@ -22,15 +24,19 @@ router.route("/").get((req, res) => {
 		.catch(err => res.status(500).json("Error: " + err));
 });
 
-// CREATES A NEW ITEM
-router.route("/create").post(async (req, res) => {
-	const newItem = new Item(req.body);
-	try {
-		const savedItem = await newItem.save();
-		res.status(200).json(savedItem);
-	} catch (err) {
-		res.status(500).json(err);
-	}
+// CREATES A NEW ITEM - FIRST UPLOADS THE IMAGE TO CLOUDINARY
+router.route("/create").post((req, res) => {
+	uploadImage(req.body.itemImage)
+		.then(url => {
+			req.body.itemImage = url;
+			const newItem = new Item(req.body);
+			return newItem;
+		})
+		.then(async (newItem) => {
+			savedItem = await newItem.save();
+			res.status(200).json(savedItem);
+		})
+		.catch((err) => res.status(500).send(err));
 });
 
 // GETS A PARTICULAR EXERCISE USING ITS ID

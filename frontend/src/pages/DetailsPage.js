@@ -29,8 +29,6 @@ const DetailsPage = (props) => {
 
 	const { id } = useParams();
 
-	const publicFolder = `${process.env.REACT_APP_API_URL}images/`;
-
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -50,7 +48,7 @@ const DetailsPage = (props) => {
 				setPrice(response.data.price);
 				setDetails(response.data.details);
 				setCategory(response.data.category);
-				setItemImage(publicFolder + response.data.itemImage);
+				setItemImage(response.data.itemImage);
 				setLoading(false);
 			});
 
@@ -59,7 +57,7 @@ const DetailsPage = (props) => {
 		if (cartItemsLocalStorage) {
 			setCartItems(cartItemsLocalStorage);
 		}
-	}, [id, navigate, customerEmail, publicFolder])
+	}, [id, navigate, customerEmail])
 
 	// SHOW SUCCESS MESSAGE - ITEM ADDED TO CART
 	const showSuccessMsgOne = () => {

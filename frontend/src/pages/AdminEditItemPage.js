@@ -14,8 +14,6 @@ const AdminEditItemPage = (props) => {
 
 	const { id } = useParams();
 
-	const publicFolder = `${process.env.REACT_APP_API_URL}images/`;
-
 	const [itemName, setItemName] = useState("");
 	const [price, setPrice] = useState("");
 	const [details, setDetails] = useState("");
@@ -38,10 +36,10 @@ const AdminEditItemPage = (props) => {
 				setPrice(response.data.price);
 				setDetails(response.data.details);
 				setCategory(response.data.category);
-				setPreviewImage(publicFolder + response.data.itemImage);
+				setPreviewImage(response.data.itemImage);
 				setOverlayRemoved(true);
 			})
-	}, [navigate, id, publicFolder])
+	}, [navigate, id])
 
 	// IMAGE SELECTION FUNCTIONALITY
 	const handleClick = () => {

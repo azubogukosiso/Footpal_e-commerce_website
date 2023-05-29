@@ -27,9 +27,10 @@ const AdminCreateItemPage = (props) => {
   }
 
   // DETECT IMAGE SELECTED AND PREVIEW THE IMAGE - DISALLOW INVALID IMAGES
-  const changeHandler = (e) => {
+  const changeHandler = async (e) => {
     setOverlayRemoved(true);
-    setItemImage(e.target.files[0]);
+    setItemImage(await convertBase64(e.target.files[0]));
+
     setPreviewImage(URL.createObjectURL(e.target.files[0]));
 
     const fileExtension = e.target.files[0].name.split(".").at(-1);
@@ -49,6 +50,22 @@ const AdminCreateItemPage = (props) => {
     }
   }
 
+  // CONVERT TO BASE 64
+  const convertBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
   // SHOW SUCCESS MESSAGE - ITEM HAS BEEN CREATED
   const showSuccessMsg = () => {
     toast.success('Item has been created!', {
@@ -66,25 +83,9 @@ const AdminCreateItemPage = (props) => {
       itemName,
       price,
       details,
-      category
+      category,
+      itemImage
     };
-
-    // CHECKS IF THERE'S AN IMAGE TO SUBMIT
-    if (itemImage) {
-      const data = new FormData();
-      const filename = Date.now() + itemImage.name;
-      data.append("name", filename);
-      data.append("file", itemImage);
-      newItem.itemImage = filename; // ADDS THE IMAGE FILE NAME TO THE MAIN OBJECT
-
-      // SAVING IMAGE TO SERVER
-      try {
-        const Imageinstance = axios.create({
-          withCredentials: true
-        });
-        await Imageinstance.post(`${process.env.REACT_APP_API_URL}upload`, data);
-      } catch (err) { }
-    }
 
     // SUBMITS ALL DETAILS
     const instance = axios.create({
@@ -95,7 +96,7 @@ const AdminCreateItemPage = (props) => {
       .then(response => {
         response && showSuccessMsg();
       })
-      .catch(() => { });
+      .catch();
   };
 
   return (

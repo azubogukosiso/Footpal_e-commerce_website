@@ -2,8 +2,6 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const cors = require('cors');
-const multer = require('multer');
-const path = require('path');
 
 const app = express();
 const dotenv = require('dotenv');
@@ -26,26 +24,14 @@ mongoose.connect(process.env.MONGO_URL_ATLAS, {
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error"));
 db.once("open", () => {
-    app.listen(PORT);
+    app.listen(PORT, () => {
+        console.log("server has started")
+    });
 });
 
 app.use(cookieParser());
 app.use(cors({ credentials: true, origin: ["http://localhost:3000", "https://footpal.onrender.com"] }));
 app.use(express.json());
-app.use("/images", express.static(path.join(__dirname, "/images")));
-
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, "images")
-    }, filename: (req, file, cb) => {
-        cb(null, req.body.name)
-    },
-});
-
-const upload = multer({ storage: storage });
-app.post("/upload", upload.single("file"), (req, res) => {
-    res.status(200).json("File has been uploaded");
-});
 
 app.use("/general", generalRouter);
 app.use("/customers", customersRouter);
