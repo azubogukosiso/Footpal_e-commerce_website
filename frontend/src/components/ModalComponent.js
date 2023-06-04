@@ -53,7 +53,6 @@ const ModalComponent = (props) => {
 			customerEmail: props.customerEmail
 		}).then(res => {
 			if (res.data.url) {
-				console.log(res.data.url);
 				window.location.href = res.data.url;
 			}
 		}).catch(err => {
@@ -118,7 +117,7 @@ const ModalComponent = (props) => {
 					{
 						props.cartItems.length > 0 &&
 						<button className='btn btn-dark w-100' onClick={() => handleCheckout()}>
-							{loading ? (<PulseLoader color="#fff" className="d-flex justify-content-center align-items-center" size={15} />) : (<>Checkout</>)}
+							{loading ? (<PulseLoader color="#fff" className="d-flex justify-content-center align-items-center" size={18} />) : (<>Checkout</>)}
 						</button>
 					}
 				</div>

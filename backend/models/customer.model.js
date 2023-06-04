@@ -20,7 +20,7 @@ const customerSchema = new Schema(
         password: {
             type: String,
             required: true,
-            minlength: [6, "Minimum password length is 6 characters, this is too short"],
+            minlength: [6, "Minimum password length is 6 characters. This is too short"],
         },
         profile_image: {
             data: Buffer,

@@ -95,27 +95,15 @@ router.route("/check-cookie").get((req, res) => {
 
 // RETRIEVE ORDERS MADE
 router.route("/orders").post((req, res) => {
-    if (!req.body === {}) {
-        Order.find({ userId: req.body.email })
-            .then(orders => {
-                if (orders.length > 0) {
-                    res.status(200).json(orders);
-                } else {
-                    res.send("No Orders for now");
-                }
-            })
-            .catch(err => res.status(500).json("Error: " + err));
-    } else {
-        Order.find()
-            .then(orders => {
-                if (orders.length > 0) {
-                    res.status(200).json(orders);
-                } else {
-                    res.send("No Orders for now");
-                }
-            })
-            .catch(err => res.status(500).json("Error: " + err));
-    }
+    Order.find()
+        .then(orders => {
+            if (orders.length > 0) {
+                res.status(200).json(orders);
+            } else {
+                res.send("No Orders for now");
+            }
+        })
+        .catch(err => res.status(500).json("Error: " + err));
 });
 
 // CONFIRM THE DELIVERY OF AN ITEM

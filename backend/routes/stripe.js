@@ -1,10 +1,13 @@
 const express = require("express");
 const Stripe = require("stripe");
+require("dotenv").config();
+
 let Order = require("../models/order.model");
+let Customer = require("../models/customer.model");
 
-const stripe = Stripe("sk_test_51MtTYpDYzW29slWj2nMgouPYGldGs0EoN3TSw89GQ8j3WtR7pc0iltVZLXnFhLcZ5orG7y69uwnWpwDfGPiMYCRT00JgBiwoW2");
+const stripe = Stripe(process.env.STRIPE_KEY);
 
-const router = express.Router()
+const router = express.Router();
 
 // COLLECT INFO ON PAYMENT
 router.post("/create-checkout-session", async (req, res) => {
@@ -20,6 +23,7 @@ router.post("/create-checkout-session", async (req, res) => {
                 currency: 'usd',
                 product_data: {
                     name: item.itemName,
+                    images: [item.itemImage],
                     description: item.details,
                     metadata: {
                         id: item._id,
@@ -63,7 +67,7 @@ router.post("/create-checkout-session", async (req, res) => {
         line_items,
         customer: customer.id,
         mode: 'payment',
-        success_url: 'http://footpal.onrender.com/checkout-success',
+        success_url: 'https://footpal.onrender.com/checkout-success',
         cancel_url: 'https://footpal.onrender.com/',
     });
 
@@ -72,9 +76,15 @@ router.post("/create-checkout-session", async (req, res) => {
 
 // CREATE ORDER
 const createOrder = async (customer, data, lineItems) => {
+    const customerId = await Customer.findOne({ email: customer.metadata.userId })
+        .then(customer => {
+            return customer._id;
+        })
+        .catch(err => console.log("Error: ", err));
+
 
     const newOrder = new Order({
-        userId: customer.metadata.userId,
+        userId: customerId,
         customerId: data.customer,
         paymentIntentId: data.payment_intent,
         products: lineItems.data,
@@ -121,15 +131,17 @@ router.post('/webhook', express.raw({ type: 'application/json' }), (req, res) =>
 
     // HANDLE THE EVENT - CHECKOUT COMPLETED
     if (eventType === "checkout.session.completed") {
-        stripe.customers.retrieve(data.customer).then(customer => {
-            stripe.checkout.sessions.listLineItems(
-                data.id,
-                {},
-                function (err, lineItems) {
-                    createOrder(customer, data, lineItems);
-                }
-            );
-        }).catch(err => console.log(err.message));
+        stripe.customers.retrieve(data.customer)
+            .then(customer => {
+                stripe.checkout.sessions.listLineItems(
+                    data.id,
+                    {},
+                    function (err, lineItems) {
+                        createOrder(customer, data, lineItems);
+                    }
+                );
+            })
+            .catch(err => console.log(err.message));
     }
 
     // RETURN A 200 RESPONSE TO ACKNOWLEDGE RECEIPT OF THE EVENT

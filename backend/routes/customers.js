@@ -2,6 +2,7 @@ const router = require("express").Router();
 const jwt = require("jsonwebtoken");
 
 let Customer = require("../models/customer.model");
+let Order = require("../models/order.model");
 
 // HANDLE ERRORS
 const handleErrors = (err) => {
@@ -89,6 +90,19 @@ router.route("/signin").post(async (req, res) => {
         const errors = handleErrors(err);
         res.status(400).send({ errors });
     }
+});
+
+// RETRIEVE ORDERS MADE
+router.route("/orders").post((req, res) => {
+    Order.find({ userId: req.body._id })
+        .then(orders => {
+            if (orders.length > 0) {
+                res.status(200).json(orders);
+            } else {
+                res.send("No Orders for now");
+            }
+        })
+        .catch(err => res.status(500).json("Error: " + err));
 });
 
 // LOGS OUT A CUSTOMER

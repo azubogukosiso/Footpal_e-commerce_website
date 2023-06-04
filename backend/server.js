@@ -2,10 +2,9 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
-const dotenv = require('dotenv');
-dotenv.config();
 
 const PORT = process.env.PORT || 5000;
 
@@ -31,7 +30,7 @@ db.once("open", () => {
 
 app.use(cookieParser());
 app.use(cors({ credentials: true, origin: ["http://localhost:3000", "https://footpal.onrender.com"] }));
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
 
 app.use("/general", generalRouter);
 app.use("/customers", customersRouter);

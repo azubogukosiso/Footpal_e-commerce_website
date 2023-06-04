@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PulseLoader from "react-spinners/PulseLoader";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -16,6 +17,7 @@ const SignInPage = () => {
   const [passwordBtnValue, setPasswordBtnValue] = useState("Show");
   const [emailErrMsg, setEmailErrMsg] = useState("");
   const [pwdErrMsg, setPwdErrMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
   // SHOW AND HIDE PASSWORD FUNCTIONALITY
   const togglePassword = () => {
@@ -51,6 +53,7 @@ const SignInPage = () => {
   // FUNCTION TO SUBMIT USER DETAILS
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const details = {
       email,
@@ -120,11 +123,9 @@ const SignInPage = () => {
           </div>
 
           <div className="form-group mb-3">
-            <input
-              type="submit"
-              className="btn btn-dark w-100"
-              value="Sign In"
-            />
+            <button className='btn btn-dark w-100' type="submit">
+              {loading ? (<PulseLoader color="#fff" className="d-flex justify-content-center align-items-center" size={18} />) : (<>Sign In</>)}
+            </button>
           </div>
 
           <div>

@@ -49,9 +49,9 @@ const CardItemComponent = (props) => {
                         <h6>{props.details}</h6>
                     </div>
                     <div className="d-flex flex-column flex-md-row">
-                        <NavLink to={"/admin/edit-item/" + props.id} className="btn btn-dark">Edit</NavLink>
+                        <NavLink to={"/admin/edit-item/" + props.id} className="btn btn-dark">Edit Item</NavLink>
                         <span className="mx-2 my-2"></span>
-                        <NavLink to="" className="btn btn-danger" onClick={() => deleteItem(props.id)}>Delete</NavLink>
+                        <NavLink to="" className="btn btn-danger" onClick={() => deleteItem(props.id)}>Delete Item</NavLink>
                     </div>
                 </div>
             </div>

@@ -29,7 +29,7 @@ const OrderListPage = (props) => {
     };
 
     const getOrders = () => {
-        axios.post(`${process.env.REACT_APP_API_URL}admin/orders`, userDetails)
+        axios.post(`${process.env.REACT_APP_API_URL}customers/orders`, userDetails)
             .then(res => {
                 if (res.data === "No Orders for now") {
                     setLoading(false);

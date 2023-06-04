@@ -87,6 +87,8 @@ const AdminCreateItemPage = (props) => {
       itemImage
     };
 
+    console.log(newItem);
+
     // SUBMITS ALL DETAILS
     const instance = axios.create({
       withCredentials: true
