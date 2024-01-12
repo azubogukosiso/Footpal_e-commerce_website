@@ -75,9 +75,11 @@ const SignInPage = () => {
           const errMsg = error.response.data.errors;
           if (errMsg.email) {
             setEmailErrMsg(errMsg.email);
+            setLoading(false);
             hideErrors();
           } else if (errMsg.password) {
             setPwdErrMsg(errMsg.password);
+            setLoading(false);
             hideErrors();
           }
         } else {
@@ -98,7 +100,6 @@ const SignInPage = () => {
           <div className="form-group mb-3">
             <label htmlFor="email">Email</label>
             <input
-              type="email"
               required
               className="form-control border border-dark"
               value={email}
